@@ -15,6 +15,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // MUTATORS
+
+    // Set unresizeable MainWindow size.
+    void setMinMaxSize(int min, int max);
+
+private slots:
+    void on_pushButton_freeForm_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
