@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
-    <height>517</height>
+    <width>393</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,8 +24,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>999</width>
-    <height>999</height>
+    <width>9999</width>
+    <height>9999</height>
    </size>
   </property>
   <property name="font">
@@ -73,6 +73,7 @@
             <property name="font">
              <font>
               <pointsize>14</pointsize>
+              <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
               <underline>true</underline>
@@ -190,76 +191,7 @@
       </widget>
       <widget class="QWidget" name="page_freeFormSetup">
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="2" column="0" colspan="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_gameSetup">
-          <item>
-           <spacer name="horizontalSpacer_gameSetupLeft">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_gameSetup">
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
-            <property name="text">
-             <string>Game Setup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_gameSetupRight">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="8" column="0" colspan="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_startGame">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <item>
-           <widget class="QPushButton" name="pushButton_startGame">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Start Game</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="9" column="0" colspan="4">
+        <item row="11" column="1" colspan="2">
          <spacer name="verticalSpacer_freeFormSetupDown">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -275,161 +207,296 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_freeFormTTT">
-          <item>
-           <spacer name="horizontalSpacer_freeFormTTTLeft">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_freeFormTTT">
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-              <bold>true</bold>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
-            <property name="text">
-             <string>Free Form Tic-Tac-Toe</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_freeFormTTTRight">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0">
-         <widget class="Line" name="line_gameSetupDown">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>12</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>512</width>
-            <height>16777215</height>
-           </size>
-          </property>
+        <item row="7" column="3">
+         <spacer name="horizontalSpacer_freeFormSetupRight">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="4">
-         <spacer name="verticalSpacer_freeFormSetupUp">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>0</width>
-            <height>12</height>
+            <height>20</height>
            </size>
           </property>
          </spacer>
         </item>
-        <item row="4" column="0" colspan="4">
+        <item row="7" column="0">
+         <spacer name="horizontalSpacer_freeFormSetupLeft">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="7" column="1" colspan="2">
          <layout class="QGridLayout" name="gridLayout_setupSettings">
-          <item row="8" column="4">
-           <widget class="QSpinBox" name="spinBox_sizeOfBoard2">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="value">
-             <number>3</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_player2Symbol">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>o</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QLabel" name="label_x">
-            <property name="text">
-             <string>x</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
+          <item row="8" column="1">
            <widget class="QLabel" name="label_player2Symbol">
             <property name="text">
              <string>Player 2 symbol:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="9" column="1" colspan="4">
+           <widget class="Line" name="line">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>12</height>
+             </size>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_numberOfPlayers">
+            <property name="text">
+             <string>Number of players:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="0" colspan="6">
+           <layout class="QHBoxLayout" name="horizontalLayout_startGame">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_startGame">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Start Game</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="7" column="1">
            <widget class="QLabel" name="label_player1Symbol">
             <property name="text">
              <string>Player 1 symbol:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QSpinBox" name="spinBox_numberOfPlayers">
+          <item row="3" column="0" colspan="6">
+           <layout class="QHBoxLayout" name="horizontalLayout_freeFormTTT">
+            <item>
+             <spacer name="horizontalSpacer_freeFormTTTLeft">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_freeFormTTT">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+                <strikeout>false</strikeout>
+               </font>
+              </property>
+              <property name="text">
+               <string>Free Form Tic-Tac-Toe</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_freeFormTTTRight">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="6">
+           <layout class="QHBoxLayout" name="horizontalLayout_freeFormSetupUp">
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&lt;-</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="18" column="0" colspan="6">
+           <widget class="Line" name="line_startGameUp">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>12</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>40</width>
+              <width>512</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="minimum">
-             <number>2</number>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
             </property>
-            <property name="maximum">
-             <number>42</number>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_player1Symbol">
+          <item row="6" column="0" rowspan="12">
+           <spacer name="horizontalSpacer_setupSettingsLeft">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="6" column="5" rowspan="12">
+           <spacer name="horizontalSpacer_setupSettingsRight">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="5" column="0" colspan="6">
+           <widget class="Line" name="line_gameSetupDown">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>12</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>25</width>
+              <width>512</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="6">
+           <layout class="QHBoxLayout" name="horizontalLayout_gameSetup">
+            <item>
+             <spacer name="horizontalSpacer_gameSetupLeft">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_gameSetup">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+                <strikeout>false</strikeout>
+               </font>
+              </property>
+              <property name="text">
+               <string>Game Setup</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_gameSetupRight">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="7" column="2" colspan="3">
+           <widget class="QLineEdit" name="lineEdit_player1Symbol">
+            <property name="minimumSize">
+             <size>
+              <width>42</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>42</width>
               <height>16777215</height>
              </size>
             </property>
@@ -447,87 +514,71 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
-           <widget class="QLabel" name="label_sizeOfBoard">
-            <property name="text">
-             <string>Size of board:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLabel" name="label_inARowToWin">
-            <property name="text">
-             <string>In a row to win:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" rowspan="9">
-           <spacer name="horizontalSpacer_setupSettingsLeft">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+          <item row="8" column="2" colspan="3">
+           <widget class="QLineEdit" name="lineEdit_player2Symbol">
+            <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>42</width>
               <height>0</height>
              </size>
             </property>
-           </spacer>
-          </item>
-          <item row="5" column="2">
-           <widget class="QSpinBox" name="spinBox_numberOfBoards">
             <property name="maximumSize">
              <size>
-              <width>40</width>
+              <width>42</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="value">
-             <number>1</number>
+            <property name="text">
+             <string>o</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1" colspan="4">
-           <widget class="Line" name="line">
+          <item row="6" column="2" colspan="3">
+           <widget class="QSpinBox" name="spinBox_numberOfPlayers">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>12</height>
+              <width>42</width>
+              <height>0</height>
              </size>
             </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+            <property name="maximumSize">
+             <size>
+              <width>42</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::WheelFocus</enum>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>99</number>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="label_editBoardNum">
-            <property name="font">
-             <font>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
-            </property>
-            <property name="text">
-             <string>Board 1 settings</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
+          <item row="10" column="1" rowspan="2">
            <widget class="QLabel" name="label_numberOfBoards">
             <property name="text">
              <string>Number of boards:</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="2">
-           <widget class="QSpinBox" name="spinBox_numberOfRounds">
+          <item row="10" column="2" rowspan="2" colspan="3">
+           <widget class="QSpinBox" name="spinBox_numberOfBoards">
+            <property name="minimumSize">
+             <size>
+              <width>42</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>40</width>
+              <width>42</width>
               <height>16777215</height>
              </size>
             </property>
@@ -536,122 +587,172 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="5" rowspan="9">
-           <spacer name="horizontalSpacer_setupSettingsRight">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_numberOfPlayers">
-            <property name="text">
-             <string>Number of players:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2">
-           <widget class="QSpinBox" name="spinBox_inARowToWin">
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="value">
-             <number>3</number>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLabel" name="label_numberOfRounds">
-            <property name="text">
-             <string>Number of rounds:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QPushButton" name="pushButton_makeAllBoardsLikeThis">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Sync</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QSpinBox" name="spinBox_sizeOfBoard1">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="minimum">
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1" colspan="4">
-           <spacer name="verticalSpacer_board1SettingsUp">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>12</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="5" column="0" colspan="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_startGameUp">
-          <item>
-           <widget class="Line" name="line_startGameUp">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>12</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>512</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
+          <item row="12" column="1" rowspan="5" colspan="4">
+           <layout class="QVBoxLayout" name="verticalLayout_boardsSettings">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_boardNumSettings">
+              <property name="horizontalSpacing">
+               <number>6</number>
+              </property>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_inARowToWin">
+                <property name="text">
+                 <string>In a row to win:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_sizeOfBoard">
+                <property name="text">
+                 <string>Size of board:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_editBoardNum">
+                <property name="font">
+                 <font>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                  <underline>false</underline>
+                  <strikeout>false</strikeout>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Board 1 settings</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QSpinBox" name="spinBox_sizeOfBoard2">
+                <property name="minimumSize">
+                 <size>
+                  <width>42</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>42</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>3</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_x">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSpinBox" name="spinBox_sizeOfBoard1">
+                <property name="minimumSize">
+                 <size>
+                  <width>42</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>42</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_numberOfRounds">
+                <property name="text">
+                 <string>Number of rounds:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="3">
+               <widget class="QPushButton" name="pushButton_makeAllBoardsLikeThis">
+                <property name="minimumSize">
+                 <size>
+                  <width>42</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Sync to All</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="4">
+               <spacer name="verticalSpacer_board1SettingsUp">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>12</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="1" colspan="3">
+               <widget class="QSpinBox" name="spinBox_inARowToWin">
+                <property name="minimumSize">
+                 <size>
+                  <width>42</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>42</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>3</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="3">
+               <widget class="QSpinBox" name="spinBox_numberOfRounds">
+                <property name="minimumSize">
+                 <size>
+                  <width>42</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>42</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -666,8 +767,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>341</width>
-     <height>21</height>
+     <width>393</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Import">
