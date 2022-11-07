@@ -18,6 +18,16 @@ public:
 
     // Mutators
 
+    //
+    int changeAmt(int currAmt,
+                  int newAmt,
+                  void (MainWindow::*add)(),
+                  void (MainWindow::*subtract)());
+
+    void addPlayer();
+
+    void removePlayer();
+
     //  Handles user incrementing "Number of boards" spin button (Free Form).
     void addBoard();
 
@@ -25,11 +35,13 @@ public:
     void removeBoard();
 
 private slots:
-    void on_pushButton_freeForm_clicked();
+    void on_pushButton_start_clicked();
 
     void on_pushButton_clicked();
 
     void on_spinBox_numberOfBoards_editingFinished();
+
+    void on_spinBox_numberOfPlayers_editingFinished();
 
 private:
     Ui::MainWindow *ui;

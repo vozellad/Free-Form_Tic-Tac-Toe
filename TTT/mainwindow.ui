@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>393</width>
-    <height>556</height>
+    <width>437</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -51,11 +51,40 @@
         </sizepolicy>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_startScreenUp">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="2" column="1">
          <layout class="QGridLayout" name="gridLayout_startScreen">
           <property name="verticalSpacing">
            <number>6</number>
           </property>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="pushButton_start">
+            <property name="minimumSize">
+             <size>
+              <width>128</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QLabel" name="label_ticTacToe">
             <property name="minimumSize">
@@ -83,14 +112,27 @@
              </font>
             </property>
             <property name="text">
-             <string>Tic-Tac-Toe</string>
+             <string>Free Form Tic-Tac-Toe</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="0" column="2" rowspan="5">
+          <item row="0" column="0" rowspan="4">
+           <spacer name="horizontalSpacer_startScreenLeft">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2" rowspan="4">
            <spacer name="horizontalSpacer_startScreenRight">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -104,95 +146,25 @@
            </spacer>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="label_selectGameMode">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Select game mode:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" rowspan="5">
-           <spacer name="horizontalSpacer_startScreenLeft">
+           <spacer name="verticalSpacer_startScreenMiddle">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Maximum</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>20</width>
+              <height>12</height>
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="4" column="1">
-           <widget class="QPushButton" name="pushButton_ultimate">
-            <property name="text">
-             <string>Ultimate</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="pushButton_freeForm">
-            <property name="minimumSize">
-             <size>
-              <width>128</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Free Form</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="pushButton_standard">
-            <property name="text">
-             <string>Standard</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>
         <item row="5" column="1">
          <spacer name="verticalSpacer_startScreenBottom">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="1">
-         <spacer name="verticalSpacer_startScreenUp">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>12</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_freeFormSetup">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="11" column="1" colspan="2">
-         <spacer name="verticalSpacer_freeFormSetupDown">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -207,32 +179,10 @@
           </property>
          </spacer>
         </item>
-        <item row="7" column="3">
-         <spacer name="horizontalSpacer_freeFormSetupRight">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="7" column="0">
-         <spacer name="horizontalSpacer_freeFormSetupLeft">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_freeFormSetup">
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="7" column="1" colspan="2">
          <layout class="QGridLayout" name="gridLayout_setupSettings">
           <item row="8" column="1">
@@ -554,10 +504,13 @@
              <enum>Qt::LeftToRight</enum>
             </property>
             <property name="minimum">
-             <number>0</number>
+             <number>1</number>
             </property>
             <property name="maximum">
              <number>99</number>
+            </property>
+            <property name="value">
+             <number>2</number>
             </property>
            </widget>
           </item>
@@ -581,6 +534,9 @@
               <width>42</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="minimum">
+             <number>1</number>
             </property>
             <property name="value">
              <number>1</number>
@@ -756,44 +712,53 @@
           </item>
          </layout>
         </item>
+        <item row="7" column="3">
+         <spacer name="horizontalSpacer_freeFormSetupRight">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="7" column="0">
+         <spacer name="horizontalSpacer_freeFormSetupLeft">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="11" column="1" colspan="2">
+         <spacer name="verticalSpacer_freeFormSetupDown">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>393</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_Import">
-    <property name="title">
-     <string>Import</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menu_Export">
-    <property name="title">
-     <string>Export</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menu_Statistics">
-    <property name="title">
-     <string>Statistics</string>
-    </property>
-   </widget>
-   <addaction name="menu_Import"/>
-   <addaction name="menu_Export"/>
-   <addaction name="menu_Statistics"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="sizeGripEnabled">
-    <bool>false</bool>
-   </property>
   </widget>
  </widget>
  <resources/>
