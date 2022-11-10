@@ -52,18 +52,41 @@ int MainWindow::changeAmt(int currAmt,
 
 void MainWindow::addPlayer()
 {
-    // Get layout that holds layouts that hold board settings.
-    QVBoxLayout* layout =
-        qobject_cast<QVBoxLayout*>(ui->verticalLayout_boardsSettings);
+    // Get vertical layout of players.
+    QVBoxLayout* layout = ui->verticalLayout_playerSymbols;
 
-    // Make layout that holds board settings.
-    QGridLayout* innerLayout =
-        qobject_cast<QGridLayout*>(ui->verticalLayout_boardsSettings);
+    int count = layout->count();
 
+    // Adds a new row representing added player.
+    QHBoxLayout* newPlayer = new QHBoxLayout();
+
+    // Create elements for new row.
+
+    QLabel* name =
+            new QLabel(tr("Player %1 symbol: ").arg(layout->count() + 1));
+
+    // Suggest symbol for new player.
+    char symbol = ('a' - 2 + count);
+    if (count == 1)
+        symbol = 'x';
+    else if (symbol == 2)
+        symbol = 'o';
+
+    QLineEdit* symbolBox = new QLineEdit(tr("%1").arg(symbol));
+    symbolBox->setFixedWidth(42);  // TODO: make dynamic
+
+    // Add new elements to new row.
+    newPlayer->addWidget(name);
+    newPlayer->addWidget(symbolBox);
+    newPlayer->addSpacing(60);
+
+    layout->addLayout(newPlayer);
 }
 
 void MainWindow::removePlayer()
 {
+    // Get vertical layout of players.
+    QVBoxLayout* layout = ui->verticalLayout_playerSymbols;
 
 }
 
@@ -107,14 +130,14 @@ void MainWindow::on_spinBox_numberOfBoards_editingFinished()
                                 &MainWindow::removeBoard);
 }
 
-void MainWindow::on_spinBox_numberOfPlayers_editingFinished()
+
+void MainWindow::on_spinBox_numberOfPlayers_valueChanged(int newNumOfPlayers)
 {
-    static int currNumOfPlayers = 1;
-    int newNumberOfPlayers = ui->spinBox_numberOfPlayers->value();
+    static int currNumOfPlayers = 2;
 
     currNumOfPlayers = changeAmt(currNumOfPlayers,
-                        newNumberOfPlayers,
-                        &MainWindow::addPlayer,
-                        &MainWindow::removePlayer);
+                                 newNumOfPlayers,
+                                 &MainWindow::addPlayer,
+                                 &MainWindow::removePlayer);
 }
 

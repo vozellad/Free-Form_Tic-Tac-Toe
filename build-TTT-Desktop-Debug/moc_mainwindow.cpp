@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[6];
-    char stringdata0[147];
+    QByteArrayData data[7];
+    char stringdata0[149];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,13 +37,15 @@ QT_MOC_LITERAL(1, 11, 27), // "on_pushButton_start_clicked"
 QT_MOC_LITERAL(2, 39, 0), // ""
 QT_MOC_LITERAL(3, 40, 21), // "on_pushButton_clicked"
 QT_MOC_LITERAL(4, 62, 41), // "on_spinBox_numberOfBoards_edi..."
-QT_MOC_LITERAL(5, 104, 42) // "on_spinBox_numberOfPlayers_ed..."
+QT_MOC_LITERAL(5, 104, 39), // "on_spinBox_numberOfPlayers_va..."
+QT_MOC_LITERAL(6, 144, 4) // "arg1"
 
     },
     "MainWindow\0on_pushButton_start_clicked\0"
     "\0on_pushButton_clicked\0"
     "on_spinBox_numberOfBoards_editingFinished\0"
-    "on_spinBox_numberOfPlayers_editingFinished"
+    "on_spinBox_numberOfPlayers_valueChanged\0"
+    "arg1"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,13 +66,13 @@ static const uint qt_meta_data_MainWindow[] = {
        1,    0,   34,    2, 0x08 /* Private */,
        3,    0,   35,    2, 0x08 /* Private */,
        4,    0,   36,    2, 0x08 /* Private */,
-       5,    0,   37,    2, 0x08 /* Private */,
+       5,    1,   37,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    6,
 
        0        // eod
 };
@@ -84,11 +86,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_pushButton_start_clicked(); break;
         case 1: _t->on_pushButton_clicked(); break;
         case 2: _t->on_spinBox_numberOfBoards_editingFinished(); break;
-        case 3: _t->on_spinBox_numberOfPlayers_editingFinished(); break;
+        case 3: _t->on_spinBox_numberOfPlayers_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = { {

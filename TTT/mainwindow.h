@@ -41,7 +41,7 @@ private slots:
 
     void on_spinBox_numberOfBoards_editingFinished();
 
-    void on_spinBox_numberOfPlayers_editingFinished();
+    void on_spinBox_numberOfPlayers_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
