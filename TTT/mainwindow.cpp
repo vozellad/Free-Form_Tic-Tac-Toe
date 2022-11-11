@@ -52,6 +52,9 @@ int MainWindow::changeAmt(int currAmt,
 
 void MainWindow::addPlayer()
 {
+    // TODO: allow the option to either use character or image for symbol
+    // TODO: allow customizeable name
+
     // Get vertical layout of players.
     QVBoxLayout* layout = ui->verticalLayout_playerSymbols;
 
@@ -71,6 +74,7 @@ void MainWindow::addPlayer()
         symbol = 'x';
     else if (symbol == 2)
         symbol = 'o';
+    // TODO: maybe make player (dictionary or class) that has these
 
     QLineEdit* symbolBox = new QLineEdit(tr("%1").arg(symbol));
     symbolBox->setFixedWidth(42);  // TODO: make dynamic
@@ -88,6 +92,9 @@ void MainWindow::removePlayer()
     // Get vertical layout of players.
     QVBoxLayout* layout = ui->verticalLayout_playerSymbols;
 
+    QLayoutItem* lastPlayer = layout->itemAt(layout->count() - 1);
+
+    removeLayout(lastPlayer);
 }
 
 //  Handles user incrementing "Number of boards" spin button.
@@ -107,6 +114,20 @@ void MainWindow::addBoard()
 void MainWindow::removeBoard()
 {
 
+}
+
+void MainWindow::removeLayout(QLayoutItem* layout)
+{
+    if (layout->layout() != NULL)
+    {
+        QLayoutItem* item;
+        while ((item = layout->layout()->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete layout->layout();
+    }
 }
 
 void MainWindow::on_pushButton_start_clicked()

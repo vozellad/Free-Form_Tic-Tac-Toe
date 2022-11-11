@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStyleFactory>
+#include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,6 +34,9 @@ public:
 
     //  Handles user decrementing "Number of boards" spin button (Free Form).
     void removeBoard();
+
+    // Remove layout and its contents.
+    void removeLayout(QLayoutItem* layout);
 
 private slots:
     void on_pushButton_start_clicked();
