@@ -48,13 +48,6 @@ public:
     QSpacerItem *verticalSpacer_freeFormSetupDown;
     QSpacerItem *horizontalSpacer_freeFormSetupRight;
     QGridLayout *gridLayout_setupSettings;
-    QHBoxLayout *horizontalLayout_freeFormTTT;
-    QSpacerItem *horizontalSpacer_freeFormTTTLeft;
-    QLabel *label_freeFormTTT;
-    QSpacerItem *horizontalSpacer_freeFormTTTRight;
-    QSpacerItem *horizontalSpacer_setupSettingsLeft;
-    QSpacerItem *horizontalSpacer_setupSettingsRight;
-    QLabel *label_numberOfBoards;
     QVBoxLayout *verticalLayout_boardsSettings;
     QGridLayout *gridLayout_boardNumSettings;
     QSpacerItem *verticalSpacer_board1SettingsUp;
@@ -68,30 +61,39 @@ public:
     QLabel *label_editBoardNum;
     QSpinBox *spinBox_sizeOfBoard2;
     QLabel *label_numberOfRounds;
+    QSpacerItem *horizontalSpacer_setupSettingsLeft;
+    QLabel *label_numberOfPlayers;
+    QFrame *line_gameSetupDown;
+    QFrame *line;
+    QFrame *line_startGameUp;
     QHBoxLayout *horizontalLayout_freeFormSetupUp;
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout_playerSymbols;
     QHBoxLayout *horizontalLayout_player1Symbol;
-    QLabel *label_player1Symbol;
+    QLineEdit *lineEdit_player1Name;
     QLineEdit *lineEdit_player1Symbol;
     QSpacerItem *horizontalSpacer_3;
     QHBoxLayout *horizontalLayout_player2Symbol;
-    QLabel *label_player2Symbol;
+    QLineEdit *lineEdit;
     QLineEdit *lineEdit_player2Symbol;
     QSpacerItem *horizontalSpacer_2;
-    QLabel *label_numberOfPlayers;
-    QFrame *line_gameSetupDown;
-    QFrame *line_startGameUp;
     QHBoxLayout *horizontalLayout_startGame;
     QPushButton *pushButton_startGame;
     QHBoxLayout *horizontalLayout_gameSetup;
     QSpacerItem *horizontalSpacer_gameSetupLeft;
     QLabel *label_gameSetup;
     QSpacerItem *horizontalSpacer_gameSetupRight;
-    QSpinBox *spinBox_numberOfBoards;
-    QFrame *line;
     QSpinBox *spinBox_numberOfPlayers;
+    QHBoxLayout *horizontalLayout_freeFormTTT;
+    QSpacerItem *horizontalSpacer_freeFormTTTLeft;
+    QLabel *label_freeFormTTT;
+    QSpacerItem *horizontalSpacer_freeFormTTTRight;
+    QSpinBox *spinBox_numberOfBoards;
+    QSpacerItem *horizontalSpacer_setupSettingsRight;
+    QLabel *label_numberOfBoards;
+    QLabel *label_name;
+    QLabel *label_symbol;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -193,43 +195,6 @@ public:
 
         gridLayout_setupSettings = new QGridLayout();
         gridLayout_setupSettings->setObjectName(QString::fromUtf8("gridLayout_setupSettings"));
-        horizontalLayout_freeFormTTT = new QHBoxLayout();
-        horizontalLayout_freeFormTTT->setObjectName(QString::fromUtf8("horizontalLayout_freeFormTTT"));
-        horizontalSpacer_freeFormTTTLeft = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_freeFormTTT->addItem(horizontalSpacer_freeFormTTTLeft);
-
-        label_freeFormTTT = new QLabel(page_freeFormSetup);
-        label_freeFormTTT->setObjectName(QString::fromUtf8("label_freeFormTTT"));
-        QFont font2;
-        font2.setPointSize(14);
-        font2.setBold(true);
-        font2.setWeight(75);
-        font2.setStrikeOut(false);
-        label_freeFormTTT->setFont(font2);
-
-        horizontalLayout_freeFormTTT->addWidget(label_freeFormTTT);
-
-        horizontalSpacer_freeFormTTTRight = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_freeFormTTT->addItem(horizontalSpacer_freeFormTTTRight);
-
-
-        gridLayout_setupSettings->addLayout(horizontalLayout_freeFormTTT, 3, 0, 1, 6);
-
-        horizontalSpacer_setupSettingsLeft = new QSpacerItem(40, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_setupSettings->addItem(horizontalSpacer_setupSettingsLeft, 6, 0, 13, 1);
-
-        horizontalSpacer_setupSettingsRight = new QSpacerItem(40, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_setupSettings->addItem(horizontalSpacer_setupSettingsRight, 6, 5, 13, 1);
-
-        label_numberOfBoards = new QLabel(page_freeFormSetup);
-        label_numberOfBoards->setObjectName(QString::fromUtf8("label_numberOfBoards"));
-
-        gridLayout_setupSettings->addWidget(label_numberOfBoards, 11, 1, 2, 1);
-
         verticalLayout_boardsSettings = new QVBoxLayout();
         verticalLayout_boardsSettings->setObjectName(QString::fromUtf8("verticalLayout_boardsSettings"));
         gridLayout_boardNumSettings = new QGridLayout();
@@ -289,14 +254,14 @@ public:
 
         label_editBoardNum = new QLabel(page_freeFormSetup);
         label_editBoardNum->setObjectName(QString::fromUtf8("label_editBoardNum"));
-        QFont font3;
-        font3.setBold(true);
-        font3.setItalic(false);
-        font3.setUnderline(false);
-        font3.setWeight(75);
-        font3.setStrikeOut(false);
-        font3.setKerning(true);
-        label_editBoardNum->setFont(font3);
+        QFont font2;
+        font2.setBold(true);
+        font2.setItalic(false);
+        font2.setUnderline(false);
+        font2.setWeight(75);
+        font2.setStrikeOut(false);
+        font2.setKerning(true);
+        label_editBoardNum->setFont(font2);
 
         gridLayout_boardNumSettings->addWidget(label_editBoardNum, 1, 0, 1, 1);
 
@@ -317,7 +282,42 @@ public:
         verticalLayout_boardsSettings->addLayout(gridLayout_boardNumSettings);
 
 
-        gridLayout_setupSettings->addLayout(verticalLayout_boardsSettings, 13, 1, 5, 4);
+        gridLayout_setupSettings->addLayout(verticalLayout_boardsSettings, 14, 1, 5, 4);
+
+        horizontalSpacer_setupSettingsLeft = new QSpacerItem(40, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_setupSettings->addItem(horizontalSpacer_setupSettingsLeft, 6, 0, 14, 1);
+
+        label_numberOfPlayers = new QLabel(page_freeFormSetup);
+        label_numberOfPlayers->setObjectName(QString::fromUtf8("label_numberOfPlayers"));
+
+        gridLayout_setupSettings->addWidget(label_numberOfPlayers, 6, 1, 1, 1);
+
+        line_gameSetupDown = new QFrame(page_freeFormSetup);
+        line_gameSetupDown->setObjectName(QString::fromUtf8("line_gameSetupDown"));
+        line_gameSetupDown->setMinimumSize(QSize(0, 12));
+        line_gameSetupDown->setMaximumSize(QSize(512, 16777215));
+        line_gameSetupDown->setFrameShadow(QFrame::Plain);
+        line_gameSetupDown->setFrameShape(QFrame::HLine);
+
+        gridLayout_setupSettings->addWidget(line_gameSetupDown, 5, 0, 1, 6);
+
+        line = new QFrame(page_freeFormSetup);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setMinimumSize(QSize(0, 12));
+        line->setFrameShadow(QFrame::Plain);
+        line->setFrameShape(QFrame::HLine);
+
+        gridLayout_setupSettings->addWidget(line, 11, 1, 1, 4);
+
+        line_startGameUp = new QFrame(page_freeFormSetup);
+        line_startGameUp->setObjectName(QString::fromUtf8("line_startGameUp"));
+        line_startGameUp->setMinimumSize(QSize(0, 12));
+        line_startGameUp->setMaximumSize(QSize(512, 16777215));
+        line_startGameUp->setFrameShadow(QFrame::Plain);
+        line_startGameUp->setFrameShape(QFrame::HLine);
+
+        gridLayout_setupSettings->addWidget(line_startGameUp, 20, 0, 1, 6);
 
         horizontalLayout_freeFormSetupUp = new QHBoxLayout();
         horizontalLayout_freeFormSetupUp->setObjectName(QString::fromUtf8("horizontalLayout_freeFormSetupUp"));
@@ -338,19 +338,19 @@ public:
         verticalLayout_playerSymbols->setObjectName(QString::fromUtf8("verticalLayout_playerSymbols"));
         horizontalLayout_player1Symbol = new QHBoxLayout();
         horizontalLayout_player1Symbol->setObjectName(QString::fromUtf8("horizontalLayout_player1Symbol"));
-        label_player1Symbol = new QLabel(page_freeFormSetup);
-        label_player1Symbol->setObjectName(QString::fromUtf8("label_player1Symbol"));
+        lineEdit_player1Name = new QLineEdit(page_freeFormSetup);
+        lineEdit_player1Name->setObjectName(QString::fromUtf8("lineEdit_player1Name"));
 
-        horizontalLayout_player1Symbol->addWidget(label_player1Symbol);
+        horizontalLayout_player1Symbol->addWidget(lineEdit_player1Name);
 
         lineEdit_player1Symbol = new QLineEdit(page_freeFormSetup);
         lineEdit_player1Symbol->setObjectName(QString::fromUtf8("lineEdit_player1Symbol"));
         lineEdit_player1Symbol->setMinimumSize(QSize(42, 0));
         lineEdit_player1Symbol->setMaximumSize(QSize(42, 16777215));
-        QFont font4;
-        font4.setPointSize(10);
-        font4.setStrikeOut(false);
-        lineEdit_player1Symbol->setFont(font4);
+        QFont font3;
+        font3.setPointSize(10);
+        font3.setStrikeOut(false);
+        lineEdit_player1Symbol->setFont(font3);
 
         horizontalLayout_player1Symbol->addWidget(lineEdit_player1Symbol);
 
@@ -364,10 +364,10 @@ public:
         horizontalLayout_player2Symbol = new QHBoxLayout();
         horizontalLayout_player2Symbol->setObjectName(QString::fromUtf8("horizontalLayout_player2Symbol"));
         horizontalLayout_player2Symbol->setContentsMargins(-1, 0, -1, -1);
-        label_player2Symbol = new QLabel(page_freeFormSetup);
-        label_player2Symbol->setObjectName(QString::fromUtf8("label_player2Symbol"));
+        lineEdit = new QLineEdit(page_freeFormSetup);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
-        horizontalLayout_player2Symbol->addWidget(label_player2Symbol);
+        horizontalLayout_player2Symbol->addWidget(lineEdit);
 
         lineEdit_player2Symbol = new QLineEdit(page_freeFormSetup);
         lineEdit_player2Symbol->setObjectName(QString::fromUtf8("lineEdit_player2Symbol"));
@@ -384,30 +384,7 @@ public:
         verticalLayout_playerSymbols->addLayout(horizontalLayout_player2Symbol);
 
 
-        gridLayout_setupSettings->addLayout(verticalLayout_playerSymbols, 7, 1, 1, 4);
-
-        label_numberOfPlayers = new QLabel(page_freeFormSetup);
-        label_numberOfPlayers->setObjectName(QString::fromUtf8("label_numberOfPlayers"));
-
-        gridLayout_setupSettings->addWidget(label_numberOfPlayers, 6, 1, 1, 1);
-
-        line_gameSetupDown = new QFrame(page_freeFormSetup);
-        line_gameSetupDown->setObjectName(QString::fromUtf8("line_gameSetupDown"));
-        line_gameSetupDown->setMinimumSize(QSize(0, 12));
-        line_gameSetupDown->setMaximumSize(QSize(512, 16777215));
-        line_gameSetupDown->setFrameShadow(QFrame::Plain);
-        line_gameSetupDown->setFrameShape(QFrame::HLine);
-
-        gridLayout_setupSettings->addWidget(line_gameSetupDown, 5, 0, 1, 6);
-
-        line_startGameUp = new QFrame(page_freeFormSetup);
-        line_startGameUp->setObjectName(QString::fromUtf8("line_startGameUp"));
-        line_startGameUp->setMinimumSize(QSize(0, 12));
-        line_startGameUp->setMaximumSize(QSize(512, 16777215));
-        line_startGameUp->setFrameShadow(QFrame::Plain);
-        line_startGameUp->setFrameShape(QFrame::HLine);
-
-        gridLayout_setupSettings->addWidget(line_startGameUp, 19, 0, 1, 6);
+        gridLayout_setupSettings->addLayout(verticalLayout_playerSymbols, 8, 1, 1, 4);
 
         horizontalLayout_startGame = new QHBoxLayout();
         horizontalLayout_startGame->setObjectName(QString::fromUtf8("horizontalLayout_startGame"));
@@ -420,7 +397,7 @@ public:
         horizontalLayout_startGame->addWidget(pushButton_startGame);
 
 
-        gridLayout_setupSettings->addLayout(horizontalLayout_startGame, 20, 0, 1, 6);
+        gridLayout_setupSettings->addLayout(horizontalLayout_startGame, 21, 0, 1, 6);
 
         horizontalLayout_gameSetup = new QHBoxLayout();
         horizontalLayout_gameSetup->setObjectName(QString::fromUtf8("horizontalLayout_gameSetup"));
@@ -430,10 +407,10 @@ public:
 
         label_gameSetup = new QLabel(page_freeFormSetup);
         label_gameSetup->setObjectName(QString::fromUtf8("label_gameSetup"));
-        QFont font5;
-        font5.setPointSize(14);
-        font5.setStrikeOut(false);
-        label_gameSetup->setFont(font5);
+        QFont font4;
+        font4.setPointSize(14);
+        font4.setStrikeOut(false);
+        label_gameSetup->setFont(font4);
 
         horizontalLayout_gameSetup->addWidget(label_gameSetup);
 
@@ -444,23 +421,6 @@ public:
 
         gridLayout_setupSettings->addLayout(horizontalLayout_gameSetup, 4, 0, 1, 6);
 
-        spinBox_numberOfBoards = new QSpinBox(page_freeFormSetup);
-        spinBox_numberOfBoards->setObjectName(QString::fromUtf8("spinBox_numberOfBoards"));
-        spinBox_numberOfBoards->setMinimumSize(QSize(42, 0));
-        spinBox_numberOfBoards->setMaximumSize(QSize(42, 16777215));
-        spinBox_numberOfBoards->setMinimum(1);
-        spinBox_numberOfBoards->setValue(1);
-
-        gridLayout_setupSettings->addWidget(spinBox_numberOfBoards, 11, 2, 2, 3);
-
-        line = new QFrame(page_freeFormSetup);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setMinimumSize(QSize(0, 12));
-        line->setFrameShadow(QFrame::Plain);
-        line->setFrameShape(QFrame::HLine);
-
-        gridLayout_setupSettings->addWidget(line, 10, 1, 1, 4);
-
         spinBox_numberOfPlayers = new QSpinBox(page_freeFormSetup);
         spinBox_numberOfPlayers->setObjectName(QString::fromUtf8("spinBox_numberOfPlayers"));
         spinBox_numberOfPlayers->setMinimumSize(QSize(42, 0));
@@ -468,11 +428,63 @@ public:
         spinBox_numberOfPlayers->setFocusPolicy(Qt::WheelFocus);
         spinBox_numberOfPlayers->setLayoutDirection(Qt::LeftToRight);
         spinBox_numberOfPlayers->setReadOnly(false);
-        spinBox_numberOfPlayers->setMinimum(1);
+        spinBox_numberOfPlayers->setMinimum(0);
         spinBox_numberOfPlayers->setMaximum(26);
         spinBox_numberOfPlayers->setValue(2);
 
         gridLayout_setupSettings->addWidget(spinBox_numberOfPlayers, 6, 2, 1, 3);
+
+        horizontalLayout_freeFormTTT = new QHBoxLayout();
+        horizontalLayout_freeFormTTT->setObjectName(QString::fromUtf8("horizontalLayout_freeFormTTT"));
+        horizontalSpacer_freeFormTTTLeft = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_freeFormTTT->addItem(horizontalSpacer_freeFormTTTLeft);
+
+        label_freeFormTTT = new QLabel(page_freeFormSetup);
+        label_freeFormTTT->setObjectName(QString::fromUtf8("label_freeFormTTT"));
+        QFont font5;
+        font5.setPointSize(14);
+        font5.setBold(true);
+        font5.setWeight(75);
+        font5.setStrikeOut(false);
+        label_freeFormTTT->setFont(font5);
+
+        horizontalLayout_freeFormTTT->addWidget(label_freeFormTTT);
+
+        horizontalSpacer_freeFormTTTRight = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_freeFormTTT->addItem(horizontalSpacer_freeFormTTTRight);
+
+
+        gridLayout_setupSettings->addLayout(horizontalLayout_freeFormTTT, 3, 0, 1, 6);
+
+        spinBox_numberOfBoards = new QSpinBox(page_freeFormSetup);
+        spinBox_numberOfBoards->setObjectName(QString::fromUtf8("spinBox_numberOfBoards"));
+        spinBox_numberOfBoards->setMinimumSize(QSize(42, 0));
+        spinBox_numberOfBoards->setMaximumSize(QSize(42, 16777215));
+        spinBox_numberOfBoards->setMinimum(1);
+        spinBox_numberOfBoards->setValue(1);
+
+        gridLayout_setupSettings->addWidget(spinBox_numberOfBoards, 12, 2, 2, 3);
+
+        horizontalSpacer_setupSettingsRight = new QSpacerItem(40, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_setupSettings->addItem(horizontalSpacer_setupSettingsRight, 6, 5, 14, 1);
+
+        label_numberOfBoards = new QLabel(page_freeFormSetup);
+        label_numberOfBoards->setObjectName(QString::fromUtf8("label_numberOfBoards"));
+
+        gridLayout_setupSettings->addWidget(label_numberOfBoards, 12, 1, 2, 1);
+
+        label_name = new QLabel(page_freeFormSetup);
+        label_name->setObjectName(QString::fromUtf8("label_name"));
+
+        gridLayout_setupSettings->addWidget(label_name, 7, 1, 1, 1);
+
+        label_symbol = new QLabel(page_freeFormSetup);
+        label_symbol->setObjectName(QString::fromUtf8("label_symbol"));
+
+        gridLayout_setupSettings->addWidget(label_symbol, 7, 2, 1, 1);
 
 
         gridLayout_3->addLayout(gridLayout_setupSettings, 7, 1, 1, 2);
@@ -493,23 +505,25 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButton_start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         label_ticTacToe->setText(QCoreApplication::translate("MainWindow", "Free Form Tic-Tac-Toe", nullptr));
-        label_freeFormTTT->setText(QCoreApplication::translate("MainWindow", "Free Form Tic-Tac-Toe", nullptr));
-        label_numberOfBoards->setText(QCoreApplication::translate("MainWindow", "Number of boards:", nullptr));
         label_x->setText(QCoreApplication::translate("MainWindow", "x", nullptr));
         label_inARowToWin->setText(QCoreApplication::translate("MainWindow", "In a row to win:", nullptr));
         label_sizeOfBoard->setText(QCoreApplication::translate("MainWindow", "Size of board:", nullptr));
         pushButton_makeAllBoardsLikeThis->setText(QCoreApplication::translate("MainWindow", "Sync to All", nullptr));
         label_editBoardNum->setText(QCoreApplication::translate("MainWindow", "Board 1 settings", nullptr));
         label_numberOfRounds->setText(QCoreApplication::translate("MainWindow", "Number of rounds:", nullptr));
+        label_numberOfPlayers->setText(QCoreApplication::translate("MainWindow", "Number of players:", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "<-", nullptr));
-        label_player1Symbol->setText(QCoreApplication::translate("MainWindow", "Player 1 symbol:", nullptr));
+        lineEdit_player1Name->setText(QCoreApplication::translate("MainWindow", "Player 1", nullptr));
         lineEdit_player1Symbol->setText(QCoreApplication::translate("MainWindow", "x", nullptr));
         lineEdit_player1Symbol->setPlaceholderText(QString());
-        label_player2Symbol->setText(QCoreApplication::translate("MainWindow", "Player 2 symbol:", nullptr));
+        lineEdit->setText(QCoreApplication::translate("MainWindow", "Player 2", nullptr));
         lineEdit_player2Symbol->setText(QCoreApplication::translate("MainWindow", "o", nullptr));
-        label_numberOfPlayers->setText(QCoreApplication::translate("MainWindow", "Number of players:", nullptr));
         pushButton_startGame->setText(QCoreApplication::translate("MainWindow", "Start Game", nullptr));
         label_gameSetup->setText(QCoreApplication::translate("MainWindow", "Game Setup", nullptr));
+        label_freeFormTTT->setText(QCoreApplication::translate("MainWindow", "Free Form Tic-Tac-Toe", nullptr));
+        label_numberOfBoards->setText(QCoreApplication::translate("MainWindow", "Number of boards:", nullptr));
+        label_name->setText(QCoreApplication::translate("MainWindow", "Name:", nullptr));
+        label_symbol->setText(QCoreApplication::translate("MainWindow", "Symbol:", nullptr));
     } // retranslateUi
 
 };

@@ -65,22 +65,29 @@ void MainWindow::addPlayer()
 
     // Create elements for new row.
 
-    QLabel* name =
-            new QLabel(tr("Player %1 symbol: ").arg(layout->count() + 1));
+    QLineEdit* nameBox =
+            new QLineEdit(tr("Player %1 symbol: ").arg(layout->count() + 1));
 
     // Suggest symbol for new player.
     char symbol = ('a' - 2 + count);
-    if (count == 1)
+    if (count == 0)
         symbol = 'x';
-    else if (symbol == 2)
+    else if (count == 1)
         symbol = 'o';
+    else if (count > 15)
+    {
+        symbol += 1;
+        if (count > 23)
+            symbol += 1;
+    }
     // TODO: maybe make player (dictionary or class) that has these
+    // TODO: honestly, this is sloppy, but fix depends on how projects turns out
 
     QLineEdit* symbolBox = new QLineEdit(tr("%1").arg(symbol));
     symbolBox->setFixedWidth(42);  // TODO: make dynamic
 
     // Add new elements to new row.
-    newPlayer->addWidget(name);
+    newPlayer->addWidget(nameBox);
     newPlayer->addWidget(symbolBox);
     newPlayer->addSpacing(60);
 
@@ -100,13 +107,6 @@ void MainWindow::removePlayer()
 //  Handles user incrementing "Number of boards" spin button.
 void MainWindow::addBoard()
 {
-    // Get layout that holds layouts that hold board settings.
-    QVBoxLayout* layout =
-        qobject_cast<QVBoxLayout*>(ui->verticalLayout_boardsSettings);
-
-    // Make layout that holds board settings.
-    QGridLayout* innerLayout =
-        qobject_cast<QGridLayout*>(ui->verticalLayout_boardsSettings);
 
 }
 
