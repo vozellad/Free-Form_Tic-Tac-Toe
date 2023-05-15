@@ -21,5 +21,6 @@ void StartScreenWindow::on_pushButton_start_clicked()
     w->show();
 
     this->hide();
+
 }
 
