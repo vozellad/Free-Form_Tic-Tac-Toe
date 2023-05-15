@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>221</height>
+    <width>444</width>
+    <height>222</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Free Form Tic-Tac-Toe</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -140,8 +140,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
-     <height>29</height>
+     <width>444</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>

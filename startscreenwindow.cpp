@@ -14,13 +14,12 @@ StartScreenWindow::~StartScreenWindow()
     delete ui;
 }
 
-// Hide current window. Go to GameSetupWindow.
+// Go to next page
 void StartScreenWindow::on_pushButton_start_clicked()
 {
     GameSetupWindow *w = new GameSetupWindow(this);
     w->show();
 
     this->hide();
-
 }
 

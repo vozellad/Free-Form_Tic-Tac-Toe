@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>242</height>
+    <width>444</width>
+    <height>222</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GameSetupWindow</string>
+   <string>Free Form Tic-Tac-Toe</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -59,9 +59,9 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_appTitle">
+     <layout class="QHBoxLayout" name="horizontalLayout_title">
       <item>
-       <spacer name="horizontalSpacer_appTitleLeft">
+       <spacer name="horizontalSpacer_titleLeft">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -74,49 +74,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_appTitle">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Free Form Tic-Tac-Toe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_appTitleRight">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_windowTitle">
-      <item>
-       <spacer name="horizontalSpacer_windowTitleLeft">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_windowTitle">
+       <widget class="QLabel" name="label_title">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -128,7 +86,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_windowTitleRight">
+       <spacer name="horizontalSpacer_titleRight">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -184,7 +142,14 @@
        </spacer>
       </item>
       <item row="0" column="2">
-       <widget class="QSpinBox" name="spinBox_playerAmt"/>
+       <widget class="QSpinBox" name="spinBox_playerAmt">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>99</number>
+        </property>
+       </widget>
       </item>
       <item row="0" column="1">
        <widget class="QLabel" name="label_playerAmt">
@@ -201,7 +166,14 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QSpinBox" name="spinBox_boardAmt"/>
+       <widget class="QSpinBox" name="spinBox_boardAmt">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>1</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

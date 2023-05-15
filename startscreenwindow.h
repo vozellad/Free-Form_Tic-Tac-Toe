@@ -17,7 +17,7 @@ public:
     ~StartScreenWindow();
 
 private slots:
-    // Hide current window. Go to GameSetupWindow.
+    // Go to next page
     void on_pushButton_start_clicked();
 
 private:

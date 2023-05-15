@@ -9,15 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gamesetup2window.cpp \
     main.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp
 
 HEADERS += \
+    gamesetup2window.h \
     startscreenwindow.h \
     gamesetupwindow.h
 
 FORMS += \
+    gamesetup2window.ui \
     startscreenwindow.ui \
     gamesetupwindow.ui \
     temp.ui
