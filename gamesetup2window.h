@@ -15,6 +15,10 @@ public:
     explicit GameSetup2Window(QWidget *parent = nullptr);
     ~GameSetup2Window();
 
+private slots:
+    // Go to previous page
+    void on_pushButton_back_clicked();
+
 private:
     Ui::GameSetup2Window *ui;
 };

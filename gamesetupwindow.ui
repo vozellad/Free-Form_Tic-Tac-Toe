@@ -143,6 +143,12 @@
       </item>
       <item row="0" column="2">
        <widget class="QSpinBox" name="spinBox_playerAmt">
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="prefix">
+         <string/>
+        </property>
         <property name="minimum">
          <number>1</number>
         </property>

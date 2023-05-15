@@ -1,5 +1,4 @@
 // TODO:
-//  remake game setup but split into windows so the setup is in steps
 //  GameSetupWindow2 has scrollable sections for player,board
 
 #include "startscreenwindow.h"
