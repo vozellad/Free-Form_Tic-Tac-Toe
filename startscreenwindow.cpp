@@ -14,7 +14,7 @@ StartScreenWindow::~StartScreenWindow()
     delete ui;
 }
 
-// Go to next page
+// Go to next window
 void StartScreenWindow::on_pushButton_start_clicked()
 {
     GameSetupWindow *w = new GameSetupWindow(this);

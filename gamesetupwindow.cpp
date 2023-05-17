@@ -1,7 +1,6 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
-#include "gamesetup2window.h"
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +14,7 @@ GameSetupWindow::~GameSetupWindow()
     delete ui;
 }
 
-// Go to previous page
+// Go to previous window
 void GameSetupWindow::on_pushButton_back_clicked()
 {
     StartScreenWindow *w = new StartScreenWindow(this);
@@ -23,13 +22,3 @@ void GameSetupWindow::on_pushButton_back_clicked()
 
     this->hide();
 }
-
-// Go to next page
-void GameSetupWindow::on_pushButton_next_clicked()
-{
-    GameSetup2Window *w = new GameSetup2Window(this);
-    w->show();
-
-    this->hide();
-}
-

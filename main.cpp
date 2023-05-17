@@ -1,6 +1,3 @@
-// TODO:
-//  GameSetupWindow2 has scrollable sections for player,board
-
 #include "startscreenwindow.h"
 
 #include <QApplication>

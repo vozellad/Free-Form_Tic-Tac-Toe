@@ -17,7 +17,7 @@ public:
     ~StartScreenWindow();
 
 private slots:
-    // Go to next page
+    // Go to next window
     void on_pushButton_start_clicked();
 
 private:
