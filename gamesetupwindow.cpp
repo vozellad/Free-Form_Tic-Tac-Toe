@@ -10,6 +10,7 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
     ui->setupUi(this);
 
     players = ui->gridLayout_players;
+    playerAmt = ui->label_playerAmtDisplay;
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -26,53 +27,58 @@ void GameSetupWindow::on_pushButton_back_clicked()
     this->hide();
 }
 
+// Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
 
 }
 
-void GameSetupWindow::on_spinBox_playerAmt_editingFinished()
+// TODO: explain dealing with spacer here
+void GameSetupWindow::on_toolButton_addPlayer_clicked()  // TODO: maybe just get the position in addPlayer instead
 {
-    static int playerAmt = 2;
-    int newPlayerAmt = ui->spinBox_playerAmt->value();
-    removeLastInLayout(players);
-
-    if (newPlayerAmt < playerAmt)
-        for (int i = 0; i < playerAmt - newPlayerAmt; i++)
-            removePlayer();
-    else
-        for (int i = 0; i < newPlayerAmt - playerAmt; i++)
-            addPlayer();
-
-    players->addItem(new QSpacerItem(5, 5), 1, 1);
-    playerAmt = newPlayerAmt;
-}
-
-
-void GameSetupWindow::addPlayer()
-{
+    // add player row
     players->addWidget(new QLineEdit("temp txt")); // TODO: add player num in name label
     players->addWidget(new QLabel("..."));
     players->addWidget(new QToolButton());  // TODO: add "..."
+
+    // increment player amount
+    setPlayerAmt(getPlayerAmt() + 1);
+
+    setButtonStates();
 }
 
-void GameSetupWindow::removePlayer()
+void GameSetupWindow::on_toolButton_removePlayer_clicked()
 {
-    for (int i = 0; i < 3; i++)
-    {
-        removeLastInLayout(players);
+    // remove player row
+    for (int i = 0; i < 3; i++) {
+        auto lastItem = players->takeAt(players->count() - 1);
+        delete lastItem->widget();
+        delete lastItem;
     }
 
-    int row = players->count() / players->columnCount();
-    if (row % 3 == 0) {
-        players->setRowMinimumHeight(row, 0);
-        players->setRowStretch(row, 0);
-    }
+    // decrement player amount
+    setPlayerAmt(getPlayerAmt() - 1);
+
+    setButtonStates();
 }
 
-void GameSetupWindow::removeLastInLayout(QLayout* layout)
+int GameSetupWindow::getPlayerAmt()
 {
-    auto lastItem = layout->takeAt(layout->count() - 1);
-    delete lastItem->widget();
-    delete lastItem;
+    return playerAmt->text().toInt();
+}
+
+void GameSetupWindow::setPlayerAmt(int newPlayerAmt)
+{
+    playerAmt->setText(QString::number(newPlayerAmt));
+}
+
+void GameSetupWindow::setButtonStates() // TODO: find better function name
+{
+    ui->toolButton_addPlayer->setEnabled(true);
+    ui->toolButton_removePlayer->setEnabled(true);
+
+    if (getPlayerAmt() <= 1)
+        ui->toolButton_removePlayer->setEnabled(false);
+    else if (99 <= getPlayerAmt())
+        ui->toolButton_addPlayer->setEnabled(false);
 }

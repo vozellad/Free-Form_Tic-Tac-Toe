@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
+#include <QLabel>
 
 namespace Ui {
 class GameSetupWindow;
@@ -20,19 +21,21 @@ private slots:
     // Go to previous window
     void on_pushButton_back_clicked();
 
+    // Go to next window
     void on_pushButton_startGame_clicked();
 
-    void on_spinBox_playerAmt_editingFinished();
+    void on_toolButton_addPlayer_clicked();
+
+    void on_toolButton_removePlayer_clicked();
 
 private:
     Ui::GameSetupWindow *ui;
     QGridLayout* players;
+    QLabel* playerAmt;
 
-    void addPlayer();
-
-    void removePlayer();
-
-    void removeLastInLayout(QLayout* layout);
+    int getPlayerAmt();
+    void setPlayerAmt(int newPlayerAmt);
+    void setButtonStates();
 };
 
 #endif // GAMESETUPWINDOW_H
