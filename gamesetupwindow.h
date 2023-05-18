@@ -2,6 +2,7 @@
 #define GAMESETUPWINDOW_H
 
 #include <QMainWindow>
+#include <QGridLayout>
 
 namespace Ui {
 class GameSetupWindow;
@@ -21,15 +22,17 @@ private slots:
 
     void on_pushButton_startGame_clicked();
 
-    void on_spinBox_playerAmt_valueChanged(int newPlayerAmt);
+    void on_spinBox_playerAmt_editingFinished();
 
 private:
     Ui::GameSetupWindow *ui;
-    //QGridLayout* playerSetup = ui->gridLayout_playerSetup;
+    QGridLayout* players;
 
     void addPlayer();
 
     void removePlayer();
+
+    void removeLastInLayout(QLayout* layout);
 };
 
 #endif // GAMESETUPWINDOW_H
