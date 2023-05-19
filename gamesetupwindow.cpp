@@ -2,6 +2,7 @@
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
 #include <QSpacerItem>
+#include <QLineEdit>
 
 // TODO: keep each side in horizontalLayout_body equal width
 
@@ -14,12 +15,7 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
     players = ui->gridLayout_players;
     playerAmt = ui->label_playerAmtDisplay;
 
-    // add second player (because UI doesn't add them in order)
-    players->addWidget(new QLineEdit("Player 2"));
-    players->addWidget(new QLabel("O"));
-    QToolButton* b = new QToolButton();
-    b->setText("...");
-    players->addWidget(b);
+    //addInitialPlayers();
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -68,13 +64,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     for (int i = 0; i < 3; i++)
         deleteLastGridItem(players);
 
-    // readjust grid size
-    // add temp item
-    QLabel* temp = new QLabel();
-    temp->setMaximumSize(0, 0);
-    players->addWidget(temp);
-    // delete temp item
-    deleteLastGridItem(players);
+    //reAdjustGridSize(players);  // TODO: delete line later if don't use
 
     setButtonStates();
 }
@@ -100,9 +90,39 @@ void GameSetupWindow::setButtonStates() // TODO: find better function name
         ui->toolButton_addPlayer->setEnabled(false);
 }
 
-void GameSetupWindow::deleteLastGridItem(QLayout* layout)
+void GameSetupWindow::deleteLastGridItem(QGridLayout* l)
 {
-    QLayoutItem* lastItem = layout->takeAt(layout->count() - 1);
+    QLayoutItem* lastItem = l->takeAt(l->count() - 1);
     delete lastItem->widget();
     delete lastItem;
+}
+
+// because UI doesn't add them in order
+void GameSetupWindow::addInitialPlayers()
+{
+    /*
+    // add first player
+    players->addWidget(new QLineEdit("Player 1"), 0, 0);
+    players->addWidget(new QLabel("X"), 0, 1);
+    QToolButton* b1 = new QToolButton();
+    b1->setText("...");
+    players->addWidget(b1, 0, 2);
+    */
+
+    // add second player
+    players->addWidget(new QLineEdit("Player 2"));
+    players->addWidget(new QLabel("O"));
+    QToolButton* b2 = new QToolButton();
+    b2->setText("...");
+    players->addWidget(b2);
+}
+
+void GameSetupWindow::reAdjustGridSize(QGridLayout *l)  // TODO: delete later if don't use
+{
+    // add temp item
+    QLabel* temp = new QLabel();
+    temp->setMaximumSize(0, 0);
+    l->addWidget(temp);
+    // delete temp item
+    deleteLastGridItem(l);
 }

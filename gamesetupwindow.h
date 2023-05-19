@@ -36,7 +36,9 @@ private:
     int getPlayerAmt();
     void setPlayerAmt(int newPlayerAmt);
     void setButtonStates();
-    void deleteLastGridItem(QLayout* layout);
+    void deleteLastGridItem(QGridLayout* l);
+    void addInitialPlayers();
+    void reAdjustGridSize(QGridLayout* l);
 };
 
 #endif // GAMESETUPWINDOW_H
