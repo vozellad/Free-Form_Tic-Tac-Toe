@@ -36,6 +36,7 @@ private:
     int getPlayerAmt();
     void setPlayerAmt(int newPlayerAmt);
     void setButtonStates();
+    void deleteLastGridItem(QLayout* layout);
 };
 
 #endif // GAMESETUPWINDOW_H

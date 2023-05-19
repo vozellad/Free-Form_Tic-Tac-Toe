@@ -3,6 +3,8 @@
 #include "startscreenwindow.h"
 #include <QSpacerItem>
 
+// TODO: keep each side in horizontalLayout_body equal width
+
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
@@ -11,6 +13,13 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     players = ui->gridLayout_players;
     playerAmt = ui->label_playerAmtDisplay;
+
+    // add second player (because UI doesn't add them in order)
+    players->addWidget(new QLineEdit("Player 2"));
+    players->addWidget(new QLabel("O"));
+    QToolButton* b = new QToolButton();
+    b->setText("...");
+    players->addWidget(b);
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -34,30 +43,38 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 }
 
 // TODO: explain dealing with spacer here
-void GameSetupWindow::on_toolButton_addPlayer_clicked()  // TODO: maybe just get the position in addPlayer instead
+void GameSetupWindow::on_toolButton_addPlayer_clicked()
 {
-    // add player row
-    players->addWidget(new QLineEdit("temp txt")); // TODO: add player num in name label
-    players->addWidget(new QLabel("..."));
-    players->addWidget(new QToolButton());  // TODO: add "..."
-
     // increment player amount
     setPlayerAmt(getPlayerAmt() + 1);
+
+    // add player row
+    QString newNameStr = tr("Player %1").arg(getPlayerAmt());
+    players->addWidget(new QLineEdit(newNameStr));  // add name
+    players->addWidget(new QLabel());  // add symbol
+    QToolButton* b = new QToolButton();
+    b->setText("...");
+    players->addWidget(b);  // add symbol options
 
     setButtonStates();
 }
 
 void GameSetupWindow::on_toolButton_removePlayer_clicked()
 {
-    // remove player row
-    for (int i = 0; i < 3; i++) {
-        auto lastItem = players->takeAt(players->count() - 1);
-        delete lastItem->widget();
-        delete lastItem;
-    }
-
     // decrement player amount
     setPlayerAmt(getPlayerAmt() - 1);
+
+    // remove player row
+    for (int i = 0; i < 3; i++)
+        deleteLastGridItem(players);
+
+    // readjust grid size
+    // add temp item
+    QLabel* temp = new QLabel();
+    temp->setMaximumSize(0, 0);
+    players->addWidget(temp);
+    // delete temp item
+    deleteLastGridItem(players);
 
     setButtonStates();
 }
@@ -81,4 +98,11 @@ void GameSetupWindow::setButtonStates() // TODO: find better function name
         ui->toolButton_removePlayer->setEnabled(false);
     else if (99 <= getPlayerAmt())
         ui->toolButton_addPlayer->setEnabled(false);
+}
+
+void GameSetupWindow::deleteLastGridItem(QLayout* layout)
+{
+    QLayoutItem* lastItem = layout->takeAt(layout->count() - 1);
+    delete lastItem->widget();
+    delete lastItem;
 }
