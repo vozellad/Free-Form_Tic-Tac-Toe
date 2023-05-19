@@ -2,8 +2,7 @@
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
 #include <QSpacerItem>
-
-// TODO: keep each side in horizontalLayout_body equal width
+#include <QLineEdit>
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,13 +12,6 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     players = ui->gridLayout_players;
     playerAmt = ui->label_playerAmtDisplay;
-
-    // add second player (because UI doesn't add them in order)
-    players->addWidget(new QLineEdit("Player 2"));
-    players->addWidget(new QLabel("O"));
-    QToolButton* b = new QToolButton();
-    b->setText("...");
-    players->addWidget(b);
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -66,15 +58,9 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 
     // remove player row
     for (int i = 0; i < 3; i++)
-        deleteLastGridItem(players);
+        deleteLastGridItem(players);  // TODO: this might not need to be a function.
 
-    // readjust grid size
-    // add temp item
-    QLabel* temp = new QLabel();
-    temp->setMaximumSize(0, 0);
-    players->addWidget(temp);
-    // delete temp item
-    deleteLastGridItem(players);
+    reAdjustGridSize(players);
 
     setButtonStates();
 }
@@ -100,9 +86,16 @@ void GameSetupWindow::setButtonStates() // TODO: find better function name
         ui->toolButton_addPlayer->setEnabled(false);
 }
 
-void GameSetupWindow::deleteLastGridItem(QLayout* layout)
+void GameSetupWindow::deleteLastGridItem(QGridLayout* l)
 {
-    QLayoutItem* lastItem = layout->takeAt(layout->count() - 1);
+    QLayoutItem* lastItem = l->takeAt(l->count() - 1);
     delete lastItem->widget();
     delete lastItem;
+}
+
+void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
+{
+    int row = l->count() / l->columnCount();
+    l->setRowMinimumHeight(row, 0);
+    l->setRowStretch(row, 0);
 }
