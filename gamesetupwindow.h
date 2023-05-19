@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QLabel>
+#include <QFileDialog>
+#include <QSpacerItem>
+#include <QLineEdit>
 
 namespace Ui {
 class GameSetupWindow;
@@ -30,6 +33,7 @@ private slots:
 
 private:
     Ui::GameSetupWindow *ui;
+
     QGridLayout* players;
     QLabel* playerAmt;
 

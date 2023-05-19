@@ -1,10 +1,6 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
-#include <QSpacerItem>
-#include <QLineEdit>
-
-// TODO: keep each side in horizontalLayout_body equal width
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,8 +10,6 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     players = ui->gridLayout_players;
     playerAmt = ui->label_playerAmtDisplay;
-
-    //addInitialPlayers();
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -61,10 +55,10 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setPlayerAmt(getPlayerAmt() - 1);
 
     // remove player row
-    for (int i = 0; i < 3; i++)
-        deleteLastGridItem(players);
+    for (int i = 0; i < players->columnCount(); i++)
+        deleteLastGridItem(players);  // TODO: this might not need to be a function.
 
-    //reAdjustGridSize(players);  // TODO: delete line later if don't use
+    reAdjustGridSize(players);
 
     setButtonStates();
 }
@@ -97,32 +91,9 @@ void GameSetupWindow::deleteLastGridItem(QGridLayout* l)
     delete lastItem;
 }
 
-// because UI doesn't add them in order
-void GameSetupWindow::addInitialPlayers()
+void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
 {
-    /*
-    // add first player
-    players->addWidget(new QLineEdit("Player 1"), 0, 0);
-    players->addWidget(new QLabel("X"), 0, 1);
-    QToolButton* b1 = new QToolButton();
-    b1->setText("...");
-    players->addWidget(b1, 0, 2);
-    */
-
-    // add second player
-    players->addWidget(new QLineEdit("Player 2"));
-    players->addWidget(new QLabel("O"));
-    QToolButton* b2 = new QToolButton();
-    b2->setText("...");
-    players->addWidget(b2);
-}
-
-void GameSetupWindow::reAdjustGridSize(QGridLayout *l)  // TODO: delete later if don't use
-{
-    // add temp item
-    QLabel* temp = new QLabel();
-    temp->setMaximumSize(0, 0);
-    l->addWidget(temp);
-    // delete temp item
-    deleteLastGridItem(l);
+    int row = l->count() / l->columnCount();
+    l->setRowMinimumHeight(row, 0);
+    l->setRowStretch(row, 0);
 }

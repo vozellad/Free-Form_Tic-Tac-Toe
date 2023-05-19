@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>373</height>
+    <width>833</width>
+    <height>636</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -112,161 +112,172 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_body">
       <item>
-       <widget class="QScrollArea" name="scrollArea_playerSetup">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_players">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>368</width>
-           <height>235</height>
-          </rect>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_scrollAreaPlayerSetup">
-          <item row="0" column="2">
-           <widget class="QToolButton" name="toolButton_removePlayer">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>-</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_playerAmtPrompt">
-            <property name="text">
-             <string>Amount of players: </string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="4">
-           <layout class="QGridLayout" name="gridLayout_players">
-            <item row="0" column="1">
-             <widget class="QLabel" name="label_playerSymbol1">
-              <property name="text">
-               <string>X</string>
-              </property>
-             </widget>
+       <layout class="QGridLayout" name="gridLayout_playerSetup">
+        <item row="3" column="1" colspan="3">
+         <widget class="QLabel" name="label_playerSymbolPrompt">
+          <property name="text">
+           <string>Symbol</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_playerAmtDisplay">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>2</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_playerAmtPrompt">
+          <property name="text">
+           <string>Amount of players: </string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="4">
+         <widget class="QScrollArea" name="scrollArea_playerSetup">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_players">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>401</width>
+             <height>377</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_scrollAreaPlayerSetup">
+            <item row="3" column="0" colspan="4">
+             <layout class="QGridLayout" name="gridLayout_players">
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_playerSymbol1">
+                <property name="text">
+                 <string>X</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QToolButton" name="toolButton_playerSymbolChange1">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLineEdit" name="lineEdit_playerName1">
+                <property name="text">
+                 <string>Player 1</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="lineEdit_playerName2">
+                <property name="text">
+                 <string>Player 2</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_playerSymbol2">
+                <property name="text">
+                 <string>O</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QToolButton" name="toolButton_playerSymbolChange2">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="0" column="2">
-             <widget class="QToolButton" name="toolButton_playerSymbolChange1">
-              <property name="text">
-               <string>...</string>
+            <item row="4" column="0" colspan="4">
+             <spacer name="verticalSpacer_playerSetupBottom">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLineEdit" name="lineEdit_playerName1">
-              <property name="text">
-               <string>Player 1</string>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLineEdit" name="lineEdit_playerName2">
-              <property name="text">
-               <string>Player 2</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="label_playerSymbol2">
-              <property name="text">
-               <string>X</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QToolButton" name="toolButton_playerSymbolChange2">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
+             </spacer>
             </item>
            </layout>
-          </item>
-          <item row="0" column="3">
-           <widget class="QToolButton" name="toolButton_addPlayer">
-            <property name="text">
-             <string>+</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_playerNamePrompt">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="3">
-           <widget class="QLabel" name="label_playerSymbolPrompt">
-            <property name="text">
-             <string>Symbol</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_playerAmtDisplay">
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>2</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="4">
-           <spacer name="verticalSpacer_playerSetup">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>5</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="4" column="0" colspan="4">
-           <spacer name="verticalSpacer_playerSetupBottom">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </widget>
+          </widget>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_playerNamePrompt">
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QToolButton" name="toolButton_addPlayer">
+          <property name="text">
+           <string>+</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="toolButton_removePlayer">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <spacer name="verticalSpacer_playerSetup">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="1" colspan="3">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Change Player Symbol</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QScrollArea" name="scrollArea_boardSetup">
@@ -293,8 +304,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>196</width>
-           <height>235</height>
+           <width>402</width>
+           <height>496</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_boardSetup">
