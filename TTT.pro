@@ -10,14 +10,17 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    playersymboldialog.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp
 
 HEADERS += \
+    playersymboldialog.h \
     startscreenwindow.h \
     gamesetupwindow.h
 
 FORMS += \
+    playersymboldialog.ui \
     startscreenwindow.ui \
     gamesetupwindow.ui \
     temp.ui

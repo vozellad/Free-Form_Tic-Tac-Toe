@@ -1,8 +1,7 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
-#include <QSpacerItem>
-#include <QLineEdit>
+#include "playersymboldialog.h"
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +10,13 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
     ui->setupUi(this);
 
     players = ui->gridLayout_players;
-    playerAmt = ui->label_playerAmtDisplay;
+
+    connectSymbolChangeClicked(ui->toolButton_playerSymbolChange1,
+                               ui->lineEdit_playerName1->text(),
+                               ui->label_playerSymbol1);
+    connectSymbolChangeClicked(ui->toolButton_playerSymbolChange2,
+                               ui->lineEdit_playerName2->text(),
+                               ui->label_playerSymbol2);
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -34,19 +39,24 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
 }
 
-// TODO: explain dealing with spacer here
 void GameSetupWindow::on_toolButton_addPlayer_clicked()
 {
     // increment player amount
     setPlayerAmt(getPlayerAmt() + 1);
 
-    // add player row
+    // add name
     QString newNameStr = tr("Player %1").arg(getPlayerAmt());
-    players->addWidget(new QLineEdit(newNameStr));  // add name
-    players->addWidget(new QLabel());  // add symbol
+    players->addWidget(new QLineEdit(newNameStr));
+
+    // add symbol
+    QLabel* newSymbolLabel = new QLabel();
+    players->addWidget(newSymbolLabel);
+
+    // add symbol options
     QToolButton* b = new QToolButton();
     b->setText("...");
-    players->addWidget(b);  // add symbol options
+    connectSymbolChangeClicked(b, newNameStr, newSymbolLabel);
+    players->addWidget(b);
 
     setButtonStates();
 }
@@ -57,7 +67,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setPlayerAmt(getPlayerAmt() - 1);
 
     // remove player row
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < players->columnCount(); i++)
         deleteLastGridItem(players);  // TODO: this might not need to be a function.
 
     reAdjustGridSize(players);
@@ -65,14 +75,31 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setButtonStates();
 }
 
+void GameSetupWindow::symbolChangeClicked(QString name,
+                                          QLabel* symbolLabel)
+{
+    PlayerSymbolDialog *w = new PlayerSymbolDialog(name, this);
+    w->show();
+}
+
+void GameSetupWindow::connectSymbolChangeClicked(QToolButton* b,
+                                                 QString name,
+                                                 QLabel* symbolLabel)
+{
+    QObject::connect(b, &QToolButton::clicked, this,
+        [this, name, symbolLabel]() {
+            symbolChangeClicked(name, symbolLabel);
+        });
+}
+
 int GameSetupWindow::getPlayerAmt()
 {
-    return playerAmt->text().toInt();
+    return ui->label_playerAmtDisplay->text().toInt();
 }
 
 void GameSetupWindow::setPlayerAmt(int newPlayerAmt)
 {
-    playerAmt->setText(QString::number(newPlayerAmt));
+    ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
 void GameSetupWindow::setButtonStates() // TODO: find better function name

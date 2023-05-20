@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QLabel>
+#include <QFileDialog>
+#include <QSpacerItem>
+#include <QLineEdit>
 
 namespace Ui {
 class GameSetupWindow;
@@ -28,11 +31,16 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
+    void symbolChangeClicked(QString name, QLabel* symbolLabel);
+
+    void connectSymbolChangeClicked(QToolButton* b,
+                                    QString name,
+                                    QLabel* symbolLabel);
+
 private:
     Ui::GameSetupWindow *ui;
 
     QGridLayout* players;
-    QLabel* playerAmt;
 
     int getPlayerAmt();
     void setPlayerAmt(int newPlayerAmt);
