@@ -78,7 +78,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 void GameSetupWindow::symbolChangeClicked(QString name,
                                           QLabel* symbolLabel)
 {
-    PlayerSymbolDialog *w = new PlayerSymbolDialog(name, this);
+    PlayerSymbolDialog *w = new PlayerSymbolDialog(name, symbolLabel, this);
     w->show();
 }
 

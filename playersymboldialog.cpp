@@ -1,13 +1,17 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(QString name, QWidget *parent) :
+PlayerSymbolDialog::PlayerSymbolDialog(QString name,
+                                       QLabel* newSymbolLabel,
+                                       QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlayerSymbolDialog)
 {
     ui->setupUi(this);
 
     ui->label_title->setText(ui->label_title->text() + name);
+
+    symbolLabel = newSymbolLabel;
 }
 
 PlayerSymbolDialog::~PlayerSymbolDialog()
@@ -15,16 +19,30 @@ PlayerSymbolDialog::~PlayerSymbolDialog()
     delete ui;
 }
 
-void PlayerSymbolDialog::on_pushButton_clicked()
+void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 {
-    QString imgExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
+    QString imageExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
     QString filename =
-            QFileDialog::getOpenFileName(this, "Choose", imgExtOptions);
+            QFileDialog::getOpenFileName(this, "Choose", imageExtOptions);
 
-    QImage img;
-    if (QString::compare(filename, QString()) != 0 && img.load(filename)) {
-        //img = img.scaledToWidth(/*label width*/, Qt::SmoothTransformation);
-        // add image to label
+    if (QString::compare(filename, QString()) != 0)
+        image.load(filename);
+}
+
+void PlayerSymbolDialog::on_buttonBox_accepted()
+{
+    QString newText = ui->lineEdit_text->text();
+
+    // if text, apply text
+    if (ui->radioButton_text->isChecked() &&
+            QString::compare(newText, QString()) != 0) {
+        symbolLabel->setText(newText);
+
+    // if image, apply image
+    } else if (ui->radioButton_image->isChecked() && !image.isNull()) {
+        symbolLabel->setPixmap(QPixmap::fromImage(image.scaledToHeight(
+            symbolLabel->height(), Qt::SmoothTransformation)));
+        symbolLabel->show();
     }
 }
 
