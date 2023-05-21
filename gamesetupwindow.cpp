@@ -9,12 +9,10 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    players = ui->gridLayout_players;
+    ui->pushButton_backBalancer->setVisible(false);
 
-    connectSymbolChangeClicked(ui->label_playerSymbol1,
-                               ui->lineEdit_playerName1->text());
-    connectSymbolChangeClicked(ui->label_playerSymbol2,
-                               ui->lineEdit_playerName2->text());
+    players = ui->gridLayout_players;
+    addInitialPlayers();
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -48,7 +46,8 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
 
     // add symbol
     ClickableLabel* newSymbol = new ClickableLabel();
-    connectSymbolChangeClicked(newSymbol, newNameStr);
+    newSymbol->setText("...");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
     players->addWidget(newSymbol);
 
     setButtonStates();
@@ -68,17 +67,15 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setButtonStates();
 }
 
-void GameSetupWindow::symbolChangeClicked(ClickableLabel* symbol, QString name)
-{
-    PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
-    w->show();
-}
-
-void GameSetupWindow::connectSymbolChangeClicked(ClickableLabel* symbol,
+void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
                                                  QString name)
 {
     QObject::connect(symbol, &ClickableLabel::clicked, this,
-        [this, name, symbol]() { symbolChangeClicked(symbol, name); });
+        [this, name, symbol]()
+    {
+        PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
+        w->show();
+    });
 }
 
 int GameSetupWindow::getPlayerAmt()
@@ -114,4 +111,23 @@ void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
     int row = l->count() / l->columnCount();
     l->setRowMinimumHeight(row, 0);
     l->setRowStretch(row, 0);
+}
+
+void GameSetupWindow::addInitialPlayers()
+{
+    QString newNameStr = "Player 1";
+    players->addWidget(new QLineEdit(newNameStr), 0, 0);
+
+    ClickableLabel* newSymbol = new ClickableLabel();
+    newSymbol->setText("X");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol, 0, 1);
+
+    newNameStr = "Player 2";
+    players->addWidget(new QLineEdit(newNameStr), 1, 0);
+
+    newSymbol = new ClickableLabel();
+    newSymbol->setText("O");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol, 1, 1);
 }

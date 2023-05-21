@@ -31,9 +31,7 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
-    void symbolChangeClicked(ClickableLabel* symbol, QString name);
-
-    void connectSymbolChangeClicked(ClickableLabel* symbol, QString name);
+    void on_playerSymbol_clicked(ClickableLabel* symbol, QString name);
 
 private:
     Ui::GameSetupWindow *ui;
@@ -45,8 +43,8 @@ private:
     void setPlayerAmt(int newPlayerAmt);
     void setButtonStates();
     void deleteLastGridItem(QGridLayout* l);
-    void addInitialPlayers();
     void reAdjustGridSize(QGridLayout* l);
+    void addInitialPlayers();
 };
 
 #endif // GAMESETUPWINDOW_H

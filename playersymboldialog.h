@@ -23,6 +23,8 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void on_lineEdit_text_textEdited();
+
 private:
     Ui::PlayerSymbolDialog *ui;
 

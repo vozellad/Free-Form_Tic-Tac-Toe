@@ -3,26 +3,22 @@
 
 #include <QLabel>
 #include <QWidget>
-#include <QtWidgets>  // TODO: which one to keep?
+#include <Qt>
 
-class ClickableLabel : public QLabel
-{
-    Q_OBJECT  // TODO: keep?
+class ClickableLabel : public QLabel {
+    Q_OBJECT
 
 public:
-    explicit ClickableLabel(QWidget* parent = nullptr) : QLabel(parent) {}
+    explicit ClickableLabel(QWidget* parent = Q_NULLPTR,
+                            Qt::WindowFlags f = Qt::WindowFlags());
+    ~ClickableLabel();
 
 signals:
     void clicked();
 
 protected:
-    void mousePressEvent(QMouseEvent* event) override
-    {
-        if (event->button() == Qt::LeftButton)
-        {
-            emit clicked();
-        }
-    }
+    void mousePressEvent(QMouseEvent* event);
+
 };
 
 #endif // CLICKABLELABEL_H

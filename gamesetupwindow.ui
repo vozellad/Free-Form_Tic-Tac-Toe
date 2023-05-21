@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_back">
+     <layout class="QHBoxLayout" name="horizontalLayout_top">
       <item>
        <widget class="QPushButton" name="pushButton_back">
         <property name="maximumSize">
@@ -37,24 +37,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_backRight">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_title">
-      <item>
-       <spacer name="horizontalSpacer_titleLeft">
+       <spacer name="horizontalSpacer_topLeft">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -79,7 +62,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_titleRight">
+       <spacer name="horizontalSpacer_topRight">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -90,6 +73,22 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_backBalancer">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>&lt;-</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -183,41 +182,12 @@
              <x>0</x>
              <y>0</y>
              <width>400</width>
-             <height>428</height>
+             <height>456</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_scrollAreaPlayerSetup">
             <item row="3" column="0" colspan="4">
-             <layout class="QGridLayout" name="gridLayout_players">
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="lineEdit_playerName2">
-                <property name="text">
-                 <string>Player 2</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLineEdit" name="lineEdit_playerName1">
-                <property name="text">
-                 <string>Player 1</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="ClickableLabel" name="label_playerSymbol1">
-                <property name="text">
-                 <string>X</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="ClickableLabel" name="label_playerSymbol2">
-                <property name="text">
-                 <string>O</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <layout class="QGridLayout" name="gridLayout_players"/>
             </item>
             <item row="4" column="0" colspan="4">
              <spacer name="verticalSpacer_playerSetupBottom">
@@ -287,7 +257,7 @@
            <x>0</x>
            <y>0</y>
            <width>401</width>
-           <height>498</height>
+           <height>526</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_boardSetup">
@@ -370,13 +340,6 @@
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
