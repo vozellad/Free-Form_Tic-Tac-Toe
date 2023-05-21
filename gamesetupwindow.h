@@ -31,11 +31,15 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
+    void symbolChangeClicked(QToolButton* symbol, QString name);
+
+    void connectSymbolChangeClicked(QToolButton* symbol, QString name);
+
 private:
     Ui::GameSetupWindow *ui;
 
     QGridLayout* players;
-    QLabel* playerAmt;
+    // TODO: might need to store playerSymbol images
 
     int getPlayerAmt();
     void setPlayerAmt(int newPlayerAmt);

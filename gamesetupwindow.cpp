@@ -1,6 +1,7 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 #include "startscreenwindow.h"
+#include "playersymboldialog.h"
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,7 +10,11 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
     ui->setupUi(this);
 
     players = ui->gridLayout_players;
-    playerAmt = ui->label_playerAmtDisplay;
+
+    connectSymbolChangeClicked(ui->toolButton_playerSymbol1,
+                               ui->lineEdit_playerName1->text());
+    connectSymbolChangeClicked(ui->toolButton_playerSymbol2,
+                               ui->lineEdit_playerName2->text());
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -32,19 +37,20 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
 }
 
-// TODO: explain dealing with spacer here
 void GameSetupWindow::on_toolButton_addPlayer_clicked()
 {
     // increment player amount
     setPlayerAmt(getPlayerAmt() + 1);
 
-    // add player row
+    // add name
     QString newNameStr = tr("Player %1").arg(getPlayerAmt());
-    players->addWidget(new QLineEdit(newNameStr));  // add name
-    players->addWidget(new QLabel());  // add symbol
-    QToolButton* b = new QToolButton();
-    b->setText("...");
-    players->addWidget(b);  // add symbol options
+    players->addWidget(new QLineEdit(newNameStr));
+
+    // add symbol
+    QToolButton* newSymbol = new QToolButton();
+    // change style to be like label here
+    connectSymbolChangeClicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol);
 
     setButtonStates();
 }
@@ -63,14 +69,27 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setButtonStates();
 }
 
+void GameSetupWindow::symbolChangeClicked(QToolButton* symbol, QString name)
+{
+    PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
+    w->show();
+}
+
+void GameSetupWindow::connectSymbolChangeClicked(QToolButton* symbol,
+                                                 QString name)
+{
+    QObject::connect(symbol, &QToolButton::clicked, this,
+        [this, name, symbol]() { symbolChangeClicked(symbol, name); });
+}
+
 int GameSetupWindow::getPlayerAmt()
 {
-    return playerAmt->text().toInt();
+    return ui->label_playerAmtDisplay->text().toInt();
 }
 
 void GameSetupWindow::setPlayerAmt(int newPlayerAmt)
 {
-    playerAmt->setText(QString::number(newPlayerAmt));
+    ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
 void GameSetupWindow::setButtonStates() // TODO: find better function name

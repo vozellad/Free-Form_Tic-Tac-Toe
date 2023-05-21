@@ -1,11 +1,18 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(QWidget *parent) :
+// TODO: when select textbox, select radio for it; when select imagebutton, select radio for it
+// OPTIONS??
+PlayerSymbolDialog::PlayerSymbolDialog(QToolButton* newSymbol,
+                                       QString name,
+                                       QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::PlayerSymbolDialog)
+    ui(new Ui::PlayerSymbolDialog),
+    symbol(newSymbol)
 {
     ui->setupUi(this);
+
+    ui->label_title->setText(ui->label_title->text() + name);
 }
 
 PlayerSymbolDialog::~PlayerSymbolDialog()
@@ -13,16 +20,29 @@ PlayerSymbolDialog::~PlayerSymbolDialog()
     delete ui;
 }
 
-void PlayerSymbolDialog::on_pushButton_clicked()
+void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 {
-    QString imgExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
+    QString imageExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
     QString filename =
-            QFileDialog::getOpenFileName(this, "Choose", imgExtOptions);
+            QFileDialog::getOpenFileName(this, "Choose", imageExtOptions);
+    image = QIcon(QPixmap::fromImage(QImage(filename)));
+}
 
-    QImage img;
-    if (QString::compare(filename, QString()) != 0 && img.load(filename)) {
-        //img = img.scaledToWidth(/*label width*/, Qt::SmoothTransformation);
-        // add image to label
+void PlayerSymbolDialog::on_buttonBox_accepted()
+{
+    QString newText = ui->lineEdit_text->text();
+
+    // if text, apply text
+    if (ui->radioButton_text->isChecked() &&
+            QString::compare(newText, QString()) != 0)
+        symbol->setText(newText);
+
+    // if image, apply image
+    else if (ui->radioButton_image->isChecked() && !image.isNull()) {
+        //symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
+        //    symbol->height(), Qt::SmoothTransformation)));
+        symbol->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        symbol->setIcon(image);
     }
 }
 
