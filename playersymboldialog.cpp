@@ -1,17 +1,18 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(QString name,
-                                       QLabel* newSymbolLabel,
+// TODO: when select textbox, select radio for it; when select imagebutton, select radio for it
+// OPTIONS??
+PlayerSymbolDialog::PlayerSymbolDialog(ClickableLabel* newSymbol,
+                                       QString name,
                                        QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::PlayerSymbolDialog)
+    ui(new Ui::PlayerSymbolDialog),
+    symbol(newSymbol)
 {
     ui->setupUi(this);
 
     ui->label_title->setText(ui->label_title->text() + name);
-
-    symbolLabel = newSymbolLabel;
 }
 
 PlayerSymbolDialog::~PlayerSymbolDialog()
@@ -35,14 +36,14 @@ void PlayerSymbolDialog::on_buttonBox_accepted()
 
     // if text, apply text
     if (ui->radioButton_text->isChecked() &&
-            QString::compare(newText, QString()) != 0) {
-        symbolLabel->setText(newText);
+            QString::compare(newText, QString()) != 0)
+        symbol->setText(newText);
 
     // if image, apply image
-    } else if (ui->radioButton_image->isChecked() && !image.isNull()) {
-        symbolLabel->setPixmap(QPixmap::fromImage(image.scaledToHeight(
-            symbolLabel->height(), Qt::SmoothTransformation)));
-        symbolLabel->show();
+    else if (ui->radioButton_image->isChecked() && !image.isNull()) {
+        symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
+            symbol->height(), Qt::SmoothTransformation)));
+        symbol->show();
     }
 }
 

@@ -155,8 +155,11 @@
         </item>
         <item row="2" column="1" colspan="3">
          <widget class="QLabel" name="label_playerSymbolPrompt">
+          <property name="toolTip">
+           <string>Click the symbol. Not this label.</string>
+          </property>
           <property name="text">
-           <string>Symbol</string>
+           <string>Symbol (Click to change)</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -186,17 +189,10 @@
            <layout class="QGridLayout" name="gridLayout_scrollAreaPlayerSetup">
             <item row="3" column="0" colspan="4">
              <layout class="QGridLayout" name="gridLayout_players">
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_playerSymbol1">
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="lineEdit_playerName2">
                 <property name="text">
-                 <string>X</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QToolButton" name="toolButton_playerSymbolChange1">
-                <property name="text">
-                 <string>...</string>
+                 <string>Player 2</string>
                 </property>
                </widget>
               </item>
@@ -207,24 +203,17 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="lineEdit_playerName2">
+              <item row="0" column="1">
+               <widget class="ClickableLabel" name="label_playerSymbol1">
                 <property name="text">
-                 <string>Player 2</string>
+                 <string>X</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="label_playerSymbol2">
+               <widget class="ClickableLabel" name="label_playerSymbol2">
                 <property name="text">
                  <string>O</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QToolButton" name="toolButton_playerSymbolChange2">
-                <property name="text">
-                 <string>...</string>
                 </property>
                </widget>
               </item>
@@ -381,6 +370,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

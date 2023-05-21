@@ -15,6 +15,7 @@ SOURCES += \
     gamesetupwindow.cpp
 
 HEADERS += \
+    clickablelabel.h \
     playersymboldialog.h \
     startscreenwindow.h \
     gamesetupwindow.h

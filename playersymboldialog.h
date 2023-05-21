@@ -2,7 +2,7 @@
 #define PLAYERSYMBOLDIALOG_H
 
 #include <QFileDialog>
-#include <QLabel>
+#include "clickablelabel.h"
 
 namespace Ui {
 class PlayerSymbolDialog;
@@ -13,8 +13,8 @@ class PlayerSymbolDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlayerSymbolDialog(QString name,
-                                QLabel* symbolLabel,
+    explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
+                                QString name,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
 
@@ -27,7 +27,7 @@ private:
     Ui::PlayerSymbolDialog *ui;
 
     QImage image;
-    QLabel* symbolLabel;
+    ClickableLabel* symbol;
 };
 
 #endif // PLAYERSYMBOLDIALOG_H

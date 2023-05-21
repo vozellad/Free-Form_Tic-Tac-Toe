@@ -11,12 +11,10 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     players = ui->gridLayout_players;
 
-    connectSymbolChangeClicked(ui->toolButton_playerSymbolChange1,
-                               ui->lineEdit_playerName1->text(),
-                               ui->label_playerSymbol1);
-    connectSymbolChangeClicked(ui->toolButton_playerSymbolChange2,
-                               ui->lineEdit_playerName2->text(),
-                               ui->label_playerSymbol2);
+    connectSymbolChangeClicked(ui->label_playerSymbol1,
+                               ui->lineEdit_playerName1->text());
+    connectSymbolChangeClicked(ui->label_playerSymbol2,
+                               ui->lineEdit_playerName2->text());
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -49,14 +47,9 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     players->addWidget(new QLineEdit(newNameStr));
 
     // add symbol
-    QLabel* newSymbolLabel = new QLabel();
-    players->addWidget(newSymbolLabel);
-
-    // add symbol options
-    QToolButton* b = new QToolButton();
-    b->setText("...");
-    connectSymbolChangeClicked(b, newNameStr, newSymbolLabel);
-    players->addWidget(b);
+    ClickableLabel* newSymbol = new ClickableLabel();
+    connectSymbolChangeClicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol);
 
     setButtonStates();
 }
@@ -75,21 +68,17 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setButtonStates();
 }
 
-void GameSetupWindow::symbolChangeClicked(QString name,
-                                          QLabel* symbolLabel)
+void GameSetupWindow::symbolChangeClicked(ClickableLabel* symbol, QString name)
 {
-    PlayerSymbolDialog *w = new PlayerSymbolDialog(name, symbolLabel, this);
+    PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
     w->show();
 }
 
-void GameSetupWindow::connectSymbolChangeClicked(QToolButton* b,
-                                                 QString name,
-                                                 QLabel* symbolLabel)
+void GameSetupWindow::connectSymbolChangeClicked(ClickableLabel* symbol,
+                                                 QString name)
 {
-    QObject::connect(b, &QToolButton::clicked, this,
-        [this, name, symbolLabel]() {
-            symbolChangeClicked(name, symbolLabel);
-        });
+    QObject::connect(symbol, &ClickableLabel::clicked, this,
+        [this, name, symbol]() { symbolChangeClicked(symbol, name); });
 }
 
 int GameSetupWindow::getPlayerAmt()

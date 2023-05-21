@@ -3,10 +3,10 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
-#include <QLabel>
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include "clickablelabel.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -31,16 +31,15 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
-    void symbolChangeClicked(QString name, QLabel* symbolLabel);
+    void symbolChangeClicked(ClickableLabel* symbol, QString name);
 
-    void connectSymbolChangeClicked(QToolButton* b,
-                                    QString name,
-                                    QLabel* symbolLabel);
+    void connectSymbolChangeClicked(ClickableLabel* symbol, QString name);
 
 private:
     Ui::GameSetupWindow *ui;
 
     QGridLayout* players;
+    // TODO: might need to store playerSymbol images
 
     int getPlayerAmt();
     void setPlayerAmt(int newPlayerAmt);
