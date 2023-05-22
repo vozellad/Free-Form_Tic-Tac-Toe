@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include "startscreenwindow.h"
+#include "playersymboldialog.h"
 #include "clickablelabel.h"
 
 namespace Ui {
@@ -50,7 +52,7 @@ private:
 
     void setPlayerAmt(int newPlayerAmt);
 
-    void setButtonStates();
+    void setAmtModBtnStates_players();
 
     void deleteLastItem(QLayout* l);
 
@@ -61,6 +63,8 @@ private:
     int getBoardAmt();
 
     void setBoardAmt(int newBoardAmt);
+
+    void setAmtModBtnStates_boards();
 };
 
 #endif // GAMESETUPWINDOW_H

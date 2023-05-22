@@ -10,6 +10,8 @@ CONFIG += c++11
 
 SOURCES += \
     clickablelabel.cpp \
+    gamesetupboards.cpp \
+    gamesetupplayers.cpp \
     main.cpp \
     playersymboldialog.cpp \
     startscreenwindow.cpp \
