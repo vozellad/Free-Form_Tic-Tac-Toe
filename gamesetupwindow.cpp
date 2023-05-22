@@ -3,18 +3,29 @@
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
 
+// TODO: split file into gamesetup, playersetup, and boardsetup
+
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
 {
     ui->setupUi(this);
 
-    players = ui->gridLayout_players;
+    // hides element that helps center the title
+    ui->pushButton_backBalancer->setVisible(false);
 
-    connectSymbolChangeClicked(ui->toolButton_playerSymbol1,
-                               ui->lineEdit_playerName1->text());
-    connectSymbolChangeClicked(ui->toolButton_playerSymbol2,
-                               ui->lineEdit_playerName2->text());
+    // make - + buttons square
+    QToolButton* buttonArray[4] = {
+        ui->toolButton_addPlayer,
+        ui->toolButton_removePlayer,
+        ui->toolButton_addBoard,
+        ui->toolButton_removeBoard
+    };
+    for (QToolButton* b : buttonArray)
+        b->setMinimumWidth(b->height());
+
+    players = ui->gridLayout_players;
+    addInitialPlayers();
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -47,9 +58,9 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     players->addWidget(new QLineEdit(newNameStr));
 
     // add symbol
-    QToolButton* newSymbol = new QToolButton();
-    // change style to be like label here
-    connectSymbolChangeClicked(newSymbol, newNameStr);
+    ClickableLabel* newSymbol = new ClickableLabel();
+    newSymbol->setText("...");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
     players->addWidget(newSymbol);
 
     setButtonStates();
@@ -69,17 +80,15 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setButtonStates();
 }
 
-void GameSetupWindow::symbolChangeClicked(QToolButton* symbol, QString name)
-{
-    PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
-    w->show();
-}
-
-void GameSetupWindow::connectSymbolChangeClicked(QToolButton* symbol,
+void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
                                                  QString name)
 {
-    QObject::connect(symbol, &QToolButton::clicked, this,
-        [this, name, symbol]() { symbolChangeClicked(symbol, name); });
+    QObject::connect(symbol, &ClickableLabel::clicked, this,
+        [this, name, symbol]()
+    {
+        PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
+        w->show();
+    });
 }
 
 int GameSetupWindow::getPlayerAmt()
@@ -115,4 +124,64 @@ void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
     int row = l->count() / l->columnCount();
     l->setRowMinimumHeight(row, 0);
     l->setRowStretch(row, 0);
+}
+
+void GameSetupWindow::addInitialPlayers()
+{
+    QString newNameStr = "Player 1";
+    players->addWidget(new QLineEdit(newNameStr), 0, 0);
+
+    ClickableLabel* newSymbol = new ClickableLabel();
+    newSymbol->setText("X");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol, 0, 1);
+
+    newNameStr = "Player 2";
+    players->addWidget(new QLineEdit(newNameStr), 1, 0);
+
+    newSymbol = new ClickableLabel();
+    newSymbol->setText("O");
+    on_playerSymbol_clicked(newSymbol, newNameStr);
+    players->addWidget(newSymbol, 1, 1);
+}
+
+void GameSetupWindow::on_toolButton_addBoard_clicked()
+{
+
+}
+
+
+void GameSetupWindow::on_toolButton_removeBoard_clicked()
+{
+
+}
+
+int GameSetupWindow::getBoardAmt()
+{
+    return ui->label_boardAmtDisplay->text().toInt();
+}
+
+void GameSetupWindow::setBoardAmt(int newBoardAmt)
+{
+    ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
+}
+
+QGridLayout* GameSetupWindow::getGridCopy(QGridLayout* grid)
+{
+    // Create a new grid layout and assign it as the layout for the target widget
+    QGridLayout* newGrid = new QGridLayout(this);
+
+    // Iterate through the rows and columns of the source grid layout
+    for (int row = 0; row < grid->rowCount(); row++) {
+        for (int col = 0; col < grid->columnCount(); col++) {
+            QLayoutItem* item = grid->itemAtPosition(row, col);
+            if (!item) continue;
+            QWidget* widget = item->widget();
+            if (!widget) continue;
+            QWidget* clonedWidget = widget->clone();
+            newGrid->addWidget(clonedWidget, row, col);
+        }
+    }
+
+    return newGrid;
 }

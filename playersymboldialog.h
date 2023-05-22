@@ -2,7 +2,7 @@
 #define PLAYERSYMBOLDIALOG_H
 
 #include <QFileDialog>
-#include <QToolButton>
+#include "clickablelabel.h"
 
 namespace Ui {
 class PlayerSymbolDialog;
@@ -13,7 +13,7 @@ class PlayerSymbolDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlayerSymbolDialog(QToolButton* newSymbol,
+    explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
                                 QString name,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
@@ -23,11 +23,13 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void on_lineEdit_text_textEdited();
+
 private:
     Ui::PlayerSymbolDialog *ui;
 
-    QIcon image;
-    QToolButton* symbol;
+    QImage image;
+    ClickableLabel* symbol;
 };
 
 #endif // PLAYERSYMBOLDIALOG_H

@@ -3,10 +3,10 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
-#include <QLabel>
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include "clickablelabel.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -31,9 +31,11 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
-    void symbolChangeClicked(QToolButton* symbol, QString name);
+    void on_playerSymbol_clicked(ClickableLabel* symbol, QString name);
 
-    void connectSymbolChangeClicked(QToolButton* symbol, QString name);
+    void on_toolButton_addBoard_clicked();
+
+    void on_toolButton_removeBoard_clicked();
 
 private:
     Ui::GameSetupWindow *ui;
@@ -42,11 +44,22 @@ private:
     // TODO: might need to store playerSymbol images
 
     int getPlayerAmt();
+
     void setPlayerAmt(int newPlayerAmt);
+
     void setButtonStates();
+
     void deleteLastGridItem(QGridLayout* l);
-    void addInitialPlayers();
+
     void reAdjustGridSize(QGridLayout* l);
+
+    void addInitialPlayers();
+
+    int getBoardAmt();
+
+    void setBoardAmt(int newBoardAmt);
+
+    QGridLayout* getGridCopy(QGridLayout* grid);
 };
 
 #endif // GAMESETUPWINDOW_H

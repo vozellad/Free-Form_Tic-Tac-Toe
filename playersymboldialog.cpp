@@ -1,9 +1,7 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-// TODO: when select textbox, select radio for it; when select imagebutton, select radio for it
-// OPTIONS??
-PlayerSymbolDialog::PlayerSymbolDialog(QToolButton* newSymbol,
+PlayerSymbolDialog::PlayerSymbolDialog(ClickableLabel* newSymbol,
                                        QString name,
                                        QWidget *parent) :
     QDialog(parent),
@@ -13,6 +11,8 @@ PlayerSymbolDialog::PlayerSymbolDialog(QToolButton* newSymbol,
     ui->setupUi(this);
 
     ui->label_title->setText(ui->label_title->text() + name);
+
+    ui->radioButton_text->setChecked(true);
 }
 
 PlayerSymbolDialog::~PlayerSymbolDialog()
@@ -25,7 +25,13 @@ void PlayerSymbolDialog::on_pushButton_getImage_clicked()
     QString imageExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
     QString filename =
             QFileDialog::getOpenFileName(this, "Choose", imageExtOptions);
-    image = QIcon(QPixmap::fromImage(QImage(filename)));
+
+    if (QString::compare(filename, QString()) != 0) {
+        image.load(filename);
+
+        ui->radioButton_text->setChecked(false);
+        ui->radioButton_image->setChecked(true);
+    }
 }
 
 void PlayerSymbolDialog::on_buttonBox_accepted()
@@ -38,11 +44,14 @@ void PlayerSymbolDialog::on_buttonBox_accepted()
         symbol->setText(newText);
 
     // if image, apply image
-    else if (ui->radioButton_image->isChecked() && !image.isNull()) {
-        //symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
-        //    symbol->height(), Qt::SmoothTransformation)));
-        symbol->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        symbol->setIcon(image);
-    }
+    else if (!image.isNull())
+        symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
+            symbol->height(), Qt::SmoothTransformation)));
+}
+
+void PlayerSymbolDialog::on_lineEdit_text_textEdited()
+{
+    ui->radioButton_text->setChecked(true);
+    ui->radioButton_image->setChecked(false);
 }
 
