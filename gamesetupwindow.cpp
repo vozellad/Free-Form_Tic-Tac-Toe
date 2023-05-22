@@ -75,7 +75,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 
     // remove player row
     for (int i = 0; i < players->columnCount(); i++)
-        deleteLastGridItem(players);  // TODO: this might not need to be a function.
+        deleteLastItem(players);
 
     reAdjustGridSize(players);
 
@@ -124,7 +124,7 @@ void GameSetupWindow::setButtonStates() // TODO: find better function name  // T
         ui->toolButton_addBoard->setEnabled(false);
 }
 
-void GameSetupWindow::deleteLastGridItem(QGridLayout* l)
+void GameSetupWindow::deleteLastItem(QLayout* l)
 {
     QLayoutItem* lastItem = l->takeAt(l->count() - 1);
     delete lastItem->widget();
@@ -210,7 +210,21 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
 
 void GameSetupWindow::on_toolButton_removeBoard_clicked()
 {
+    // decrement board amount
+    setBoardAmt(getBoardAmt() - 1);
 
+    // delete board
+    QLayoutItem* board = boards->takeAt(boards->count() - 1);
+    while (QLayoutItem* item = board->layout()->takeAt(0))
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    // delete HLine
+    deleteLastItem(boards);
+
+    setButtonStates();
 }
 
 int GameSetupWindow::getBoardAmt()

@@ -52,7 +52,7 @@ private:
 
     void setButtonStates();
 
-    void deleteLastGridItem(QGridLayout* l);
+    void deleteLastItem(QLayout* l);
 
     void reAdjustGridSize(QGridLayout* l);
 
