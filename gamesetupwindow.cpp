@@ -147,9 +147,11 @@ void GameSetupWindow::addInitialPlayers()
 
 void GameSetupWindow::on_toolButton_addBoard_clicked()
 {
-
+    QLayout* layout = ui->gridLayout_board1->layout();
+    QGridLayout* grid = qobject_cast<QGridLayout*>(layout);
+    QGridLayout* newGrid = getGridCopy(grid);
+    ui->verticalLayout_boardSetup->addLayout(newGrid);
 }
-
 
 void GameSetupWindow::on_toolButton_removeBoard_clicked()
 {
@@ -166,20 +168,14 @@ void GameSetupWindow::setBoardAmt(int newBoardAmt)
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }
 
-QGridLayout* GameSetupWindow::getGridCopy(QGridLayout* grid)
+QGridLayout* GameSetupWindow::getGridCopy(QGridLayout* grid)  // TODO: QGridLayout* or QGridLayout
 {
-    // Create a new grid layout and assign it as the layout for the target widget
-    QGridLayout* newGrid = new QGridLayout(this);
+    QGridLayout* newGrid = new QGridLayout();
 
-    // Iterate through the rows and columns of the source grid layout
     for (int row = 0; row < grid->rowCount(); row++) {
         for (int col = 0; col < grid->columnCount(); col++) {
-            QLayoutItem* item = grid->itemAtPosition(row, col);
-            if (!item) continue;
-            QWidget* widget = item->widget();
-            if (!widget) continue;
-            QWidget* clonedWidget = widget->clone();
-            newGrid->addWidget(clonedWidget, row, col);
+            QWidget* w = grid->itemAtPosition(row, col)->widget();
+            if (w) newGrid->addWidget(w, row, col);
         }
     }
 
