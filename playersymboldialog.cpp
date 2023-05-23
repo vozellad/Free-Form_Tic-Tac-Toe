@@ -22,7 +22,7 @@ PlayerSymbolDialog::~PlayerSymbolDialog()
 
 void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 {
-    QString filename =
+    const QString filename =
             QFileDialog::getOpenFileName(this, ui->label_explanation->text());
 
     if (QString::compare(filename, QString()) == 0)
@@ -41,7 +41,7 @@ void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 
 void PlayerSymbolDialog::on_buttonBox_accepted()
 {
-    QString newText = ui->lineEdit_text->text();
+    const QString newText = ui->lineEdit_text->text();
 
     // if text, apply text
     if (ui->radioButton_text->isChecked() &&
@@ -61,10 +61,10 @@ void PlayerSymbolDialog::on_lineEdit_text_textEdited()
     ui->radioButton_image->setChecked(false);
 }
 
-void PlayerSymbolDialog::markGetImageButton(QString appendedText)
+void PlayerSymbolDialog::markGetImageButton(const QString appendedText)
 {
     QPushButton* b = ui->pushButton_getImage;
-    static QString buttonText = b->text();
+    const static QString buttonText = b->text();
 
     appendedText == "" ? b->setText(buttonText) :
                          b->setText(buttonText + " (" + appendedText + ")");

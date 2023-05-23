@@ -34,7 +34,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 }
 
 void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
-                                                 QString name)
+                                              const QString name)
 {
     QObject::connect(symbol, &ClickableLabel::clicked, this,
         [this, name, symbol]()
@@ -44,12 +44,12 @@ void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
     });
 }
 
-int GameSetupWindow::getPlayerAmt()
+int GameSetupWindow::getPlayerAmt() const
 {
     return ui->label_playerAmtDisplay->text().toInt();
 }
 
-void GameSetupWindow::setPlayerAmt(int newPlayerAmt)
+void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }

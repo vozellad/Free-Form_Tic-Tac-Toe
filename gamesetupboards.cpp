@@ -71,7 +71,7 @@ void GameSetupWindow::on_toolButton_removeBoard_clicked()
     setAmtModBtnStates_boards();
 }
 
-int GameSetupWindow::getBoardAmt()
+int GameSetupWindow::getBoardAmt() const
 {
     return ui->label_boardAmtDisplay->text().toInt();
 }

@@ -33,7 +33,7 @@ private slots:
 
     void on_toolButton_removePlayer_clicked();
 
-    void on_playerSymbol_clicked(ClickableLabel* symbol, QString name);
+    void on_playerSymbol_clicked(ClickableLabel* symbol, const QString name);
 
     void on_toolButton_addBoard_clicked();
 
@@ -46,9 +46,9 @@ private:
 
     QVBoxLayout* boards;
 
-    int getPlayerAmt();
+    int getPlayerAmt() const;
 
-    void setPlayerAmt(int newPlayerAmt);
+    void setPlayerAmt(const int newPlayerAmt);
 
     void setAmtModBtnStates_players();
 
@@ -58,7 +58,7 @@ private:
 
     void addInitialPlayers();
 
-    int getBoardAmt();
+    int getBoardAmt() const;
 
     void setBoardAmt(int newBoardAmt);
 

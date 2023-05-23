@@ -15,7 +15,7 @@ class PlayerSymbolDialog : public QDialog
 
 public:
     explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                QString name,
+                                const QString name,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
 
@@ -33,7 +33,7 @@ private:
 
     ClickableLabel* symbol;
 
-    void markGetImageButton(QString appendedText = "");
+    void markGetImageButton(const QString appendedText = "");
 };
 
 #endif // PLAYERSYMBOLDIALOG_H
