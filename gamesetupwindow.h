@@ -46,8 +46,6 @@ private:
 
     QVBoxLayout* boards;
 
-    // TODO: might need to store playerSymbol images
-
     int getPlayerAmt();
 
     void setPlayerAmt(int newPlayerAmt);

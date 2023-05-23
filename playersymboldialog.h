@@ -2,6 +2,7 @@
 #define PLAYERSYMBOLDIALOG_H
 
 #include <QFileDialog>
+#include <QImageReader>
 #include "clickablelabel.h"
 
 namespace Ui {
@@ -29,7 +30,10 @@ private:
     Ui::PlayerSymbolDialog *ui;
 
     QImage image;
+
     ClickableLabel* symbol;
+
+    void markGetImageButton(QString appendedText = "");
 };
 
 #endif // PLAYERSYMBOLDIALOG_H

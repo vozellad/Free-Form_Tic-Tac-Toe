@@ -22,11 +22,16 @@ PlayerSymbolDialog::~PlayerSymbolDialog()
 
 void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 {
-    QString imageExtOptions = "Images (*.png *.jpg *.jpeg *.bmp *.gif)";
     QString filename =
-            QFileDialog::getOpenFileName(this, "Choose", imageExtOptions);
+            QFileDialog::getOpenFileName(this, ui->label_explanation->text());
 
-    if (QString::compare(filename, QString()) != 0) {
+    if (QString::compare(filename, QString()) == 0)
+        markGetImageButton("No file");
+    else if (QImageReader::imageFormat(filename) == "")  // if not an image
+        markGetImageButton("Not an image");
+    else {
+        markGetImageButton("Image selected");
+
         image.load(filename);
 
         ui->radioButton_text->setChecked(false);
@@ -44,14 +49,24 @@ void PlayerSymbolDialog::on_buttonBox_accepted()
         symbol->setText(newText);
 
     // if image, apply image
-    else if (!image.isNull())
+    else if (!image.isNull()) {
         symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
             symbol->height(), Qt::SmoothTransformation)));
+    }
 }
 
 void PlayerSymbolDialog::on_lineEdit_text_textEdited()
 {
     ui->radioButton_text->setChecked(true);
     ui->radioButton_image->setChecked(false);
+}
+
+void PlayerSymbolDialog::markGetImageButton(QString appendedText)
+{
+    QPushButton* b = ui->pushButton_getImage;
+    static QString buttonText = b->text();
+
+    appendedText == "" ? b->setText(buttonText) :
+                         b->setText(buttonText + " (" + appendedText + ")");
 }
 

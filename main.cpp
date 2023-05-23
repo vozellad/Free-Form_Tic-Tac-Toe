@@ -13,3 +13,4 @@ int main(int argc, char *argv[])
 }
 
 // TODO: offer spanish and greek translations (tr)
+//      swtch from literal strings to QStrings
