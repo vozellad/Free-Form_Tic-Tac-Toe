@@ -26,8 +26,7 @@ HEADERS += \
 FORMS += \
     playersymboldialog.ui \
     startscreenwindow.ui \
-    gamesetupwindow.ui \
-    temp.ui
+    gamesetupwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
