@@ -40,7 +40,8 @@ private:
     ClickableLabel* symbol;
 
     // Write to text of Get Image button
-    // to let user know the state of retrieving image
+    // to let user know the state of retrieving image.
+    // No parameter resets the button text.
     void markGetImageButton(const QString appendedText = "");
 };
 

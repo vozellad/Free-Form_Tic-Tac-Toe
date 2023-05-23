@@ -1,3 +1,5 @@
+// https://wiki.qt.io/Clickable_QLabel
+
 #ifndef CLICKABLELABEL_H
 #define CLICKABLELABEL_H
 

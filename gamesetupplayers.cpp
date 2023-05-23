@@ -23,6 +23,10 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     setAmtModBtnStates_players();
 }
 
+// To remove the last player row, remove the last element a number of times
+// equal to the grid column width. The symbol and name of the last player gets
+// removed. The grid size must also be readjusted or else there will be an
+// empty space at the bottom.
 void GameSetupWindow::on_toolButton_removePlayer_clicked()
 {
     // decrement player amount
@@ -37,27 +41,33 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setAmtModBtnStates_players();
 }
 
+// Connect symbol label to a click listener that brings up symbol prompt window.
+// Function is a lambda function to pass variables.
 void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
                                               const QString name)
 {
     QObject::connect(symbol, &ClickableLabel::clicked, this,
-        [this, name, symbol]()
-    {
+        [this, name, symbol]() {
         PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
         w->show();
     });
 }
 
+// Get number represeting player amount in UI
 int GameSetupWindow::getPlayerAmt() const
 {
     return ui->label_playerAmtDisplay->text().toInt();
 }
 
+// Set number represeting player amount in UI
 void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
+// Keep player amount within range (1-99)
+// If not in range, turn off appropriate board amount modifier button -/+
+// to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_players()
 {
     ui->toolButton_addPlayer->setEnabled(true);
@@ -69,6 +79,11 @@ void GameSetupWindow::setAmtModBtnStates_players()
         ui->toolButton_addPlayer->setEnabled(false);
 }
 
+// Removing players is done by removing recent elements.
+// This makes sure the elements of the player are ordered correctly
+// to be correctly removed.
+// Similar widgets to on_toolButton_addPlayer_clicked(),
+// but with values and positional arguments specific to player 1 and 2.
 void GameSetupWindow::addInitialPlayers()
 {
     QString newNameStr = "Player 1";

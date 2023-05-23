@@ -65,8 +65,7 @@ void GameSetupWindow::on_toolButton_removeBoard_clicked()
 
     // delete board
     QLayoutItem* board = boards->takeAt(boards->count() - 1);
-    while (QLayoutItem* item = board->layout()->takeAt(0))
-    {
+    while (QLayoutItem* item = board->layout()->takeAt(0)) {
         delete item->widget();
         delete item;
     }

@@ -46,6 +46,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
 }
 
+// Delete last item and widget within item in given layout
 void GameSetupWindow::deleteLastItem(QLayout* l)
 {
     QLayoutItem* lastItem = l->takeAt(l->count() - 1);
@@ -53,6 +54,8 @@ void GameSetupWindow::deleteLastItem(QLayout* l)
     delete lastItem;
 }
 
+// Deleting from a grid doesn't reduce the grid size appropriately.
+// This makes sure it is.
 void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
 {
     int row = l->count() / l->columnCount();
