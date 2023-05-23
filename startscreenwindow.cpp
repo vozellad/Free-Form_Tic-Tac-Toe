@@ -1,6 +1,5 @@
 #include "startscreenwindow.h"
 #include "ui_startscreenwindow.h"
-#include "gamesetupwindow.h"
 
 StartScreenWindow::StartScreenWindow(QWidget *parent) :
     QMainWindow(parent),

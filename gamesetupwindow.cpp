@@ -1,9 +1,5 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
-#include "startscreenwindow.h"
-#include "playersymboldialog.h"
-
-// TODO: split file into gamesetup, playersetup, and boardsetup
 
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +22,8 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     players = ui->gridLayout_players;
     addInitialPlayers();
+
+    boards = ui->verticalLayout_boards;
 }
 
 GameSetupWindow::~GameSetupWindow()
@@ -48,136 +46,19 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
 }
 
-void GameSetupWindow::on_toolButton_addPlayer_clicked()
-{
-    // increment player amount
-    setPlayerAmt(getPlayerAmt() + 1);
-
-    // add name
-    QString newNameStr = tr("Player %1").arg(getPlayerAmt());
-    players->addWidget(new QLineEdit(newNameStr));
-
-    // add symbol
-    ClickableLabel* newSymbol = new ClickableLabel();
-    newSymbol->setText("...");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol);
-
-    setButtonStates();
-}
-
-void GameSetupWindow::on_toolButton_removePlayer_clicked()
-{
-    // decrement player amount
-    setPlayerAmt(getPlayerAmt() - 1);
-
-    // remove player row
-    for (int i = 0; i < players->columnCount(); i++)
-        deleteLastGridItem(players);  // TODO: this might not need to be a function.
-
-    reAdjustGridSize(players);
-
-    setButtonStates();
-}
-
-void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
-                                                 QString name)
-{
-    QObject::connect(symbol, &ClickableLabel::clicked, this,
-        [this, name, symbol]()
-    {
-        PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
-        w->show();
-    });
-}
-
-int GameSetupWindow::getPlayerAmt()
-{
-    return ui->label_playerAmtDisplay->text().toInt();
-}
-
-void GameSetupWindow::setPlayerAmt(int newPlayerAmt)
-{
-    ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
-}
-
-void GameSetupWindow::setButtonStates() // TODO: find better function name
-{
-    ui->toolButton_addPlayer->setEnabled(true);
-    ui->toolButton_removePlayer->setEnabled(true);
-
-    if (getPlayerAmt() <= 1)
-        ui->toolButton_removePlayer->setEnabled(false);
-    else if (99 <= getPlayerAmt())
-        ui->toolButton_addPlayer->setEnabled(false);
-}
-
-void GameSetupWindow::deleteLastGridItem(QGridLayout* l)
+// Delete last item and widget within item in given layout
+void GameSetupWindow::deleteLastItem(QLayout* l)
 {
     QLayoutItem* lastItem = l->takeAt(l->count() - 1);
     delete lastItem->widget();
     delete lastItem;
 }
 
+// Deleting from a grid doesn't reduce the grid size appropriately.
+// This makes sure it is.
 void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
 {
     int row = l->count() / l->columnCount();
     l->setRowMinimumHeight(row, 0);
     l->setRowStretch(row, 0);
-}
-
-void GameSetupWindow::addInitialPlayers()
-{
-    QString newNameStr = "Player 1";
-    players->addWidget(new QLineEdit(newNameStr), 0, 0);
-
-    ClickableLabel* newSymbol = new ClickableLabel();
-    newSymbol->setText("X");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 0, 1);
-
-    newNameStr = "Player 2";
-    players->addWidget(new QLineEdit(newNameStr), 1, 0);
-
-    newSymbol = new ClickableLabel();
-    newSymbol->setText("O");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 1, 1);
-}
-
-void GameSetupWindow::on_toolButton_addBoard_clicked()
-{
-    QLayout* layout = ui->gridLayout_board1->layout();
-    QGridLayout* grid = qobject_cast<QGridLayout*>(layout);
-    QGridLayout* newGrid = getGridCopy(grid);
-    ui->verticalLayout_boardSetup->addLayout(newGrid);
-}
-
-void GameSetupWindow::on_toolButton_removeBoard_clicked()
-{
-
-}
-
-int GameSetupWindow::getBoardAmt()
-{
-    return ui->label_boardAmtDisplay->text().toInt();
-}
-
-void GameSetupWindow::setBoardAmt(int newBoardAmt)
-{
-    ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
-}
-
-QGridLayout* GameSetupWindow::getGridCopy(QGridLayout* grid)  // TODO: QGridLayout* or QGridLayout
-{
-    QGridLayout* newGrid = new QGridLayout();
-
-    for (int row = 0; row < grid->rowCount(); row++) {
-        for (int col = 0; col < grid->columnCount(); col++) {
-            QWidget* w = grid->itemAtPosition(row, col)->widget();
-            if (w) newGrid->addWidget(w, row, col);
-        }
-    }
-
-    return newGrid;
 }
