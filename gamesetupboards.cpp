@@ -1,6 +1,10 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
+// Add new board to list of boards by duplicating the initial board in the
+// designer view programatically. It's done manually because Qt does not have
+// any methods for cloning widgets or layouts. Also adds a line to seperate it
+// from the previous board.
 void GameSetupWindow::on_toolButton_addBoard_clicked()
 {
     // increment board amount
@@ -52,6 +56,8 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
     setAmtModBtnStates_boards();
 }
 
+// Take last grid layout (the last board) from list of boards and delete it and
+// its contents. Also delete the line seperating it from its previous board.
 void GameSetupWindow::on_toolButton_removeBoard_clicked()
 {
     // decrement board amount
@@ -71,16 +77,21 @@ void GameSetupWindow::on_toolButton_removeBoard_clicked()
     setAmtModBtnStates_boards();
 }
 
+// Get number represeting board amount in UI
 int GameSetupWindow::getBoardAmt() const
 {
     return ui->label_boardAmtDisplay->text().toInt();
 }
 
+// Set number representing board amount in UI
 void GameSetupWindow::setBoardAmt(int newBoardAmt)
 {
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }
 
+// Keep board amount within range (1-99)
+// If not in range, turn off appropriate board amount modifier button -/+
+// to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_boards()
 {
      ui->toolButton_addBoard->setEnabled(true);

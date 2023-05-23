@@ -35,7 +35,7 @@ private slots:
     // Remove last player row from list of players
     void on_toolButton_removePlayer_clicked();
 
-    // Prompts user for new symbol to replace clicked symbol
+    // Prompt user for new symbol to replace clicked symbol
     void on_playerSymbol_clicked(ClickableLabel* symbol, const QString name);
 
     // Add new board to list of boards
@@ -59,7 +59,7 @@ private:
     // Set current amount of players
     void setPlayerAmt(const int newPlayerAmt);
 
-    // Keeps player amount within range (1-99)
+    // Keep player amount within range (1-99)
     // If not in range, turn off appropriate player amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_players();
@@ -82,7 +82,7 @@ private:
     // Set current amount of boards
     void setBoardAmt(int newBoardAmt);
 
-    // Keeps board amount within range (1-99)
+    // Keep board amount within range (1-99)
     // If not in range, turn off appropriate board amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_boards();

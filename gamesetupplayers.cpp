@@ -1,6 +1,10 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
+// Add new player row to list of players (which is a grid) by adding name and
+// symbol widgets to grid layout. The grid already knows the column maximum,
+// so just adding the widgets with no positional values works. Each symbol gets
+// a click listener for a dialog window prompting the user for a new symbol.
 void GameSetupWindow::on_toolButton_addPlayer_clicked()
 {
     // increment player amount
