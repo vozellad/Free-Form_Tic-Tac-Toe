@@ -43,7 +43,13 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
+    QVector<Player> playersL;  // TODO: rename this
+    for (int i = 0; i < players->count(); i++) {
+        playersL.push_back(Player(players->itemAt(i)->text(), players->itemAt(++i)));
+    }
 
+    // PlayGameWindow *w = new PlayGameWindow(_, this);
+    // this->hide();
 }
 
 // Delete last item and widget within item in given layout
