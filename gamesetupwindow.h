@@ -7,11 +7,15 @@
 #include <QSpacerItem>
 #include <QLineEdit>
 #include <algorithm>
+#include <set>
+#include <QMetaType>
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
 #include "clickablelabel.h"
 #include "playgamewindow.h"
 #include "player.h"
+
+Q_DECLARE_METATYPE(QPixmap*)
 
 namespace Ui {
 class GameSetupWindow;

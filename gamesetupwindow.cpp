@@ -1,8 +1,6 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-#include <iostream>  // TODO: testing code
-
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
@@ -72,7 +70,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         QString symbolText = symbolLabel->text();
         const QPixmap* symbolImage = symbolLabel->pixmap();  // TODO: replace with updated function
 
-        if (!symbolText.isEmpty())
+        if (!symbolText.isEmpty() && symbolText != "...")
             playerSymbols.push_back(symbolText);
         else if (!symbolImage->isNull())
             playerSymbols.push_back(symbolImage);
@@ -84,10 +82,14 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     }
 
     // Test for non-unique name
-    for (QString name : playerNames) {
-        // OR do this
-        // std::set<int> set1(vec.begin(), vec.end());
-        //
+    for (QString name : playerNames) {  // TODO: arr.begin() or begin(arr)
+        //std::set<QString> nameTest_(playerNames.begin(), playerNames.end());
+        //if (nameTest_.size() < playerNames.size()) {
+            // dialog error window - duplicate name
+        //}
+        // TODO: if works, do for symbol - but why segfault
+
+        // TODO: or
 
         QVector<QString> nameTest = playerNames;
         // std::sort(std::begin(arr), std::end(arr));
@@ -115,9 +117,6 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
     // PlayGameWindow *w = new PlayGameWindow(players_, this);
     // this->hide();
-    std::cout << "h";  // TODO: testing code
-
-    std::any sus;
 }
 
 // Delete last item and widget within item in given layout
