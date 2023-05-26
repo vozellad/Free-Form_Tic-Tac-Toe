@@ -1,6 +1,8 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
+#include <iostream>  // TODO: testing code
+
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
@@ -43,7 +45,79 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
+    // List of players to pass to next window
+    QVector<Player> players_;  // TODO: fix name
 
+    // Used to test for dulplicates and emptiness
+    QVector<QString> playerNames;
+    QVector<QVariant> playerSymbols;
+
+    // Get names
+    for (int i = 0; i < players->count(); i += 2) {
+        QString name = qobject_cast<QLineEdit*>
+                (players->itemAt(i)->widget()) ->text();
+        playerNames.push_back(name);
+
+        // Test for empty name
+        if (name.isEmpty()) {
+            // dialog error window (make function that does this) - empty name
+            return;
+        }
+    }
+
+    // Get symbols
+    for (int i = 1; i < players->count(); i += 2) {
+        ClickableLabel* symbolLabel = qobject_cast<ClickableLabel*>
+                (players->itemAt(i)->widget());
+        QString symbolText = symbolLabel->text();
+        const QPixmap* symbolImage = symbolLabel->pixmap();  // TODO: replace with updated function
+
+        if (!symbolText.isEmpty())
+            playerSymbols.push_back(symbolText);
+        else if (!symbolImage->isNull())
+            playerSymbols.push_back(symbolImage);
+
+        // Test for empty symbol
+        else {
+            // dialog error window - empty symbol
+        }
+    }
+
+    // Test for non-unique name
+    for (QString name : playerNames) {
+        // OR do this
+        // std::set<int> set1(vec.begin(), vec.end());
+        //
+
+        QVector<QString> nameTest = playerNames;
+        // std::sort(std::begin(arr), std::end(arr));
+        std::sort(std::begin(nameTest), std::end(nameTest));
+        QString* pos = std::adjacent_find(std::begin(nameTest),
+                                         std::end(nameTest));
+        if (pos != std::end(nameTest)) {
+            // dialog error window - duplicate name
+        }
+    }
+
+    // Test for non-unique symbol
+    //for ()
+
+
+    // Make player list
+    for (int i = 0; i < players->rowCount(); i++)
+        if (playerSymbols[i].canConvert<QString>())
+            players_.push_back(Player(playerNames[i],
+                                      playerSymbols[i].value<QString>()));
+        else
+            players_.push_back(Player(playerNames[i],
+                                      playerSymbols[i].value<QPixmap*>()));
+
+
+    // PlayGameWindow *w = new PlayGameWindow(players_, this);
+    // this->hide();
+    std::cout << "h";  // TODO: testing code
+
+    std::any sus;
 }
 
 // Delete last item and widget within item in given layout

@@ -6,9 +6,12 @@
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include <algorithm>
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
 #include "clickablelabel.h"
+#include "playgamewindow.h"
+#include "player.h"
 
 namespace Ui {
 class GameSetupWindow;
