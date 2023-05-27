@@ -64,10 +64,9 @@ void PlayerSymbolDialog::on_buttonBox_accepted()
         symbol->setText(newText);
 
     // If image, apply image
-    else if (!image.isNull()) {
+    else if (!image.isNull())
         symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
-            symbol->height(), Qt::SmoothTransformation)));
-    }
+            symbol->height(), Qt::SmoothTransformation)))  // TODO: funcion in main.cpp - getImage(label), setImage(image, *label)
 }
 
 // When user modifies text symbol, check text radio button

@@ -43,7 +43,71 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
+    // List of players to pass to next window
+    QVector<Player> players_;  // TODO: fix name
 
+    // Used to test for dulplicates and emptiness
+    QVector<QString> playerNames;
+    QVector<QVariant> playerSymbols;
+
+    // Get names
+    for (int i = 0; i < players->count(); i += 2) {
+        QString name = qobject_cast<QLineEdit*>
+                (players->itemAt(i)->widget()) ->text();
+        playerNames.push_back(name);
+
+        // Test for empty name
+        if (name.isEmpty()) {
+            // dialog error window (make function that does this) - empty name
+            return;
+        }
+    }
+
+    // Get symbols
+    for (int i = 1; i < players->count(); i += 2) {
+        ClickableLabel* symbolLabel = qobject_cast<ClickableLabel*>
+                (players->itemAt(i)->widget());
+        QString symbolText = symbolLabel->text();
+        const QPixmap* symbolImage = symbolLabel->pixmap()->toImage();  // TODO: replace with updated function
+
+        if (!symbolText.isEmpty())
+            playerSymbols.push_back(symbolText);
+        else if (symbolImage->isNull())
+            playerSymbols.push_back(symbolImage);
+
+        // Test for empty symbol
+        else if (symbolText != "...") {
+            // dialog error window - empty symbol
+        }
+    }
+
+    // Test for non-unique name
+    // TODO: arr.begin() or begin(arr)
+    std::set<QString> nameTest(playerNames.begin(), playerNames.end());
+    if (nameTest.size() < playerNames.size()) {
+        // dialog error window - duplicate name
+    }
+
+    // Test for non-unique symbol
+    std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
+    if (symbolTest.size() < playerSymbols.size()) {
+        // dialog error window - duplicate name
+        ui->label_title->setText("duplicate found");
+    }
+
+    return;
+    // Make player list
+    for (int i = 0; i < players->rowCount(); i++)
+        if (playerSymbols[i].canConvert<QString>())
+            players_.push_back(Player(playerNames[i],
+                                      playerSymbols[i].value<QString>()));
+        else
+            players_.push_back(Player(playerNames[i],
+                                      playerSymbols[i].value<QPixmap*>()));
+
+
+    // PlayGameWindow *w = new PlayGameWindow(players_, this);
+    // this->hide();
 }
 
 // Delete last item and widget within item in given layout
