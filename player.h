@@ -2,14 +2,14 @@
 #define PLAYER_H
 
 #include <QMainWindow>
-#include <QVariant>
+#include <QImage>
 
 class Player
 {
 public:
     Player(const QString name, const QString symbol);
 
-    Player(const QString name, const QPixmap* symbol);
+    Player(const QString name, const QImage symbol);
 
     QString getName() const;
 

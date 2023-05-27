@@ -13,6 +13,7 @@ SOURCES += \
     clickablelabel.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
+    imageutils.cpp \
     main.cpp \
     player.cpp \
     playersymboldialog.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     board.h \
     clickablelabel.h \
+    imageutils.h \
     player.h \
     playersymboldialog.h \
     playgamewindow.h \

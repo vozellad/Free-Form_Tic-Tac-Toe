@@ -1,6 +1,8 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
+// TODO: how to name extended source files of class
+
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
@@ -43,6 +45,8 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
+    // TODO: Make another source file for this
+
     // List of players to pass to next window
     QVector<Player> players_;  // TODO: fix name
 
@@ -68,42 +72,32 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         ClickableLabel* symbolLabel = qobject_cast<ClickableLabel*>
                 (players->itemAt(i)->widget());
         QString symbolText = symbolLabel->text();
-        const QPixmap* symbolImage = symbolLabel->pixmap();  // TODO: replace with updated function
+        QImage* symbolImage = getImageFromLabel(symbolLabel);
 
-        if (!symbolText.isEmpty() && symbolText != "...")
+        if (!symbolText.isEmpty())
             playerSymbols.push_back(symbolText);
-        else if (!symbolImage->isNull())
+        else if (symbolImage->isNull())
             playerSymbols.push_back(symbolImage);
 
         // Test for empty symbol
-        else {
+        else if (symbolText.isEmpty() || symbolText != "...") {
             // dialog error window - empty symbol
         }
     }
 
     // Test for non-unique name
-    for (QString name : playerNames) {  // TODO: arr.begin() or begin(arr)
-        //std::set<QString> nameTest_(playerNames.begin(), playerNames.end());
-        //if (nameTest_.size() < playerNames.size()) {
-            // dialog error window - duplicate name
-        //}
-        // TODO: if works, do for symbol - but why segfault
-
-        // TODO: or
-
-        QVector<QString> nameTest = playerNames;
-        // std::sort(std::begin(arr), std::end(arr));
-        std::sort(std::begin(nameTest), std::end(nameTest));
-        QString* pos = std::adjacent_find(std::begin(nameTest),
-                                         std::end(nameTest));
-        if (pos != std::end(nameTest)) {
-            // dialog error window - duplicate name
-        }
+    // TODO: arr.begin() or begin(arr)
+    std::set<QString> nameTest(playerNames.begin(), playerNames.end());
+    if (nameTest.size() < playerNames.size()) {
+        // dialog error window - duplicate name
     }
 
     // Test for non-unique symbol
-    //for ()
-
+    std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
+    if (symbolTest.size() < playerSymbols.size()) {
+        // dialog error window - duplicate name
+        ui->label_title->setText("duplicate found");
+    }
 
     // Make player list
     for (int i = 0; i < players->rowCount(); i++)
@@ -112,7 +106,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
                                       playerSymbols[i].value<QString>()));
         else
             players_.push_back(Player(playerNames[i],
-                                      playerSymbols[i].value<QPixmap*>()));
+                                      playerSymbols[i].value<QImage*>()));
 
 
     // PlayGameWindow *w = new PlayGameWindow(players_, this);

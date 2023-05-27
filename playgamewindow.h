@@ -2,6 +2,7 @@
 #define PLAYGAMEWINDOW_H
 
 #include <QMainWindow>
+#include "imageutils.h"
 
 namespace Ui {
 class PlayGameWindow;
