@@ -2,9 +2,19 @@
 #define IMAGEUTILS_H
 
 #include <QImage>
+#include <QLabel>
+#include <QException>
 
-void setImageToLabel(QImage image, QLabel label);
+class ImageNotFoundException : public QException
+{
+public:
+    void raise() const override;
+    ImageNotFoundException* clone() const override;
+    const char* what() const noexcept override;
+};
 
-QImage getImageFromLabel(QLabel label);
+void setImageToLabel(QImage image, QLabel* label);
+
+QImage getImageFromLabel(QLabel* label);
 
 #endif // IMAGEUTILS_H

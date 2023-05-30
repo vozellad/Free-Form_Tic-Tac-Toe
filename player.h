@@ -3,23 +3,21 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include <QVariant>
 
 class Player
 {
 public:
-    Player(const QString name, const QString symbol);
-
-    Player(const QString name, const QImage symbol);
+    Player(const QString name, const QVariant symbol);
 
     QString getName() const;
 
-    QVariant getSymbol() const;
+    QObject getSymbol();
 
 private:
     const QString name;
 
     const QVariant symbol;
-    // https://doc.qt.io/qt-6/qvariant.html
 };
 
 #endif // PLAYER_H

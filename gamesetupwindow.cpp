@@ -54,8 +54,9 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     QVector<QString> playerNames;
     QVector<QVariant> playerSymbols;
 
-    // Get names
-    for (int i = 0; i < players->count(); i += 2) {
+    // Iterate through players
+    for (int i = 0; i < players->count(); i++) {
+        // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
         playerNames.push_back(name);
@@ -65,23 +66,20 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             // dialog error window (make function that does this) - empty name
             return;
         }
-    }
 
-    // Get symbols
-    for (int i = 1; i < players->count(); i += 2) {
-        ClickableLabel* symbolLabel = qobject_cast<ClickableLabel*>
-                (players->itemAt(i)->widget());
-        QString symbolText = symbolLabel->text();
-        QImage* symbolImage = getImageFromLabel(symbolLabel);
-
-        if (!symbolText.isEmpty())
-            playerSymbols.push_back(symbolText);
-        else if (symbolImage->isNull())
-            playerSymbols.push_back(symbolImage);
+        // Get symbol
+        QLabel* symbolLabel = qobject_cast<QLabel*>
+                (players->itemAt(++i)->widget());
+        try {  // if label has image (else it has text)
+            playerSymbols.push_back(getImageFromLabel(symbolLabel));
+        } catch (const ImageNotFoundException& e) {
+            playerSymbols.push_back(symbolLabel->text());
+        }
 
         // Test for empty symbol
-        else if (symbolText.isEmpty() || symbolText != "...") {
+        if (symbolLabel->text().isEmpty() || symbolLabel->text() != "...") {
             // dialog error window - empty symbol
+            return;
         }
     }
 
@@ -90,23 +88,19 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     std::set<QString> nameTest(playerNames.begin(), playerNames.end());
     if (nameTest.size() < playerNames.size()) {
         // dialog error window - duplicate name
+        return;
     }
 
     // Test for non-unique symbol
     std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
     if (symbolTest.size() < playerSymbols.size()) {
         // dialog error window - duplicate name
-        ui->label_title->setText("duplicate found");
+        return;
     }
 
-    // Make player list
+    // Make player lists
     for (int i = 0; i < players->rowCount(); i++)
-        if (playerSymbols[i].canConvert<QString>())
-            players_.push_back(Player(playerNames[i],
-                                      playerSymbols[i].value<QString>()));
-        else
-            players_.push_back(Player(playerNames[i],
-                                      playerSymbols[i].value<QImage*>()));
+        players_.push_back(Player(playerNames[i], playerSymbols[i]));
 
 
     // PlayGameWindow *w = new PlayGameWindow(players_, this);
