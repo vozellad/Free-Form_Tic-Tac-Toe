@@ -86,19 +86,15 @@ void GameSetupWindow::setAmtModBtnStates_players()
 // but with values and positional arguments specific to player 1 and 2.
 void GameSetupWindow::addInitialPlayers()
 {
-    QString newNameStr = "Player 1";
-    players->addWidget(new QLineEdit(newNameStr), 0, 0);
+    // Set grid column width
+    players->setColumnMinimumWidth(1, 0);
+    players->setColumnStretch(1, 0);
 
-    ClickableLabel* newSymbol = new ClickableLabel();
-    newSymbol->setText("X");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 0, 1);
+    // Add the 2 initial players
+    on_toolButton_addPlayer_clicked();
+    on_toolButton_addPlayer_clicked();
 
-    newNameStr = "Player 2";
-    players->addWidget(new QLineEdit(newNameStr), 1, 0);
-
-    newSymbol = new ClickableLabel();
-    newSymbol->setText("O");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 1, 1);
+    // Set starting symbols
+    qobject_cast<QLabel*>(players->itemAt(1)->widget())->setText("X");
+    qobject_cast<QLabel*>(players->itemAt(3)->widget())->setText("O");
 }

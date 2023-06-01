@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include <QSpinBox>
 #include <algorithm>
 #include <set>
 #include "startscreenwindow.h"
@@ -92,6 +93,8 @@ private:
     // If not in range, turn off appropriate board amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_boards();
+
+    QSpinBox* createBoardSpinBox();
 };
 
 #endif // GAMESETUPWINDOW_H

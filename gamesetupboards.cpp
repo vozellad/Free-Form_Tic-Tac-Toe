@@ -10,46 +10,34 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
     // increment board amount
     setBoardAmt(getBoardAmt() + 1);
 
-    QFrame* hLine = new QFrame;
-    hLine->setFrameShape(QFrame::HLine);
-    hLine->setFrameShadow(QFrame::Sunken);
-    boards->addWidget(hLine);
+    if (getBoardAmt() != 1) {
+        QFrame* hLine = new QFrame;
+        hLine->setFrameShape(QFrame::HLine);
+        hLine->setFrameShadow(QFrame::Sunken);
+        boards->addWidget(hLine);
+    }
 
     QGridLayout* newBoard = new QGridLayout();
 
     QString numStr = tr("<b>Board %1<b>").arg(getBoardAmt());
-    QLabel* num = new QLabel(numStr);
-    newBoard->addWidget(num);
+    newBoard->addWidget(new QLabel(numStr));
 
-    QSpacerItem* spacerRight = new QSpacerItem(5,
-                                               5,
-                                               QSizePolicy::Expanding,
-                                               QSizePolicy::Minimum);
+    QSpacerItem* spacerRight =
+            new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     newBoard->addItem(spacerRight, 0, 4);
 
     newBoard->addWidget(new QLabel("Size of board: "), 1, 0);
 
-    QSpinBox* sizeRow = new QSpinBox();
-    sizeRow->setValue(3);
-    sizeRow->setMaximumWidth(55);  // TODO: why different
-    sizeRow->setMinimum(1);
-    newBoard->addWidget(sizeRow);
+    newBoard->addWidget(createBoardSpinBox());
 
     newBoard->addWidget(new QLabel("x"));
 
-    QSpinBox* sizeCol = new QSpinBox();
-    sizeCol->setValue(3);
-    sizeCol->setMaximumWidth(55);
-    sizeCol->setMinimum(1);
-    newBoard->addWidget(sizeCol);
+    newBoard->addWidget(createBoardSpinBox());
 
     newBoard->addWidget(new QLabel("In a row to win: "), 2, 0);
 
-    QSpinBox* win = new QSpinBox();
-    win->setValue(3);
-    win->setMaximumWidth(55);
-    win->setMinimum(1);
-    newBoard->addWidget(win);
+    newBoard->addWidget(createBoardSpinBox());
 
     boards->addLayout(newBoard);
 
@@ -100,4 +88,14 @@ void GameSetupWindow::setAmtModBtnStates_boards()
          ui->toolButton_removeBoard->setEnabled(false);
      else if (99 <= getBoardAmt())
          ui->toolButton_addBoard->setEnabled(false);
+}
+
+QSpinBox* GameSetupWindow::createBoardSpinBox()
+{
+    QSpinBox* newSpinBox = new QSpinBox();
+    newSpinBox->setValue(3);
+    newSpinBox->setMaximumWidth(70);
+    newSpinBox->setMinimum(1);
+    newSpinBox->setAlignment(Qt::AlignRight);
+    return newSpinBox;
 }
