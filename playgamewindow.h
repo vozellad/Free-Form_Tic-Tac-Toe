@@ -23,9 +23,9 @@ public:
 private:
     Ui::PlayGameWindow *ui;
 
-    QVector<Player> players;
+    const QVector<Player> players;
 
-    QVector<Board> boards;
+    const QVector<Board> boards;
 };
 
 #endif // PLAYGAMEWINDOW_H

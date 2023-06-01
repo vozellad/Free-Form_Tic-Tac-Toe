@@ -13,8 +13,8 @@ public:
     const char* what() const noexcept override;
 };
 
-void setImageToLabel(QImage image, QLabel* label);
+void setImageToLabel(const QImage& image, QLabel* label);
 
-QImage getImageFromLabel(QLabel* label);
+QImage getImageFromLabel(const QLabel* label);
 
 #endif // IMAGEUTILS_H

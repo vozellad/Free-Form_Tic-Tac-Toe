@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     clickablelabel.cpp \
+    errordialog.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
     imageutils.cpp \
@@ -17,19 +18,23 @@ SOURCES += \
     playersymboldialog.cpp \
     playgamewindow.cpp \
     startscreenwindow.cpp \
-    gamesetupwindow.cpp
+    gamesetupwindow.cpp \
+    utils.cpp
 
 HEADERS += \
     board.h \
     clickablelabel.h \
+    errordialog.h \
     imageutils.h \
     player.h \
     playersymboldialog.h \
     playgamewindow.h \
     startscreenwindow.h \
-    gamesetupwindow.h
+    gamesetupwindow.h \
+    utils.h
 
 FORMS += \
+    errordialog.ui \
     playersymboldialog.ui \
     playgamewindow.ui \
     startscreenwindow.ui \

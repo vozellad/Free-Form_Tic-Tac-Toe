@@ -5,6 +5,7 @@
 #include <QImageReader>
 #include "clickablelabel.h"
 #include "imageutils.h"
+#include "errordialog.h"
 
 namespace Ui {
 class PlayerSymbolDialog;
@@ -16,7 +17,7 @@ class PlayerSymbolDialog : public QDialog
 
 public:
     explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                const QString name,
+                                const QString& name,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
 
@@ -43,7 +44,7 @@ private:
     // Write to text of Get Image button
     // to let user know the state of retrieving image.
     // No parameter resets the button text.
-    void markGetImageButton(const QString appendedText = "");
+    void markGetImageButton(const QString& appendedText = "");
 };
 
 #endif // PLAYERSYMBOLDIALOG_H

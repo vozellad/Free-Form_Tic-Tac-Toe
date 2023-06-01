@@ -46,10 +46,10 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
-    // TODO: Make another source file for this?
+    // TODO: how to or do I split this?
 
     // List of players to pass to next window
-    QVector<Player> players_;  // TODO: fix name
+    QVector<Player> playersList;
 
     // Used to test for dulplicates and emptiness
     QVector<QString> playerNames;
@@ -64,7 +64,8 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Test for empty name
         if (name.isEmpty()) {
-            // dialog error window (make function that does this) - empty name
+            ErrorDialog *w = new ErrorDialog("Names cannot be empty.", this);
+            w->show();
             return;
         }
 
@@ -77,34 +78,38 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             playerSymbols.push_back(symbolLabel->text());
         }
 
-        // Test for empty symbol
-        if (symbolLabel->text().isEmpty() && symbolLabel->text() != "...") {
-            // dialog error window - empty symbol
+        // Test for empty symbol  (Other code does not let this be empty)
+        if (symbolLabel->text() == "...") {
+            // Symbol as an image was tested earlier
+
+            ErrorDialog *w = new ErrorDialog("Symbols cannot be empty.", this);
+            w->show();
             return;
         }
     }
 
-    // Test for non-unique name  // TODO: function for these 2?
-    // TODO: arr.begin() or begin(arr)
-    std::set<QString> nameTest(playerNames.begin(), playerNames.end());
-    if (nameTest.size() < playerNames.size()) {
-        // dialog error window - duplicate name
+    // Test for non-unique name
+    const std::set<QString> nameTest(playerNames.begin(), playerNames.end());
+    if (static_cast<int>(nameTest.size()) < playerNames.size()) {
+        ErrorDialog *w = new ErrorDialog("Names must be unique.", this);
+        w->show();
         return;
     }
 
     // Test for non-unique symbol
-    std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
-    if (symbolTest.size() < playerSymbols.size()) {
-        // dialog error window - duplicate name
+    const std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
+    if (static_cast<int>(symbolTest.size()) < playerSymbols.size()) {
+        ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
+        w->show();
         return;
     }
 
     // Make player lists
     for (int i = 0; i < players->rowCount(); i++)
-        players_.push_back(Player{playerNames[i], playerSymbols[i]});
+        playersList.push_back(Player{playerNames[i], playerSymbols[i]});
 
     // List of boards to pass to next window
-    QVector<Board> boards_;  // TODO: fix name
+    QVector<Board> boardsList;
 
     // Iterate through boards
     for (int i = 0; i < boards->count(); i++) {
@@ -112,17 +117,17 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         QGridLayout* currBoard = qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
 
         // Get board spinbox numbers
-        int size_x = qobject_cast<QSpinBox*>
+        const int size_x = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(3)->widget()) ->value();
-        int size_y = qobject_cast<QSpinBox*>
+        const int size_y = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(5)->widget()) ->value();
-        int winCond = qobject_cast<QSpinBox*>
+        const int winCond = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(7)->widget()) ->value();
 
-        boards_.push_back(Board{size_x, size_y, winCond});
+        boardsList.push_back(Board{size_x, size_y, winCond});
     }
 
-    PlayGameWindow *w = new PlayGameWindow(players_, boards_, this);
+    PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);
     w->show();
     this->hide();
 }
