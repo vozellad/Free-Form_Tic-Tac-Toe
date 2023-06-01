@@ -6,16 +6,16 @@
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include <QSpinBox>
 #include <algorithm>
 #include <set>
-#include <QMetaType>
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
 #include "clickablelabel.h"
 #include "playgamewindow.h"
 #include "player.h"
-
-Q_DECLARE_METATYPE(QPixmap*)
+#include "board.h"
+#include "imageutils.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -93,6 +93,8 @@ private:
     // If not in range, turn off appropriate board amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_boards();
+
+    QSpinBox* createBoardSpinBox();
 };
 
 #endif // GAMESETUPWINDOW_H

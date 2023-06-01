@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QImageReader>
 #include "clickablelabel.h"
+#include "imageutils.h"
 
 namespace Ui {
 class PlayerSymbolDialog;
