@@ -46,7 +46,7 @@ void GameSetupWindow::on_pushButton_back_clicked()
 // Go to next window
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
-    // TODO: Make another source file for this
+    // TODO: Make another source file for this?
 
     // List of players to pass to next window
     QVector<Player> players_;  // TODO: fix name
@@ -84,7 +84,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         }
     }
 
-    // Test for non-unique name
+    // Test for non-unique name  // TODO: function for these 2?
     // TODO: arr.begin() or begin(arr)
     std::set<QString> nameTest(playerNames.begin(), playerNames.end());
     if (nameTest.size() < playerNames.size()) {
@@ -113,13 +113,13 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Get board spinbox numbers
         int size_x = qobject_cast<QSpinBox*>
-                (currBoard->itemAt(6)->widget()) ->value();
+                (currBoard->itemAt(3)->widget()) ->value();
         int size_y = qobject_cast<QSpinBox*>
-                (currBoard->itemAt(8)->widget()) ->value();
-        int win = qobject_cast<QSpinBox*>
-                (currBoard->itemAt(11)->widget()) ->value();
+                (currBoard->itemAt(5)->widget()) ->value();
+        int winCond = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(7)->widget()) ->value();
 
-        boards_.push_back(Board{size_x, size_y, win});
+        boards_.push_back(Board{size_x, size_y, winCond});
     }
 
     PlayGameWindow *w = new PlayGameWindow(players_, boards_, this);
