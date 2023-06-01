@@ -13,6 +13,7 @@
 #include "clickablelabel.h"
 #include "playgamewindow.h"
 #include "player.h"
+#include "board.h"
 #include "imageutils.h"
 
 namespace Ui {

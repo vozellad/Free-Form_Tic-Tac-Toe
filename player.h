@@ -2,21 +2,11 @@
 #define PLAYER_H
 
 #include <QMainWindow>
-#include <QImage>
 #include <QVariant>
 
-class Player
+struct Player  // TODO: what if make class then in constructor give error if symbol can't cast to QString or QImage?
 {
-public:
-    Player(const QString name, const QVariant symbol);
-
-    QString getName() const;
-
-    QObject getSymbol();
-
-private:
     const QString name;
-
     const QVariant symbol;
 };
 

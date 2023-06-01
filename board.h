@@ -2,10 +2,11 @@
 #define BOARD_H
 
 
-class Board
+struct Board
 {
-public:
-    Board();
+    const int boardSize_x;
+    const int boardSize_y;
+    const int boardWin;
 };
 
 #endif // BOARD_H

@@ -100,7 +100,26 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
     // Make player lists
     for (int i = 0; i < players->rowCount(); i++)
-        players_.push_back(Player(playerNames[i], playerSymbols[i]));
+        players_.push_back(Player{playerNames[i], playerSymbols[i]});
+
+    // List of boards to pass to next window
+    QVector<Board> boards_;  // TODO: fix name
+
+    // Iterate through boards
+    for (int i = 0; i < boards->count(); i++) {
+        // Get board
+        QLayout* currBoard = boards->itemAt(i)->layout();
+
+        // Get board spinbox numbers
+        int size_x = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(6)->widget()) ->value();
+        int size_y = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(8)->widget()) ->value();
+        int win = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(11)->widget()) ->value();
+
+        boards_.push_back(Board{size_x, size_y, win});
+    }  // TODO: check correct values in debugger
 
 
     // PlayGameWindow *w = new PlayGameWindow(players_, this);
