@@ -1,9 +1,13 @@
 #include "playgamewindow.h"
 #include "ui_playgamewindow.h"
 
-PlayGameWindow::PlayGameWindow(QWidget *parent) :
+PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
+                               const QVector<Board>& boards,
+                               QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::PlayGameWindow)
+    ui(new Ui::PlayGameWindow),
+    players(players),
+    boards(boards)
 {
     ui->setupUi(this);
 }

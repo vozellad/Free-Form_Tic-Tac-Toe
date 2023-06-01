@@ -77,7 +77,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         }
 
         // Test for empty symbol
-        if (symbolLabel->text().isEmpty() || symbolLabel->text() != "...") {
+        if (symbolLabel->text().isEmpty() && symbolLabel->text() != "...") {
             // dialog error window - empty symbol
             return;
         }
@@ -108,22 +108,22 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     // Iterate through boards
     for (int i = 0; i < boards->count(); i++) {
         // Get board
-        QLayout* currBoard = boards->itemAt(i)->layout();
+        QGridLayout* currBoard = qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
 
         // Get board spinbox numbers
         int size_x = qobject_cast<QSpinBox*>
-                (currBoard->itemAt(6)->widget()) ->value();
+                (currBoard->itemAt(2)->widget()) ->value();
         int size_y = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(8)->widget()) ->value();
         int win = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(11)->widget()) ->value();
 
         boards_.push_back(Board{size_x, size_y, win});
-    }  // TODO: check correct values in debugger
+    }
 
-
-    // PlayGameWindow *w = new PlayGameWindow(players_, this);
-    // this->hide();
+    PlayGameWindow *w = new PlayGameWindow(players_, boards_, this);
+    w->show();
+    this->hide();
 }
 
 // Delete last item and widget within item in given layout
