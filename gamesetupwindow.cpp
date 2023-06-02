@@ -144,7 +144,7 @@ void GameSetupWindow::deleteLastItem(QLayout* l)
 // This makes sure it is.
 void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
 {
-    int row = l->count() / l->columnCount();
+    int row = l->count() / l->columnCount() - 1;
     l->setRowMinimumHeight(row, 0);
     l->setRowStretch(row, 0);
 }

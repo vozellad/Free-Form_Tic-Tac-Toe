@@ -13,7 +13,6 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
     if (getBoardAmt() != 1) {
         QFrame* hLine = new QFrame;
         hLine->setFrameShape(QFrame::HLine);
-        hLine->setFrameShadow(QFrame::Sunken);
         boards->addWidget(hLine);
     }
 
