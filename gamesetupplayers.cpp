@@ -44,7 +44,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 // Connect symbol label to a click listener that brings up symbol prompt window.
 // Function is a lambda function to pass variables.
 void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
-                                              const QString name)
+                                              const QString& name)
 {
     QObject::connect(symbol, &ClickableLabel::clicked, this,
         [this, name, symbol]() {
@@ -60,7 +60,7 @@ int GameSetupWindow::getPlayerAmt() const
 }
 
 // Set number represeting player amount in UI
-void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
+void GameSetupWindow::setPlayerAmt(const int& newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }

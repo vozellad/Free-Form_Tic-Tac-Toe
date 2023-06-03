@@ -13,7 +13,6 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
     if (getBoardAmt() != 1) {
         QFrame* hLine = new QFrame;
         hLine->setFrameShape(QFrame::HLine);
-        hLine->setFrameShadow(QFrame::Sunken);
         boards->addWidget(hLine);
     }
 
@@ -71,7 +70,7 @@ int GameSetupWindow::getBoardAmt() const
 }
 
 // Set number representing board amount in UI
-void GameSetupWindow::setBoardAmt(int newBoardAmt)
+void GameSetupWindow::setBoardAmt(const int& newBoardAmt)
 {
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }

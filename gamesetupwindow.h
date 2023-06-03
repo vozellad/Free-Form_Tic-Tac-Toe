@@ -7,6 +7,7 @@
 #include <QSpacerItem>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QMessageBox>
 #include <algorithm>
 #include <set>
 #include "startscreenwindow.h"
@@ -16,6 +17,7 @@
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
+#include "errordialog.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -43,7 +45,7 @@ private slots:
     void on_toolButton_removePlayer_clicked();
 
     // Prompt user for new symbol to replace clicked symbol
-    void on_playerSymbol_clicked(ClickableLabel* symbol, const QString name);
+    void on_playerSymbol_clicked(ClickableLabel* symbol, const QString& name);
 
     // Add new board to list of boards
     void on_toolButton_addBoard_clicked();
@@ -64,7 +66,7 @@ private:
     int getPlayerAmt() const;
 
     // Set current amount of players
-    void setPlayerAmt(const int newPlayerAmt);
+    void setPlayerAmt(const int& newPlayerAmt);
 
     // Keep player amount within range (1-99)
     // If not in range, turn off appropriate player amount modifier button -/+
@@ -87,7 +89,7 @@ private:
     int getBoardAmt() const;
 
     // Set current amount of boards
-    void setBoardAmt(int newBoardAmt);
+    void setBoardAmt(const int& newBoardAmt);
 
     // Keep board amount within range (1-99)
     // If not in range, turn off appropriate board amount modifier button -/+

@@ -6,11 +6,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // Set style sheet
-    QFile styleSheetFile("./styleSheet.qss");
-    styleSheetFile.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(styleSheetFile.readAll());
-    a.setStyleSheet(styleSheet);
+    // Set style sheet  // TODO
+    //QFile styleSheetFile("./styleSheet.qss");
+    //styleSheetFile.open(QFile::ReadOnly);
+    //QString styleSheet = QLatin1String(styleSheetFile.readAll());
+    //a.setStyleSheet(styleSheet);
 
     StartScreenWindow w;
     w.show();

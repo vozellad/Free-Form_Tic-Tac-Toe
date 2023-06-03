@@ -103,6 +103,9 @@
         <bold>false</bold>
        </font>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -239,6 +242,9 @@
       </item>
       <item>
        <widget class="Line" name="line_bodyMiddle">
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -364,6 +370,9 @@
     </item>
     <item>
      <widget class="Line" name="line_bottom">
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>

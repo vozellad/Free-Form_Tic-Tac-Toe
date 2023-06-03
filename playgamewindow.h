@@ -2,9 +2,11 @@
 #define PLAYGAMEWINDOW_H
 
 #include <QMainWindow>
+#include <QGridLayout>
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
+#include "clickablelabel.h"
 
 namespace Ui {
 class PlayGameWindow;
@@ -23,9 +25,13 @@ public:
 private:
     Ui::PlayGameWindow *ui;
 
-    QVector<Player> players;
+    const QVector<Player>& players;
 
-    QVector<Board> boards;
+    const QVector<Board>& boards;
+
+    QGridLayout* table;
+
+    QGridLayout* createBoard(const Board& board);
 };
 
 #endif // PLAYGAMEWINDOW_H
