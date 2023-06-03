@@ -12,16 +12,6 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     ui->setupUi(this);
 
     table = ui->gridLayout_table;
-    // TODO: set up table function?
-
-    // Get table grid column width based on boards amount
-    int boardWidth = 1;
-    while (boardWidth * boardWidth <= boards.count())
-        boardWidth++;
-
-    // Set table grid column width
-    table->setColumnMinimumWidth(boardWidth, 0);
-    table->setColumnStretch(boardWidth, 0);
 
     // Add boards to table
     int i = 0, j = 0;  // addLayout() requires position args
@@ -40,7 +30,7 @@ PlayGameWindow::~PlayGameWindow()
 
 QGridLayout* PlayGameWindow::createBoard(const Board& board)
 {
-    QGridLayout* boardLayout = new QGridLayout(containerWidget);
+    QGridLayout* boardLayout = new QGridLayout();
 
     // Set grid column width
     boardLayout->setColumnMinimumWidth(board.sizeX-1, 0);
