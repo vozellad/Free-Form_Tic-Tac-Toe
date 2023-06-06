@@ -12,15 +12,9 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     ui->setupUi(this);
 
     table = ui->gridLayout_table;
+    table->setSpacing(42);
 
-    // Add boards to table
-    int i = 0, j = 0;  // addLayout() requires position args
-    for (Board b : boards) {
-        table->addLayout(createBoard(b), i, j);
-        j = (j + 1) % 3;
-        if (j == 0) i++;
-    }
-    //table->addLayout(createBoard(boards[0]), 0, 0);
+    addBoards();  // Add boards to table
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -28,20 +22,71 @@ PlayGameWindow::~PlayGameWindow()
     delete ui;
 }
 
+void PlayGameWindow::addBoards()
+{
+    // addLayout() requires position values
+    int row = 0, col = 0;
+
+    const int tableWidth = ((int)sqrt(boards.count()) + 1);
+
+    for (Board b : boards) {
+        table->addLayout(createBoard(b), row, col);
+
+        // Increment position values
+        col = (col + 1) % tableWidth;
+        if (col == 0)  row++;
+    }
+}
+
 QGridLayout* PlayGameWindow::createBoard(const Board& board)
 {
+    // TODO: do with QPallete instead?
+
     QGridLayout* boardLayout = new QGridLayout();
+    boardLayout->setSpacing(0);  // Connect lines
+
+    // Grid sizes including grid lines
+    const int gridHeight = board.sizeY * 2 - 1;
+    const int gridWidth = board.sizeX * 2 - 1;
 
     // Set grid column width
     boardLayout->setColumnMinimumWidth(board.sizeX-1, 0);
     boardLayout->setColumnStretch(board.sizeX-1, 0);
 
     // Add spaces for symbols
-    for (int i = 0; i < board.sizeX * board.sizeY; i++) {
-        ClickableLabel* temp = new ClickableLabel();
-        temp->setText("temp");
-        boardLayout->addWidget(temp);
+    for (int row = 0; row < gridHeight; row += 2)
+        for (int col = 0; col < gridWidth; col += 2) {
+            ClickableLabel* l = new ClickableLabel();
+            l->setAlignment(Qt::AlignCenter);
+            l->setText("temp");  // TODO: testing codes
+
+            QObject::connect(l, &ClickableLabel::clicked, this, [this]() {  // TODO
+                // insert symbol
+                // eval board
+            });
+
+            boardLayout->addWidget(l, row, col);
+        }
+
+    // Add lines
+    for (int row = 0; row < gridHeight; row += 2) {
+        for (int col = 1; col < gridWidth; col += 2) {
+            QFrame* vLine = new QFrame;
+            vLine->setFrameShape(QFrame::VLine);
+            vLine->setStyleSheet("background-color: white;");
+            boardLayout->addWidget(vLine, row, col);
+        }
+
+        // Don't add last hLine
+        if (row >= gridHeight - 1)  break;
+
+        QFrame* hLine = new QFrame;
+        hLine->setFrameShape(QFrame::HLine);
+        hLine->setStyleSheet("background-color: white;");
+        boardLayout->addWidget(hLine, row + 1, 0, 1, 0);
     }
 
     return boardLayout;
 }
+
+// TODO: connect labels to function that handles symbol insertion and win condition

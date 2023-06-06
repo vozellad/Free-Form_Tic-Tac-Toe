@@ -23,7 +23,6 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
 
     QSpacerItem* spacerRight =
             new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     newBoard->addItem(spacerRight, 0, 4);
 
     newBoard->addWidget(new QLabel("Size of board: "), 1, 0);

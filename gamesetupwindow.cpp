@@ -126,7 +126,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
                 (currBoard->itemAt(7)->widget()) ->value();
 
         // Verify winCond is possible
-        if (sizeX < winCond || sizeY < winCond) {
+        if (sizeX < winCond && sizeY < winCond) {
             QString e = "'In a row to win' number can't be more than grid size.";
             ErrorDialog *w = new ErrorDialog(e, this);
             w->show();
