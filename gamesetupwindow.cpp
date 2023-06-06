@@ -112,19 +112,28 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     QVector<Board> boardsList;
 
     // Iterate through boards
-    for (int i = 0; i < boards->count(); i++) {
+    for (int i = 0; i < boards->count(); i+=2) {  // +2 to skip hLines
         // Get board
-        QGridLayout* currBoard = qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
+        QGridLayout* currBoard =
+                qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
 
         // Get board spinbox numbers
-        const int size_x = qobject_cast<QSpinBox*>
+        const int sizeX = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(3)->widget()) ->value();
-        const int size_y = qobject_cast<QSpinBox*>
+        const int sizeY = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(5)->widget()) ->value();
         const int winCond = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(7)->widget()) ->value();
 
-        boardsList.push_back(Board{size_x, size_y, winCond});
+        // Verify winCond is possible
+        if (sizeX < winCond && sizeY < winCond) {
+            QString e = "'In a row to win' number can't be more than grid size.";
+            ErrorDialog *w = new ErrorDialog(e, this);
+            w->show();
+            return;
+        }
+
+        boardsList.push_back(Board{sizeX, sizeY, winCond});
     }
 
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);

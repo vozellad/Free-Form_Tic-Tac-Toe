@@ -18,7 +18,21 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-// TODO: offer spanish and greek translations (tr).
-//      swtch from literal strings to QStrings?
+/* TODO:
 
-// TODO: add docstrings at top of each file
+offer spanish and greek translations (tr).
+    swtch from literal strings to QStrings?
+
+add docstrings at top of each file
+
+make sure correct use of
+    setColumnMinimumWidth
+    setColumnStretch
+
+make window appear in center of screen
+
+custom widget for player and boards?
+
+class diagram
+
+*/

@@ -3,9 +3,13 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
+#include <cmath>
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
+#include "clickablelabel.h"
+
+// TODO: players on top. etc on bottom.
 
 namespace Ui {
 class PlayGameWindow;
@@ -29,6 +33,10 @@ private:
     const QVector<Board>& boards;
 
     QGridLayout* table;
+
+    QGridLayout* createBoard(const Board& board);
+
+    void addBoards();
 };
 
 #endif // PLAYGAMEWINDOW_H
