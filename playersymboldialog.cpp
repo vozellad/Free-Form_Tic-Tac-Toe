@@ -1,12 +1,14 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                       const QString& name,
+PlayerSymbolDialog::PlayerSymbolDialog(const QString& name,
+                                       ClickableLabel* newSymbol,
+                                       QLabel* symImgHolder,
                                        QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlayerSymbolDialog),
-    symbol(newSymbol)
+    symbol(newSymbol),
+    symImgHolder(symImgHolder)
 {
     ui->setupUi(this);
 
@@ -66,12 +68,18 @@ void PlayerSymbolDialog::on_buttonBox_accepted()
 
     // If text, apply text
     if (ui->radioButton_text->isChecked() &&
-            QString::compare(newText, QString()) != 0)
+            QString::compare(newText, QString()) != 0) {
         symbol->setText(newText);
 
+        symImgHolder->clear();
+    }
+
     // If image, apply image
-    else if (!image.isNull())
+    else if (!image.isNull()) {
         setImageToLabel(image, symbol);
+
+        symImgHolder->setPixmap(QPixmap::fromImage(image));
+    }
 }
 
 // When user modifies text symbol, check text radio button

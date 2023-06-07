@@ -17,4 +17,6 @@ void setImageToLabel(const QImage& image, QLabel* label);
 
 QImage getImageFromLabel(const QLabel* label);
 
+bool compareImages(const QImage& image1, const QImage& image2);
+
 #endif // IMAGEUTILS_H

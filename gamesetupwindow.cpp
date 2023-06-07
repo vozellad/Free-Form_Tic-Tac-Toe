@@ -56,7 +56,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     QVector<QVariant> playerSymbols;
 
     // Iterate through players
-    for (int i = 0; i < players->count(); i++) {
+    for (int i = 0; i < players->count(); i += 3) {
         // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
@@ -71,9 +71,11 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Get symbol
         QLabel* symbolLabel = qobject_cast<QLabel*>
-                (players->itemAt(++i)->widget());
+                (players->itemAt(i + 1)->widget());
+        QLabel* symImgHolder = qobject_cast<QLabel*>
+                (players->itemAt(i + 2)->widget());
         try {  // if label has image (else it has text)
-            playerSymbols.push_back(getImageFromLabel(symbolLabel));
+            playerSymbols.push_back(getImageFromLabel(symImgHolder));
         } catch (const ImageNotFoundException& e) {
             playerSymbols.push_back(symbolLabel->text());
         }
@@ -97,12 +99,21 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     }
 
     // Test for non-unique symbol
-    const std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
+    const std::set<QVariant> symbolTest(playerSymbols.begin(),
+                                        playerSymbols.end());
     if (static_cast<int>(symbolTest.size()) < playerSymbols.size()) {
         ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
         w->show();
         return;
     }
+
+    std::set<QVariant> symbolTest(playerSymbols.begin(),
+                                  playerSymbols.end());
+    qSort(symbolTest.begin(), symbolTest.end());
+    for (int i = 0; i < symbolTest.size() - 1; i++) {
+        if ()  https://stackoverflow.com/questions/46477764/check-stdvector-has-duplicates
+    }
+
 
     // Make player lists
     for (int i = 0; i < players->rowCount(); i++)
