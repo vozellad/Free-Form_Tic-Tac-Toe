@@ -28,15 +28,25 @@ public:
 private:
     Ui::PlayGameWindow *ui;
 
-    const QVector<Player>& players;
+    QVector<Player> players;
 
-    const QVector<Board>& boards;
+    QVector<Board> boards;
 
     QGridLayout* table;
 
-    QGridLayout* createBoard(const Board& board);
+    int currPlayerIndex = 0;
+
+    void addClickedBoardSpace(ClickableLabel* boardSpace,
+                              const QGridLayout* board);
 
     void addBoards();
+
+    QGridLayout* createBoard(const Board& board);
+
+    void insertPlayerSymbol(ClickableLabel* boardSpace);
+
+    void evalBoard(const QGridLayout* board);
+
 };
 
 #endif // PLAYGAMEWINDOW_H

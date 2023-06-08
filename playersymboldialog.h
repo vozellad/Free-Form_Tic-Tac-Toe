@@ -16,8 +16,9 @@ class PlayerSymbolDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                const QString& name,
+    explicit PlayerSymbolDialog(const QString& name,
+                                ClickableLabel* newSymbol,
+                                QLabel* symImgHolder,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
 
@@ -40,6 +41,8 @@ private:
 
     // Write new symbol to this element
     ClickableLabel* symbol;
+
+    QLabel* symImgHolder;
 
     // Write to text of Get Image button
     // to let user know the state of retrieving image.

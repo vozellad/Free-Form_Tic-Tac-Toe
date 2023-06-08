@@ -22,6 +22,20 @@ PlayGameWindow::~PlayGameWindow()
     delete ui;
 }
 
+void PlayGameWindow::addClickedBoardSpace(ClickableLabel* boardSpace,
+                                          const QGridLayout* board)
+{
+    QObject::connect(boardSpace, &ClickableLabel::clicked, this,
+        [this, boardSpace, board]() {
+            insertPlayerSymbol(boardSpace);
+            evalBoard(board);
+
+            // Cyclically iterate players
+            currPlayerIndex = (currPlayerIndex + 1) % players.count();
+        }
+    );
+}
+
 void PlayGameWindow::addBoards()
 {
     // addLayout() requires position values
@@ -58,7 +72,7 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
         for (int col = 0; col < gridWidth; col += 2) {
             ClickableLabel* l = new ClickableLabel();
             l->setAlignment(Qt::AlignCenter);
-            l->setText("temp");  // TODO: testing codes
+            addClickedBoardSpace(l, boardLayout);
             boardLayout->addWidget(l, row, col);
         }
 
@@ -67,7 +81,7 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
         for (int col = 1; col < gridWidth; col += 2) {
             QFrame* vLine = new QFrame;
             vLine->setFrameShape(QFrame::VLine);
-            vLine->setStyleSheet("background-color: white;");
+            vLine->setStyleSheet("background-color: white;");  // TODO: make it theme agnostic
             boardLayout->addWidget(vLine, row, col);
         }
 
@@ -76,11 +90,36 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
 
         QFrame* hLine = new QFrame;
         hLine->setFrameShape(QFrame::HLine);
-        hLine->setStyleSheet("background-color: white;");
+        hLine->setStyleSheet("background-color: white;");  // TODO: make it theme agnostic
         boardLayout->addWidget(hLine, row + 1, 0, 1, 0);
     }
 
     return boardLayout;
 }
 
-// TODO: connect labels to function that handles symbol insertion and win condition
+void PlayGameWindow::insertPlayerSymbol(ClickableLabel* boardSpace)
+{
+    // TODO: insert symbol in large, scalable size
+
+    // if space has text or image
+    if (!boardSpace->text().isEmpty() || boardSpace->pixmap() != nullptr)
+        return;
+
+    // Get QVariant symbol
+    QVariant symbol = players[currPlayerIndex].symbol;
+
+    // Insert symbol as text
+    boardSpace->setText(symbol.value<QString>());
+
+    // If no text, insert symbol as image
+    if (boardSpace->text().isEmpty())
+        setImageToLabel(symbol.value<QImage>(), boardSpace);
+}
+
+void PlayGameWindow::evalBoard(const QGridLayout* board)
+{
+    // check if currPlayer won
+    // if so, display win
+
+    // check if board is full (draw)
+}

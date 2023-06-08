@@ -10,6 +10,10 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     // increment player amount
     setPlayerAmt(getPlayerAmt() + 1);
 
+    // Add symbol label to keep original image
+    QLabel* symImgHolder = new QLabel();
+    symImgHolder->hide();
+
     // add name
     QString newNameStr = tr("Player %1").arg(getPlayerAmt());
     players->addWidget(new QLineEdit(newNameStr));
@@ -17,8 +21,10 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     // add symbol
     ClickableLabel* newSymbol = new ClickableLabel();
     newSymbol->setText("...");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
+    addClickedPlayerSymbol(newNameStr, newSymbol, symImgHolder);
     players->addWidget(newSymbol);
+
+    players->addWidget(symImgHolder);
 
     setAmtModBtnStates_players();
 }
@@ -43,14 +49,17 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 
 // Connect symbol label to a click listener that brings up symbol prompt window.
 // Function is a lambda function to pass variables.
-void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
-                                              const QString& name)
+void GameSetupWindow::addClickedPlayerSymbol(const QString& name,
+                                             ClickableLabel* symbol,
+                                             QLabel* symImgHolder)
 {
     QObject::connect(symbol, &ClickableLabel::clicked, this,
-        [this, name, symbol]() {
-        PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
-        w->show();
-    });
+        [this, name, symbol, symImgHolder]()  {
+            PlayerSymbolDialog *w = new PlayerSymbolDialog(
+                        name, symbol, symImgHolder, this);
+            w->show();
+        }
+    );
 }
 
 // Get number represeting player amount in UI
@@ -86,9 +95,11 @@ void GameSetupWindow::setAmtModBtnStates_players()
 // but with values and positional arguments specific to player 1 and 2.
 void GameSetupWindow::addInitialPlayers()
 {
+    const int width = 3;
+
     // Set grid column width
-    players->setColumnMinimumWidth(1, 0);
-    players->setColumnStretch(1, 0);
+    players->setColumnMinimumWidth(width - 1, 0);
+    players->setColumnStretch(width - 1, 0);
 
     // Add the 2 initial players
     on_toolButton_addPlayer_clicked();
@@ -96,5 +107,5 @@ void GameSetupWindow::addInitialPlayers()
 
     // Set starting symbols
     qobject_cast<QLabel*>(players->itemAt(1)->widget())->setText("X");
-    qobject_cast<QLabel*>(players->itemAt(3)->widget())->setText("O");
+    qobject_cast<QLabel*>(players->itemAt(1 + width)->widget())->setText("O");
 }

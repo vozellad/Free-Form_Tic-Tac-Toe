@@ -44,9 +44,6 @@ private slots:
     // Remove last player row from list of players
     void on_toolButton_removePlayer_clicked();
 
-    // Prompt user for new symbol to replace clicked symbol
-    void on_playerSymbol_clicked(ClickableLabel* symbol, const QString& name);
-
     // Add new board to list of boards
     void on_toolButton_addBoard_clicked();
 
@@ -61,6 +58,11 @@ private:
 
     // List of boards
     QVBoxLayout* boards;
+
+    // Prompt user for new symbol to replace clicked symbol
+    void addClickedPlayerSymbol(const QString& name,
+                                ClickableLabel* symbol,
+                                QLabel* symImgHolder);
 
     // Get current amount of players
     int getPlayerAmt() const;

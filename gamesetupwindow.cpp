@@ -56,7 +56,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     QVector<QVariant> playerSymbols;
 
     // Iterate through players
-    for (int i = 0; i < players->count(); i++) {
+    for (int i = 0; i < players->count(); i += 3) {
         // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
@@ -71,9 +71,11 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Get symbol
         QLabel* symbolLabel = qobject_cast<QLabel*>
-                (players->itemAt(++i)->widget());
+                (players->itemAt(i + 1)->widget());
+        QLabel* symImgHolder = qobject_cast<QLabel*>
+                (players->itemAt(i + 2)->widget());
         try {  // if label has image (else it has text)
-            playerSymbols.push_back(getImageFromLabel(symbolLabel));
+            playerSymbols.push_back(getImageFromLabel(symImgHolder));
         } catch (const ImageNotFoundException& e) {
             playerSymbols.push_back(symbolLabel->text());
         }
@@ -97,12 +99,32 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     }
 
     // Test for non-unique symbol
-    const std::set<QVariant> symbolTest(playerSymbols.begin(), playerSymbols.end());
-    if (static_cast<int>(symbolTest.size()) < playerSymbols.size()) {
-        ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
-        w->show();
-        return;
+    QVector<QVariant> symbolTest(playerSymbols);
+    std::sort(symbolTest.begin(), symbolTest.end());
+    // Adjacent compare
+    for (int i = 0; i < symbolTest.size() - 1; i++) {
+        // Get symbols to compare
+        QVariant sym1 = symbolTest[i];
+        QVariant sym2 = symbolTest[i + 1];
+
+        // Check if same datatype
+        if (sym1.userType() != sym2.userType())  continue;
+
+        // Get comparison condition (depending on if they're string or image)
+        bool duplicateFound =
+                (sym1.userType() == QMetaType::QString &&
+                 sym1.value<QString>() == sym2.value<QString>()) ||
+                (sym1.userType() == QMetaType::QImage &&
+                 compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
+
+        // If comparing text and both texts are the same, display error
+        if (duplicateFound) {
+            ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
+            w->show();
+            return;
+        }
     }
+
 
     // Make player lists
     for (int i = 0; i < players->rowCount(); i++)
