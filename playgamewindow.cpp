@@ -15,33 +15,11 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     table->setSpacing(42);
 
     addBoards();  // Add boards to table
-
-    //connect(this, &PlayGameWindow::resized,
-    //        this, &PlayGameWindow::updateSymbolSizes);
 }
 
 PlayGameWindow::~PlayGameWindow()
 {
     delete ui;
-}
-
-void PlayGameWindow::resizeEvent(QResizeEvent *event)
-{
-    QMainWindow::resizeEvent(event);
-    emit resized();
-}
-
-void PlayGameWindow::updateSymbolSizes()
-{
-    return;
-    for (int i = 0; i < table->count(); i++)
-        for (int j = 0; j < table[i].count(); j += 2) {
-            try {  // if label has image (else it has text)
-                //getImageFromLabel();
-            } catch (const ImageNotFoundException& e) {
-                //symbolLabel->text();
-            }
-        }
 }
 
 void PlayGameWindow::addClickedBoardSpace(SymbolLabel* boardSpace,

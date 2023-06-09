@@ -105,12 +105,12 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Get comparison condition
         bool duplicateFound =
-            // Compare as string
-            (sym1.userType() == QMetaType::QString &&
-            sym1.value<QString>() == sym2.value<QString>()) ||
-            // Compare as image
-            (sym1.userType() == QMetaType::QImage &&
-            compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
+                // Compare as string
+                (sym1.userType() == QMetaType::QString &&
+                sym1.value<QString>() == sym2.value<QString>()) ||
+                // Compare as image
+                (sym1.userType() == QMetaType::QImage &&
+                compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
 
         // If comparing text and both texts are the same, display error
         if (duplicateFound) {

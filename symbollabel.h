@@ -21,11 +21,17 @@ public:
 signals:
     void clicked();
 
+    void resized();
+
 protected:
     void mousePressEvent(QMouseEvent* event);
 
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     QImage unscaledImage;
+
+    void updateSize();
 
 };
 

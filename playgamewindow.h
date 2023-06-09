@@ -25,9 +25,6 @@ public:
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
-signals:
-    void resized();
-
 private:
     Ui::PlayGameWindow *ui;
 
@@ -38,10 +35,6 @@ private:
     QGridLayout* table;
 
     int currPlayerIndex = 0;
-
-    void resizeEvent(QResizeEvent *event) override;
-
-    void updateSymbolSizes();
 
     void addClickedBoardSpace(SymbolLabel* boardSpace,
                               const QGridLayout* board);

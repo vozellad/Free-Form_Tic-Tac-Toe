@@ -3,7 +3,8 @@
 SymbolLabel::SymbolLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent)
 {
-
+    connect(this, &SymbolLabel::resized,
+            this, &SymbolLabel::updateSize);
 }
 
 SymbolLabel::~SymbolLabel() {}
@@ -11,6 +12,13 @@ SymbolLabel::~SymbolLabel() {}
 void SymbolLabel::mousePressEvent(QMouseEvent* event)
 {
     emit clicked();
+}
+
+void SymbolLabel::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+
+    updateSize();
 }
 
 void SymbolLabel::setSymbol(const QVariant& symbol)
@@ -48,4 +56,9 @@ QVariant SymbolLabel::getSymbol()
 
     // Return text if text or return empty string if nothing
     return text();
+}
+
+void SymbolLabel::updateSize()
+{
+    QString s;
 }
