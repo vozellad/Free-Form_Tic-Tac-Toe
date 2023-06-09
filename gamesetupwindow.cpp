@@ -56,7 +56,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     QVector<QVariant> playerSymbols;
 
     // Iterate through players
-    for (int i = 0; i < players->count(); i += 3) {
+    for (int i = 0; i < players->count(); i += 2) {
         // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
@@ -70,20 +70,13 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         }
 
         // Get symbol
-        QLabel* symbolLabel = qobject_cast<QLabel*>
+        SymbolLabel* symbolLabel = qobject_cast<SymbolLabel*>
                 (players->itemAt(i + 1)->widget());
-        QLabel* symImgHolder = qobject_cast<QLabel*>
-                (players->itemAt(i + 2)->widget());
-        try {  // if label has image (else it has text)
-            playerSymbols.push_back(getImageFromLabel(symImgHolder));
-        } catch (const ImageNotFoundException& e) {
-            playerSymbols.push_back(symbolLabel->text());
-        }
+        QVariant symbol = symbolLabel->getSymbol();
+        playerSymbols.push_back(symbol);
 
-        // Test for empty symbol  (Other code does not let this be empty)
-        if (symbolLabel->text() == "...") {
-            // Symbol as an image was tested earlier
-
+        // Test for empty symbol
+        if (symbol == "" || symbol == "...") {
             ErrorDialog *w = new ErrorDialog("Symbols cannot be empty.", this);
             w->show();
             return;
@@ -110,12 +103,14 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         // Check if same datatype
         if (sym1.userType() != sym2.userType())  continue;
 
-        // Get comparison condition (depending on if they're string or image)
+        // Get comparison condition
         bool duplicateFound =
-                (sym1.userType() == QMetaType::QString &&
-                 sym1.value<QString>() == sym2.value<QString>()) ||
-                (sym1.userType() == QMetaType::QImage &&
-                 compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
+            // Compare as string
+            (sym1.userType() == QMetaType::QString &&
+            sym1.value<QString>() == sym2.value<QString>()) ||
+            // Compare as image
+            (sym1.userType() == QMetaType::QImage &&
+            compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
 
         // If comparing text and both texts are the same, display error
         if (duplicateFound) {
@@ -124,7 +119,6 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             return;
         }
     }
-
 
     // Make player lists
     for (int i = 0; i < players->rowCount(); i++)

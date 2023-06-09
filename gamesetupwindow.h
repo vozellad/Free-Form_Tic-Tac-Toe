@@ -12,7 +12,7 @@
 #include <set>
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
-#include "clickablelabel.h"
+#include "symbollabel.h"
 #include "playgamewindow.h"
 #include "player.h"
 #include "board.h"
@@ -61,8 +61,7 @@ private:
 
     // Prompt user for new symbol to replace clicked symbol
     void addClickedPlayerSymbol(const QString& name,
-                                ClickableLabel* symbol,
-                                QLabel* symImgHolder);
+                                SymbolLabel* symbol);
 
     // Get current amount of players
     int getPlayerAmt() const;

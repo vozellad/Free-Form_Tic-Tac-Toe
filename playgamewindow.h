@@ -7,7 +7,7 @@
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
-#include "clickablelabel.h"
+#include "symbollabel.h"
 
 // TODO: players on top. etc on bottom.
 
@@ -25,6 +25,9 @@ public:
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
+signals:
+    void resized();
+
 private:
     Ui::PlayGameWindow *ui;
 
@@ -36,16 +39,20 @@ private:
 
     int currPlayerIndex = 0;
 
-    void addClickedBoardSpace(ClickableLabel* boardSpace,
+    void resizeEvent(QResizeEvent *event) override;
+
+    void updateSymbolSizes();
+
+    void addClickedBoardSpace(SymbolLabel* boardSpace,
                               const QGridLayout* board);
 
     void addBoards();
 
     QGridLayout* createBoard(const Board& board);
 
-    void insertPlayerSymbol(ClickableLabel* boardSpace);
+    void insertPlayerSymbol(SymbolLabel* boardSpace);
 
-    void evalBoard(const QGridLayout* board);
+    void evalBoardWin(const QGridLayout* board);
 
 };
 

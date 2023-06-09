@@ -15,6 +15,9 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     table->setSpacing(42);
 
     addBoards();  // Add boards to table
+
+    //connect(this, &PlayGameWindow::resized,
+    //        this, &PlayGameWindow::updateSymbolSizes);
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -22,13 +25,32 @@ PlayGameWindow::~PlayGameWindow()
     delete ui;
 }
 
-void PlayGameWindow::addClickedBoardSpace(ClickableLabel* boardSpace,
+void PlayGameWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    emit resized();
+}
+
+void PlayGameWindow::updateSymbolSizes()
+{
+    return;
+    for (int i = 0; i < table->count(); i++)
+        for (int j = 0; j < table[i].count(); j += 2) {
+            try {  // if label has image (else it has text)
+                //getImageFromLabel();
+            } catch (const ImageNotFoundException& e) {
+                //symbolLabel->text();
+            }
+        }
+}
+
+void PlayGameWindow::addClickedBoardSpace(SymbolLabel* boardSpace,
                                           const QGridLayout* board)
 {
-    QObject::connect(boardSpace, &ClickableLabel::clicked, this,
+    QObject::connect(boardSpace, &SymbolLabel::clicked, this,
         [this, boardSpace, board]() {
             insertPlayerSymbol(boardSpace);
-            evalBoard(board);
+            //evalBoardWin(board);
 
             // Cyclically iterate players
             currPlayerIndex = (currPlayerIndex + 1) % players.count();
@@ -70,10 +92,10 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     // Add spaces for symbols
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
-            ClickableLabel* l = new ClickableLabel();
-            l->setAlignment(Qt::AlignCenter);
-            addClickedBoardSpace(l, boardLayout);
-            boardLayout->addWidget(l, row, col);
+            SymbolLabel* boardSpace = new SymbolLabel();
+            boardSpace->setAlignment(Qt::AlignCenter);
+            addClickedBoardSpace(boardSpace, boardLayout);
+            boardLayout->addWidget(boardSpace, row, col);
         }
 
     // Add lines
@@ -97,29 +119,17 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     return boardLayout;
 }
 
-void PlayGameWindow::insertPlayerSymbol(ClickableLabel* boardSpace)
+void PlayGameWindow::insertPlayerSymbol(SymbolLabel* boardSpace)
 {
-    // TODO: insert symbol in large, scalable size
-
     // if space has text or image
     if (!boardSpace->text().isEmpty() || boardSpace->pixmap() != nullptr)
         return;
 
-    // Get QVariant symbol
-    QVariant symbol = players[currPlayerIndex].symbol;
-
-    // Insert symbol as text
-    boardSpace->setText(symbol.value<QString>());
-
-    // If no text, insert symbol as image
-    if (boardSpace->text().isEmpty())
-        setImageToLabel(symbol.value<QImage>(), boardSpace);
+    // Insert symbol
+    boardSpace->setSymbol(players[currPlayerIndex].symbol);
 }
 
-void PlayGameWindow::evalBoard(const QGridLayout* board)
+void PlayGameWindow::evalBoardWin(const QGridLayout* board)
 {
-    // check if currPlayer won
-    // if so, display win
 
-    // check if board is full (draw)
 }
