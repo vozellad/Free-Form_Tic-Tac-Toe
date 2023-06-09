@@ -16,8 +16,8 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     addBoards();  // Add boards to table
 
-    //connect(this, &PlayGameWindow::resized,
-    //        this, &PlayGameWindow::updateSymbolSizes);
+    connect(this, &PlayGameWindow::resized,
+            this, &PlayGameWindow::updateSymbolSizes);
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -28,18 +28,23 @@ PlayGameWindow::~PlayGameWindow()
 void PlayGameWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    emit resized();
+
+    updateSymbolSizes();
 }
 
 void PlayGameWindow::updateSymbolSizes()
 {
+    std::string s;
     for (int board_i = 0; board_i < table->count(); board_i++) {
         const int boardAmt = qobject_cast<QGridLayout*>
-                (table->itemAt(board_i)->widget()) ->count();
+                (table->itemAt(board_i)->layout()) ->count();
 
         for (int space_i = 0; space_i < boardAmt; space_i += 2) {
+            QLayoutItem* item = table->itemAt(space_i);
+            if (!item)  continue;
             SymbolLabel* symbolLabel = qobject_cast<SymbolLabel*>
-                    (table->itemAt(space_i)->widget());
+                    (item->widget());
+            if (!symbolLabel)  continue;
             QVariant symbol = symbolLabel->getSymbol();
 
             if (symbol.canConvert<QImage>()) {
@@ -98,7 +103,15 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
             SymbolLabel* boardSpace = new SymbolLabel();
+
             boardSpace->setAlignment(Qt::AlignCenter);
+
+            // Make it resize with window
+            boardSpace->setSizePolicy(QSizePolicy::Ignored,
+                                      QSizePolicy::Ignored);
+            boardSpace->setAspectRatioMode(Qt::KeepAspectRatio);
+            boardSpace->setScaledContents(true);  // TODO
+
             addClickedBoardSpace(boardSpace, boardLayout);
             boardLayout->addWidget(boardSpace, row, col);
         }

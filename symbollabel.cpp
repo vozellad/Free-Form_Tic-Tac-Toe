@@ -2,9 +2,7 @@
 
 SymbolLabel::SymbolLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent)
-{
-
-}
+{ }
 
 SymbolLabel::~SymbolLabel() {}
 

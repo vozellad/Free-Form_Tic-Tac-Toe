@@ -28,6 +28,9 @@ public:
 signals:
     void resized();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::PlayGameWindow *ui;
 
@@ -38,8 +41,6 @@ private:
     QGridLayout* table;
 
     int currPlayerIndex = 0;
-
-    void resizeEvent(QResizeEvent *event) override;
 
     void updateSymbolSizes();
 
