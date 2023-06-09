@@ -20,7 +20,7 @@ void setImageToLabel(const QImage& image, QLabel* label)
 
 QImage getImageFromLabel(const QLabel* label)
 {
-    if (label->pixmap() == nullptr)
+    if (label->pixmap()->isNull())
         throw ImageNotFoundException();
 
     return label->pixmap()->toImage();

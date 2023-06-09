@@ -9,7 +9,6 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    clickablelabel.cpp \
     errordialog.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
@@ -19,11 +18,11 @@ SOURCES += \
     playgamewindow.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp \
+    symbollabel.cpp \
     utils.cpp
 
 HEADERS += \
     board.h \
-    clickablelabel.h \
     errordialog.h \
     imageutils.h \
     player.h \
@@ -31,6 +30,7 @@ HEADERS += \
     playgamewindow.h \
     startscreenwindow.h \
     gamesetupwindow.h \
+    symbollabel.h \
     utils.h
 
 FORMS += \
