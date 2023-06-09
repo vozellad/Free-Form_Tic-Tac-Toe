@@ -3,7 +3,9 @@
 
 #include <QFileDialog>
 #include <QImageReader>
-#include "clickablelabel.h"
+#include "symbollabel.h"
+#include "imageutils.h"
+#include "errordialog.h"
 
 namespace Ui {
 class PlayerSymbolDialog;
@@ -14,8 +16,8 @@ class PlayerSymbolDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                const QString name,
+    explicit PlayerSymbolDialog(const QString& name,
+                                SymbolLabel* newSymbol,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
 
@@ -37,12 +39,12 @@ private:
     QImage image;
 
     // Write new symbol to this element
-    ClickableLabel* symbol;
+    SymbolLabel* symbol;
 
     // Write to text of Get Image button
     // to let user know the state of retrieving image.
     // No parameter resets the button text.
-    void markGetImageButton(const QString appendedText = "");
+    void markGetImageButton(const QString& appendedText = "");
 };
 
 #endif // PLAYERSYMBOLDIALOG_H

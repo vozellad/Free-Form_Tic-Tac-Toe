@@ -15,9 +15,9 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     players->addWidget(new QLineEdit(newNameStr));
 
     // add symbol
-    ClickableLabel* newSymbol = new ClickableLabel();
-    newSymbol->setText("...");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
+    SymbolLabel* newSymbol = new SymbolLabel();
+    newSymbol->setSymbol("...");
+    addClickedPlayerSymbol(newNameStr, newSymbol);
     players->addWidget(newSymbol);
 
     setAmtModBtnStates_players();
@@ -43,14 +43,15 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 
 // Connect symbol label to a click listener that brings up symbol prompt window.
 // Function is a lambda function to pass variables.
-void GameSetupWindow::on_playerSymbol_clicked(ClickableLabel* symbol,
-                                              const QString name)
+void GameSetupWindow::addClickedPlayerSymbol(const QString& name,
+                                             SymbolLabel* symbol)
 {
-    QObject::connect(symbol, &ClickableLabel::clicked, this,
-        [this, name, symbol]() {
-        PlayerSymbolDialog *w = new PlayerSymbolDialog(symbol, name, this);
-        w->show();
-    });
+    QObject::connect(symbol, &SymbolLabel::clicked, this,
+        [this, name, symbol]()  {
+            PlayerSymbolDialog *w = new PlayerSymbolDialog(name, symbol, this);
+            w->show();
+        }
+    );
 }
 
 // Get number represeting player amount in UI
@@ -60,7 +61,7 @@ int GameSetupWindow::getPlayerAmt() const
 }
 
 // Set number represeting player amount in UI
-void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
+void GameSetupWindow::setPlayerAmt(const int& newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
@@ -86,19 +87,18 @@ void GameSetupWindow::setAmtModBtnStates_players()
 // but with values and positional arguments specific to player 1 and 2.
 void GameSetupWindow::addInitialPlayers()
 {
-    QString newNameStr = "Player 1";
-    players->addWidget(new QLineEdit(newNameStr), 0, 0);
+    const int width = 2;
 
-    ClickableLabel* newSymbol = new ClickableLabel();
-    newSymbol->setText("X");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 0, 1);
+    // Set grid column width
+    players->setColumnMinimumWidth(width - 1, 0);
+    players->setColumnStretch(width - 1, 0);
 
-    newNameStr = "Player 2";
-    players->addWidget(new QLineEdit(newNameStr), 1, 0);
+    // Add the 2 initial players
+    on_toolButton_addPlayer_clicked();
+    on_toolButton_addPlayer_clicked();
 
-    newSymbol = new ClickableLabel();
-    newSymbol->setText("O");
-    on_playerSymbol_clicked(newSymbol, newNameStr);
-    players->addWidget(newSymbol, 1, 1);
+    // Set starting symbols
+    qobject_cast<SymbolLabel*>(players->itemAt(1)->widget()) ->setSymbol("X");
+    qobject_cast<SymbolLabel*>(
+                players->itemAt(1 + width)->widget()) ->setSymbol("O");
 }

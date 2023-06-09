@@ -1,12 +1,12 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(ClickableLabel* newSymbol,
-                                       QString name,
+PlayerSymbolDialog::PlayerSymbolDialog(const QString& name,
+                                       SymbolLabel* symbol,
                                        QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlayerSymbolDialog),
-    symbol(newSymbol)
+    symbol(symbol)
 {
     ui->setupUi(this);
 
@@ -31,12 +31,18 @@ void PlayerSymbolDialog::on_pushButton_getImage_clicked()
             QFileDialog::getOpenFileName(this, ui->label_explanation->text());
 
     // If filepath is empty
-    if (QString::compare(filename, QString()) == 0)
-        markGetImageButton("No file");
+    if (QString::compare(filename, QString()) == 0) {
+        markGetImageButton("");
+        ErrorDialog *w = new ErrorDialog("No file.", this);
+        w->show();
+    }
 
     // If file isn't usable as image
-    else if (QImageReader::imageFormat(filename) == "")
-        markGetImageButton("Not an image");
+    else if (QImageReader::imageFormat(filename) == "") {
+        markGetImageButton("");
+        ErrorDialog *w = new ErrorDialog("Not an image.", this);
+        w->show();
+    }
 
     // If image is valid
     else {
@@ -56,17 +62,16 @@ void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 void PlayerSymbolDialog::on_buttonBox_accepted()
 {
     // Get new text symbol
-    const QString newText = ui->lineEdit_text->text();
+    const QString newText = ui->lineEdit_text->text().trimmed();
 
     // If text, apply text
     if (ui->radioButton_text->isChecked() &&
             QString::compare(newText, QString()) != 0)
-        symbol->setText(newText);
+        symbol->setSymbol(newText);
 
     // If image, apply image
     else if (!image.isNull())
-        symbol->setPixmap(QPixmap::fromImage(image.scaledToHeight(
-            symbol->height(), Qt::SmoothTransformation)));
+        symbol->setSymbol(image);
 }
 
 // When user modifies text symbol, check text radio button
@@ -79,7 +84,7 @@ void PlayerSymbolDialog::on_lineEdit_text_textEdited()
 // Write to text of Get Image button
 // to let user know the state of retrieving image
 // No parameter resets the button text.
-void PlayerSymbolDialog::markGetImageButton(const QString appendedText)
+void PlayerSymbolDialog::markGetImageButton(const QString& appendedText)
 {
     QPushButton* b = ui->pushButton_getImage;
     const static QString bText = b->text();

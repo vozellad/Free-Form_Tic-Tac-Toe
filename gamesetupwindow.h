@@ -6,11 +6,18 @@
 #include <QFileDialog>
 #include <QSpacerItem>
 #include <QLineEdit>
+#include <QSpinBox>
+#include <QMessageBox>
+#include <algorithm>
+#include <set>
 #include "startscreenwindow.h"
 #include "playersymboldialog.h"
-#include "clickablelabel.h"
+#include "symbollabel.h"
 #include "playgamewindow.h"
 #include "player.h"
+#include "board.h"
+#include "imageutils.h"
+#include "errordialog.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -37,9 +44,6 @@ private slots:
     // Remove last player row from list of players
     void on_toolButton_removePlayer_clicked();
 
-    // Prompt user for new symbol to replace clicked symbol
-    void on_playerSymbol_clicked(ClickableLabel* symbol, const QString name);
-
     // Add new board to list of boards
     void on_toolButton_addBoard_clicked();
 
@@ -55,11 +59,15 @@ private:
     // List of boards
     QVBoxLayout* boards;
 
+    // Prompt user for new symbol to replace clicked symbol
+    void addClickedPlayerSymbol(const QString& name,
+                                SymbolLabel* symbol);
+
     // Get current amount of players
     int getPlayerAmt() const;
 
     // Set current amount of players
-    void setPlayerAmt(const int newPlayerAmt);
+    void setPlayerAmt(const int& newPlayerAmt);
 
     // Keep player amount within range (1-99)
     // If not in range, turn off appropriate player amount modifier button -/+
@@ -82,12 +90,14 @@ private:
     int getBoardAmt() const;
 
     // Set current amount of boards
-    void setBoardAmt(int newBoardAmt);
+    void setBoardAmt(const int& newBoardAmt);
 
     // Keep board amount within range (1-99)
     // If not in range, turn off appropriate board amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_boards();
+
+    QSpinBox* createBoardSpinBox();
 };
 
 #endif // GAMESETUPWINDOW_H

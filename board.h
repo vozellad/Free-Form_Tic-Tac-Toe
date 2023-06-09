@@ -1,11 +1,12 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-
-class Board
+// TODO: only .h or what?
+struct Board
 {
-public:
-    Board();
+    const int sizeX;
+    const int sizeY;
+    const int winCond;
 };
 
 #endif // BOARD_H
