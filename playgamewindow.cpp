@@ -15,9 +15,6 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     table->setSpacing(42);
 
     addBoards();  // Add boards to table
-
-    connect(this, &PlayGameWindow::resized,
-            this, &PlayGameWindow::updateSymbolSizes);
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -25,41 +22,17 @@ PlayGameWindow::~PlayGameWindow()
     delete ui;
 }
 
-void PlayGameWindow::resizeEvent(QResizeEvent *event)
-{
-    QMainWindow::resizeEvent(event);
-
-    updateSymbolSizes();
-}
-
-void PlayGameWindow::updateSymbolSizes()
-{
-    std::string s;
-    for (int board_i = 0; board_i < table->count(); board_i++) {
-        const int boardAmt = qobject_cast<QGridLayout*>
-                (table->itemAt(board_i)->layout()) ->count();
-
-        for (int space_i = 0; space_i < boardAmt; space_i += 2) {
-            QLayoutItem* item = table->itemAt(space_i);
-            if (!item)  continue;
-            SymbolLabel* symbolLabel = qobject_cast<SymbolLabel*>
-                    (item->widget());
-            if (!symbolLabel)  continue;
-            QVariant symbol = symbolLabel->getSymbol();
-
-            if (symbol.canConvert<QImage>()) {
-                symbolLabel->setSymbol(symbol);  // TODO
-            }
-        }
-    }
-}
-
-void PlayGameWindow::addClickedBoardSpace(SymbolLabel* boardSpace,
+void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
                                           const QGridLayout* board)
 {
-    QObject::connect(boardSpace, &SymbolLabel::clicked, this,
+    QObject::connect(boardSpace, &PlaySymbolLabel::clicked, this,
         [this, boardSpace, board]() {
-            insertPlayerSymbol(boardSpace);
+            // if space has text or image
+            if (boardSpace->getSymbol() != "")
+                return;
+
+            boardSpace->setSymbol(players[currPlayerIndex].symbol);
+
             //evalBoardWin(board);
 
             // Cyclically iterate players
@@ -102,16 +75,8 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     // Add spaces for symbols
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
-            SymbolLabel* boardSpace = new SymbolLabel();
-
+            PlaySymbolLabel* boardSpace = new PlaySymbolLabel();
             boardSpace->setAlignment(Qt::AlignCenter);
-
-            // Make it resize with window
-            boardSpace->setSizePolicy(QSizePolicy::Ignored,
-                                      QSizePolicy::Ignored);
-            boardSpace->setAspectRatioMode(Qt::KeepAspectRatio);
-            boardSpace->setScaledContents(true);  // TODO
-
             addClickedBoardSpace(boardSpace, boardLayout);
             boardLayout->addWidget(boardSpace, row, col);
         }
@@ -135,16 +100,6 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     }
 
     return boardLayout;
-}
-
-void PlayGameWindow::insertPlayerSymbol(SymbolLabel* boardSpace)
-{
-    // if space has text or image
-    if (!boardSpace->text().isEmpty() || boardSpace->pixmap() != nullptr)
-        return;
-
-    // Insert symbol
-    boardSpace->setSymbol(players[currPlayerIndex].symbol);
 }
 
 void PlayGameWindow::evalBoardWin(const QGridLayout* board)
