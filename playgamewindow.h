@@ -7,7 +7,7 @@
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
-#include "symbollabel.h"
+#include "playsymbollabel.h"
 
 // TODO: players on top. etc on bottom.
 
@@ -36,16 +36,18 @@ private:
 
     int currPlayerIndex = 0;
 
-    void addClickedBoardSpace(SymbolLabel* boardSpace,
+    void addClickedBoardSpace(PlaySymbolLabel* boardSpace,
                               const QGridLayout* board);
 
     void addBoards();
 
     QGridLayout* createBoard(const Board& board);
 
-    void insertPlayerSymbol(SymbolLabel* boardSpace);
-
     void evalBoardWin(const QGridLayout* board);
+
+    QVector<PlaySymbolLabel*> getWinSpaces(const QGridLayout* board);
+
+    bool boardIsFull(const QGridLayout* board);
 
 };
 

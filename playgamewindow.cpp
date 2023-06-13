@@ -22,13 +22,30 @@ PlayGameWindow::~PlayGameWindow()
     delete ui;
 }
 
-void PlayGameWindow::addClickedBoardSpace(SymbolLabel* boardSpace,
+void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
                                           const QGridLayout* board)
 {
-    QObject::connect(boardSpace, &SymbolLabel::clicked, this,
+    QObject::connect(boardSpace, &PlaySymbolLabel::clicked, this,
         [this, boardSpace, board]() {
-            insertPlayerSymbol(boardSpace);
+            // if space has text or image
+            if (boardSpace->getSymbol() != "")
+                return;
+
+            boardSpace->setSymbol(players[currPlayerIndex].symbol);
+
             //evalBoardWin(board);
+                // getWinPositions();
+                    // displayWin();
+            QVector<PlaySymbolLabel*> winSpaces = getWinSpaces(board);
+            if (winSpaces != QVector<PlaySymbolLabel*>()) {
+                //for (PlaySymbolLabel* space : winSpaces) {
+                    // make green
+                //}
+                // "player won"; end game
+            } else if (boardIsFull(board)) {
+                // announce draw
+            }
+
 
             // Cyclically iterate players
             currPlayerIndex = (currPlayerIndex + 1) % players.count();
@@ -70,7 +87,7 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     // Add spaces for symbols
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
-            SymbolLabel* boardSpace = new SymbolLabel();
+            PlaySymbolLabel* boardSpace = new PlaySymbolLabel();
             boardSpace->setAlignment(Qt::AlignCenter);
             addClickedBoardSpace(boardSpace, boardLayout);
             boardLayout->addWidget(boardSpace, row, col);
@@ -97,17 +114,24 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     return boardLayout;
 }
 
-void PlayGameWindow::insertPlayerSymbol(SymbolLabel* boardSpace)
-{
-    // if space has text or image
-    if (!boardSpace->text().isEmpty() || boardSpace->pixmap() != nullptr)
-        return;
-
-    // Insert symbol
-    boardSpace->setSymbol(players[currPlayerIndex].symbol);
-}
-
 void PlayGameWindow::evalBoardWin(const QGridLayout* board)
 {
 
+}
+
+QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(const QGridLayout* board)
+{
+    return QVector<PlaySymbolLabel*>();
+}
+
+bool PlayGameWindow::boardIsFull(const QGridLayout* board)
+{
+    for (int row = 0; row < board->rowCount(); row += 2)
+        for (int col = 0; col < board->columnCount(); col += 2)
+            if (qobject_cast<PlaySymbolLabel*>
+                    (board->itemAtPosition(row, col)->widget())
+                    ->getSymbol() == "")
+                return false;
+
+    return true;
 }

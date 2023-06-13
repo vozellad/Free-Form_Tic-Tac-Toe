@@ -1,10 +1,9 @@
 #include "symbollabel.h"
 
-SymbolLabel::SymbolLabel(QWidget* parent, Qt::WindowFlags f)
+SymbolLabel::SymbolLabel(QWidget* parent,
+                         Qt::WindowFlags f)
     : QLabel(parent)
 {
-    connect(this, &SymbolLabel::resized,
-            this, &SymbolLabel::updateSize);
 }
 
 SymbolLabel::~SymbolLabel() {}
@@ -14,19 +13,10 @@ void SymbolLabel::mousePressEvent(QMouseEvent* event)
     emit clicked();
 }
 
-void SymbolLabel::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-
-    updateSize();
-}
-
 void SymbolLabel::setSymbol(const QVariant& symbol)
 {
-    std::string errorMessage = "Symbol must be QString or QImage.";
-
     if (symbol.isNull())
-        throw std::invalid_argument(errorMessage);
+        throw std::invalid_argument("Symbol is null.");
 
     else if (symbol.canConvert<QString>()) {
         setText(symbol.value<QString>());
@@ -36,8 +26,8 @@ void SymbolLabel::setSymbol(const QVariant& symbol)
     else if (symbol.canConvert<QImage>()) {
         QImage image = symbol.value<QImage>();
 
-        QImage scaledImage = image.scaledToHeight(height(),
-                                      Qt::SmoothTransformation);
+        QImage scaledImage = image.scaledToHeight(
+                    height(), Qt::SmoothTransformation);
         const QPixmap pixmap = QPixmap::fromImage(scaledImage);
         setPixmap(pixmap);
 
@@ -45,7 +35,7 @@ void SymbolLabel::setSymbol(const QVariant& symbol)
     }
 
     else
-        throw std::invalid_argument(errorMessage);
+        throw std::invalid_argument("Symbol must be QString or QImage.");
 }
 
 QVariant SymbolLabel::getSymbol()
@@ -56,9 +46,4 @@ QVariant SymbolLabel::getSymbol()
 
     // Return text if text or return empty string if nothing
     return text();
-}
-
-void SymbolLabel::updateSize()
-{
-    QString s;
 }

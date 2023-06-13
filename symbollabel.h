@@ -11,7 +11,7 @@ class SymbolLabel : public QLabel {
 
 public:
     explicit SymbolLabel(QWidget* parent = Q_NULLPTR,
-                            Qt::WindowFlags f = Qt::WindowFlags());
+                         Qt::WindowFlags f = Qt::WindowFlags());
     ~SymbolLabel();
 
     void setSymbol(const QVariant& symbol);
@@ -21,17 +21,10 @@ public:
 signals:
     void clicked();
 
-    void resized();
-
 protected:
-    void mousePressEvent(QMouseEvent* event);
-
-    void resizeEvent(QResizeEvent *event) override;
-
-private:
     QImage unscaledImage;
 
-    void updateSize();
+    void mousePressEvent(QMouseEvent* event);
 
 };
 
