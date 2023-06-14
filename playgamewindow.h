@@ -60,7 +60,7 @@ private:
                               const int& row,
                               const int& col);
 
-    int getGridSize(const int widthOrHeight);
+    int getGridSize(const int& widthOrHeight);
 };
 
 #endif // PLAYGAMEWINDOW_H

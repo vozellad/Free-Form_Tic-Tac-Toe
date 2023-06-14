@@ -1,6 +1,8 @@
 #include "playgamewindow.h"
 #include "ui_playgamewindow.h"
 
+// TODO: board stuff might all need to be contained in a class
+
 PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
                                const QVector<Board>& boards,
                                QWidget *parent) :
@@ -34,19 +36,20 @@ void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
 
             boardSpace->setSymbol(players[currPlayerIndex].symbol);
 
-            //evalBoardWin(board);
-                // getWinPositions();
-                    // displayWin();
             QVector<PlaySymbolLabel*> winSpaces = getWinSpaces(boardSpace,
                                                                boardLayout,
                                                                boardSettings);
             if (winSpaces != QVector<PlaySymbolLabel*>()) {
-                //for (PlaySymbolLabel* space : winSpaces) {
+                for (PlaySymbolLabel* space : winSpaces) {
                     // make green
-                //}
-                // "player won"; end game
+                    QPalette palette = space->palette();
+                    palette.setColor(QPalette::Background,
+                                     QColor(144, 238, 144));
+                    space->setAutoFillBackground(true);
+                    space->setPalette(palette);
+                }
             } else if (boardIsFull(boardLayout)) {
-                // announce draw
+
             }
 
 
@@ -127,6 +130,8 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
         const QGridLayout* boardLayout,
         const Board& boardSettings)
 {
+    // TODO: account for multiple lines of single win
+
     // Grid sizes including grid lines
     const int gridHeight = getGridSize(boardSettings.sizeY);
     const int gridWidth = getGridSize(boardSettings.sizeX);
@@ -227,7 +232,7 @@ PlaySymbolLabel* PlayGameWindow::getSpace(const QGridLayout* boardLayout,
             (boardLayout->itemAtPosition(row, col)->widget());
 }
 
-int PlayGameWindow::getGridSize(const int widthOrHeight)
+int PlayGameWindow::getGridSize(const int& widthOrHeight)
 {
     return widthOrHeight * 2 - 1;
 }
