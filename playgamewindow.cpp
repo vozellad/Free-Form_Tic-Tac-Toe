@@ -23,10 +23,11 @@ PlayGameWindow::~PlayGameWindow()
 }
 
 void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
-                                          const QGridLayout* board)
+                                          const QGridLayout* boardLayout,
+                                          const Board& boardSettings)
 {
     QObject::connect(boardSpace, &PlaySymbolLabel::clicked, this,
-        [this, boardSpace, board]() {
+        [this, boardSpace, boardLayout, boardSettings]() {
             // if space has text or image
             if (boardSpace->getSymbol() != "")
                 return;
@@ -36,13 +37,15 @@ void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
             //evalBoardWin(board);
                 // getWinPositions();
                     // displayWin();
-            QVector<PlaySymbolLabel*> winSpaces = getWinSpaces(board);
+            QVector<PlaySymbolLabel*> winSpaces = getWinSpaces(boardSpace,
+                                                               boardLayout,
+                                                               boardSettings);
             if (winSpaces != QVector<PlaySymbolLabel*>()) {
                 //for (PlaySymbolLabel* space : winSpaces) {
                     // make green
                 //}
                 // "player won"; end game
-            } else if (boardIsFull(board)) {
+            } else if (boardIsFull(boardLayout)) {
                 // announce draw
             }
 
@@ -69,7 +72,7 @@ void PlayGameWindow::addBoards()
     }
 }
 
-QGridLayout* PlayGameWindow::createBoard(const Board& board)
+QGridLayout* PlayGameWindow::createBoard(const Board& boardSettings)
 {
     // TODO: do with QPallete instead?
 
@@ -77,19 +80,19 @@ QGridLayout* PlayGameWindow::createBoard(const Board& board)
     boardLayout->setSpacing(0);  // Connect lines
 
     // Grid sizes including grid lines
-    const int gridHeight = board.sizeY * 2 - 1;
-    const int gridWidth = board.sizeX * 2 - 1;
+    const int gridHeight = getGridSize(boardSettings.sizeY);
+    const int gridWidth = getGridSize(boardSettings.sizeX);
 
     // Set grid column width
-    boardLayout->setColumnMinimumWidth(board.sizeX-1, 0);
-    boardLayout->setColumnStretch(board.sizeX-1, 0);
+    boardLayout->setColumnMinimumWidth(boardSettings.sizeX-1, 0);
+    boardLayout->setColumnStretch(boardSettings.sizeX-1, 0);
 
     // Add spaces for symbols
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
             PlaySymbolLabel* boardSpace = new PlaySymbolLabel();
             boardSpace->setAlignment(Qt::AlignCenter);
-            addClickedBoardSpace(boardSpace, boardLayout);
+            addClickedBoardSpace(boardSpace, boardLayout, boardSettings);
             boardLayout->addWidget(boardSpace, row, col);
         }
 
@@ -119,19 +122,92 @@ void PlayGameWindow::evalBoardWin(const QGridLayout* board)
 
 }
 
-QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(const QGridLayout* board)
+QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
+        PlaySymbolLabel* boardSpace,
+        const QGridLayout* boardLayout,
+        const Board& boardSettings)
 {
+    // Grid sizes including grid lines
+    const int gridHeight = getGridSize(boardSettings.sizeY);
+    const int gridWidth = getGridSize(boardSettings.sizeX);
+
+    // Get boardSpace coordinates
+    int row, col, _rowSpan, _colSpan;
+    boardLayout->getItemPosition(boardLayout->indexOf(boardSpace),
+                                 &row, &col,
+                                 &_rowSpan, &_colSpan);
+
+    // Winning spaces to return
+    QVector<PlaySymbolLabel*> winSpaces;
+
+    // Check symbols horizontally
+    int sameInARow = 0;
+    QVariant compareSymbol = getSymbol(boardLayout, row, 0);
+    for (int c = 0; c < gridWidth; c += 2) {
+        QVariant currSymbol = getSymbol(boardLayout, row, c);
+
+        if (compareSymbol == currSymbol) {
+            sameInARow++;
+            winSpaces.push_back(getSpace(boardLayout, row, c));
+        } else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            winSpaces.clear();
+        }
+
+        if (sameInARow == boardSettings.winCond)
+            return winSpaces;
+    }
+
+    // Reset spaces to return
+    winSpaces.clear();
+
+    // Check symbols vertically
+
+
+    winSpaces.clear();
+
+    // check symbols diagonally
+
+
+    winSpaces.clear();
+
     return QVector<PlaySymbolLabel*>();
+    // TODO: what's the correct wa to do this?
+    //       is it just return winSpaces because it's cleared?
 }
 
-bool PlayGameWindow::boardIsFull(const QGridLayout* board)
+bool PlayGameWindow::boardIsFull(const QGridLayout* boardLayout)
 {
-    for (int row = 0; row < board->rowCount(); row += 2)
-        for (int col = 0; col < board->columnCount(); col += 2)
-            if (qobject_cast<PlaySymbolLabel*>
-                    (board->itemAtPosition(row, col)->widget())
-                    ->getSymbol() == "")
+    for (int row = 0; row < boardLayout->rowCount(); row += 2)
+        for (int col = 0; col < boardLayout->columnCount(); col += 2)
+            if (getSymbol(boardLayout, row, col) == "")
                 return false;
 
     return true;
+}
+
+// TODO: next 2 functions might get replaced by a utils function
+
+QVariant PlayGameWindow::getSymbol(const QGridLayout* boardLayout,
+                                   const int& row,
+                                   const int& col)
+{
+    return qobject_cast<PlaySymbolLabel*>
+            (boardLayout->itemAtPosition(row, col)->widget())
+            ->getSymbol();
+    // TODO: this or use getSpace().getSymbol()?
+}
+
+PlaySymbolLabel* PlayGameWindow::getSpace(const QGridLayout* boardLayout,
+                                          const int& row,
+                                          const int& col)
+{
+    return qobject_cast<PlaySymbolLabel*>
+            (boardLayout->itemAtPosition(row, col)->widget());
+}
+
+int PlayGameWindow::getGridSize(const int widthOrHeight)
+{
+    return widthOrHeight * 2 - 1;
 }

@@ -37,18 +37,30 @@ private:
     int currPlayerIndex = 0;
 
     void addClickedBoardSpace(PlaySymbolLabel* boardSpace,
-                              const QGridLayout* board);
+                              const QGridLayout* boardLayout,
+                              const Board& boardSettings);
 
     void addBoards();
 
-    QGridLayout* createBoard(const Board& board);
+    QGridLayout* createBoard(const Board& boardSettings);
 
-    void evalBoardWin(const QGridLayout* board);
+    void evalBoardWin(const QGridLayout* boardLayout);
 
-    QVector<PlaySymbolLabel*> getWinSpaces(const QGridLayout* board);
+    QVector<PlaySymbolLabel*> getWinSpaces(PlaySymbolLabel* boardSpace,
+                                           const QGridLayout* boardLayout,
+                                           const Board& boardSettings);
 
     bool boardIsFull(const QGridLayout* board);
 
+    QVariant getSymbol(const QGridLayout* boardLayout,
+                       const int& row,
+                       const int& col);
+
+    PlaySymbolLabel* getSpace(const QGridLayout* boardLayout,
+                              const int& row,
+                              const int& col);
+
+    int getGridSize(const int widthOrHeight);
 };
 
 #endif // PLAYGAMEWINDOW_H
