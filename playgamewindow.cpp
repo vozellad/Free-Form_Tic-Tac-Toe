@@ -132,10 +132,14 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
     const int gridWidth = getGridSize(boardSettings.sizeX);
 
     // Get boardSpace coordinates
-    int row, col, _rowSpan, _colSpan;
+    int _row, _col, _rowSpan, _colSpan;
     boardLayout->getItemPosition(boardLayout->indexOf(boardSpace),
-                                 &row, &col,
+                                 &_row, &_col,
                                  &_rowSpan, &_colSpan);
+
+    // Make coordinates immutable
+    const int row = _row;
+    const int col = _col;
 
     // Winning spaces to return
     QVector<PlaySymbolLabel*> winSpaces;
@@ -163,7 +167,23 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
     winSpaces.clear();
 
     // Check symbols vertically
+    sameInARow = 0;
+    compareSymbol = getSymbol(boardLayout, 0, col);
+    for (int r = 0; r < gridHeight; r += 2) {
+        QVariant currSymbol = getSymbol(boardLayout, r, col);
 
+        if (compareSymbol == currSymbol) {
+            sameInARow++;
+            winSpaces.push_back(getSpace(boardLayout, r, col));
+        } else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            winSpaces.clear();
+        }
+
+        if (sameInARow == boardSettings.winCond)
+            return winSpaces;
+    }
 
     winSpaces.clear();
 
