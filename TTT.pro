@@ -16,6 +16,7 @@ SOURCES += \
     main.cpp \
     playersymboldialog.cpp \
     playgamewindow.cpp \
+    playsymbollabel.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp \
     symbollabel.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     player.h \
     playersymboldialog.h \
     playgamewindow.h \
+    playsymbollabel.h \
     startscreenwindow.h \
     gamesetupwindow.h \
     symbollabel.h \

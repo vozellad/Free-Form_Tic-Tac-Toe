@@ -1,8 +1,10 @@
 #include "symbollabel.h"
 
-SymbolLabel::SymbolLabel(QWidget* parent, Qt::WindowFlags f)
+SymbolLabel::SymbolLabel(QWidget* parent,
+                         Qt::WindowFlags f)
     : QLabel(parent)
-{ }
+{
+}
 
 SymbolLabel::~SymbolLabel() {}
 
@@ -13,10 +15,8 @@ void SymbolLabel::mousePressEvent(QMouseEvent* event)
 
 void SymbolLabel::setSymbol(const QVariant& symbol)
 {
-    std::string errorMessage = "Symbol must be QString or QImage.";
-
     if (symbol.isNull())
-        throw std::invalid_argument(errorMessage);
+        throw std::invalid_argument("Symbol is null.");
 
     else if (symbol.canConvert<QString>()) {
         setText(symbol.value<QString>());
@@ -26,8 +26,8 @@ void SymbolLabel::setSymbol(const QVariant& symbol)
     else if (symbol.canConvert<QImage>()) {
         QImage image = symbol.value<QImage>();
 
-        QImage scaledImage = image.scaledToHeight(height(),
-                                      Qt::SmoothTransformation);
+        QImage scaledImage = image.scaledToHeight(
+                    height(), Qt::SmoothTransformation);
         const QPixmap pixmap = QPixmap::fromImage(scaledImage);
         setPixmap(pixmap);
 
@@ -35,7 +35,7 @@ void SymbolLabel::setSymbol(const QVariant& symbol)
     }
 
     else
-        throw std::invalid_argument(errorMessage);
+        throw std::invalid_argument("Symbol must be QString or QImage.");
 }
 
 QVariant SymbolLabel::getSymbol()

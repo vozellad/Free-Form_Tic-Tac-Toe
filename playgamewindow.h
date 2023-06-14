@@ -7,7 +7,7 @@
 #include "player.h"
 #include "board.h"
 #include "imageutils.h"
-#include "symbollabel.h"
+#include "playsymbollabel.h"
 
 // TODO: players on top. etc on bottom.
 
@@ -25,12 +25,6 @@ public:
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
-signals:
-    void resized();
-
-protected:
-    void resizeEvent(QResizeEvent *event) override;
-
 private:
     Ui::PlayGameWindow *ui;
 
@@ -42,19 +36,33 @@ private:
 
     int currPlayerIndex = 0;
 
-    void updateSymbolSizes();
-
-    void addClickedBoardSpace(SymbolLabel* boardSpace,
-                              const QGridLayout* board);
+    void addClickedBoardSpace(PlaySymbolLabel* boardSpace,
+                              const QGridLayout* boardLayout,
+                              const Board& boardSettings);
 
     void addBoards();
 
-    QGridLayout* createBoard(const Board& board);
+    QGridLayout* createBoard(const Board& boardSettings);
 
-    void insertPlayerSymbol(SymbolLabel* boardSpace);
+    void evalBoardWin(const QGridLayout* boardLayout);
 
-    void evalBoardWin(const QGridLayout* board);
+    QVector<PlaySymbolLabel*> getWinSpaces(PlaySymbolLabel* boardSpace,
+                                           const QGridLayout* boardLayout,
+                                           const Board& boardSettings);
 
+    bool boardIsFull(const QGridLayout* board);
+
+    QVariant getSymbol(const QGridLayout* boardLayout,
+                       const int& row,
+                       const int& col);
+
+    PlaySymbolLabel* getSpace(const QGridLayout* boardLayout,
+                              const int& row,
+                              const int& col);
+
+    int getGridSize(const int& widthOrHeight);
+
+    void disableBoard(const QGridLayout* boardLayout);
 };
 
 #endif // PLAYGAMEWINDOW_H

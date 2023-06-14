@@ -74,7 +74,7 @@ void GameSetupWindow::setBoardAmt(const int& newBoardAmt)
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }
 
-// Keep board amount within range (1-99)
+// Keep board amount within range
 // If not in range, turn off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_boards()
@@ -84,7 +84,7 @@ void GameSetupWindow::setAmtModBtnStates_boards()
 
      if (getBoardAmt() <= 1)
          ui->toolButton_removeBoard->setEnabled(false);
-     else if (99 <= getBoardAmt())
+     else if (20 <= getBoardAmt())
          ui->toolButton_addBoard->setEnabled(false);
 }
 

@@ -66,7 +66,7 @@ void GameSetupWindow::setPlayerAmt(const int& newPlayerAmt)
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
-// Keep player amount within range (1-99)
+// Keep player amount within range
 // If not in range, turn off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_players()
@@ -76,7 +76,7 @@ void GameSetupWindow::setAmtModBtnStates_players()
 
     if (getPlayerAmt() <= 1)
         ui->toolButton_removePlayer->setEnabled(false);
-    else if (99 <= getPlayerAmt())
+    else if (20 <= getPlayerAmt())
         ui->toolButton_addPlayer->setEnabled(false);
 }
 
