@@ -30,31 +30,7 @@ void PlayGameWindow::addClickedBoardSpace(PlaySymbolLabel* boardSpace,
 {
     QObject::connect(boardSpace, &PlaySymbolLabel::clicked, this,
         [this, boardSpace, boardLayout, boardSettings]() {
-            // if space has text or image
-            if (boardSpace->getSymbol() != "")
-                return;
-
-            boardSpace->setSymbol(players[currPlayerIndex].symbol);
-
-            QVector<PlaySymbolLabel*> winSpaces = getWinSpaces(boardSpace,
-                                                               boardLayout,
-                                                               boardSettings);
-            if (winSpaces != QVector<PlaySymbolLabel*>()) {
-                for (PlaySymbolLabel* space : winSpaces) {
-                    // make green
-                    QPalette palette = space->palette();
-                    palette.setColor(QPalette::Background,
-                                     QColor(144, 238, 144));
-                    space->setAutoFillBackground(true);
-                    space->setPalette(palette);
-                }
-            } else if (boardIsFull(boardLayout)) {
-
-            }
-
-
-            // Cyclically iterate players
-            currPlayerIndex = (currPlayerIndex + 1) % players.count();
+            boardSpaceClicked(boardSpace, boardLayout, boardSettings);
         }
     );
 }
@@ -120,18 +96,33 @@ QGridLayout* PlayGameWindow::createBoard(const Board& boardSettings)
     return boardLayout;
 }
 
-void PlayGameWindow::evalBoardWin(const QGridLayout* board)
+void PlayGameWindow::boardSpaceClicked(PlaySymbolLabel* boardSpace,
+                                  const QGridLayout* boardLayout,
+                                  const Board& boardSettings)
 {
+    // if space has text or image
+    if (boardSpace->getSymbol() != "")
+        return;
 
+    boardSpace->setSymbol(players[currPlayerIndex].symbol);
+
+    QVector<QVector<PlaySymbolLabel*>> wins =
+            getWinSpaces(boardSpace, boardLayout, boardSettings);
+
+    displayWins(wins);
+
+    if (0 < wins.count() || boardIsFull(boardLayout))
+        disableBoard(boardLayout);
+
+    // Cyclically iterate players
+    currPlayerIndex = (currPlayerIndex + 1) % players.count();
 }
 
-QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
+QVector<QVector<PlaySymbolLabel*>> PlayGameWindow::getWinSpaces(
         PlaySymbolLabel* boardSpace,
         const QGridLayout* boardLayout,
         const Board& boardSettings)
 {
-    // TODO: account for multiple lines of single win
-
     // Grid sizes including grid lines
     const int gridHeight = getGridSize(boardSettings.sizeY);
     const int gridWidth = getGridSize(boardSettings.sizeX);
@@ -146,8 +137,11 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
     const int row = _row;
     const int col = _col;
 
-    // Winning spaces to return
-    QVector<PlaySymbolLabel*> winSpaces;
+    //
+    QVector<PlaySymbolLabel*> currWinSpaces;
+
+    //
+    QVector<QVector<PlaySymbolLabel*>> allWins;
 
     // Check symbols horizontally
     int sameInARow = 0;
@@ -155,21 +149,27 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
     for (int c = 0; c < gridWidth; c += 2) {
         QVariant currSymbol = getSymbol(boardLayout, row, c);
 
-        if (compareSymbol == currSymbol) {
+        if (currSymbol != "" && compareSymbol == currSymbol) {
             sameInARow++;
-            winSpaces.push_back(getSpace(boardLayout, row, c));
+            currWinSpaces.push_back(getSpace(boardLayout, row, c));
         } else {
             sameInARow = 1;
             compareSymbol = currSymbol;
-            winSpaces.clear();
+            currWinSpaces.clear();
+            currWinSpaces.push_back(getSpace(boardLayout, row, c));
         }
 
-        if (sameInARow == boardSettings.winCond)
-            return winSpaces;
+        if (sameInARow == boardSettings.winCond) {
+            allWins.push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
     }
 
     // Reset spaces to return
-    winSpaces.clear();
+    currWinSpaces.clear();
+
+    //
 
     // Check symbols vertically
     sameInARow = 0;
@@ -177,29 +177,88 @@ QVector<PlaySymbolLabel*> PlayGameWindow::getWinSpaces(
     for (int r = 0; r < gridHeight; r += 2) {
         QVariant currSymbol = getSymbol(boardLayout, r, col);
 
-        if (compareSymbol == currSymbol) {
+        if (currSymbol != "" && compareSymbol == currSymbol) {
             sameInARow++;
-            winSpaces.push_back(getSpace(boardLayout, r, col));
+            currWinSpaces.push_back(getSpace(boardLayout, r, col));
         } else {
             sameInARow = 1;
             compareSymbol = currSymbol;
-            winSpaces.clear();
+            currWinSpaces.clear();
+            currWinSpaces.push_back(getSpace(boardLayout, r, col));
         }
 
-        if (sameInARow == boardSettings.winCond)
-            return winSpaces;
+        if (sameInARow == boardSettings.winCond) {
+            allWins.push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
     }
 
-    winSpaces.clear();
+    currWinSpaces.clear();
 
-    // check symbols diagonally
+    // Get beginning of diagonal line (first)
+    int dRow = row, dCol = col;
+    while (0 < dRow && 0 < dCol) {
+        dRow--;
+        dCol--;
+    }
 
+    // check symbols diagonally (first)
+    sameInARow = 0;
+    compareSymbol = getSymbol(boardLayout, dRow, dCol);
+    for (; dRow < gridHeight && dCol < gridWidth; dRow += 2, dCol += 2) {
+        QVariant currSymbol = getSymbol(boardLayout, dRow, dCol);
 
-    winSpaces.clear();
+        if (currSymbol != "" && compareSymbol == currSymbol) {
+            sameInARow++;
+            currWinSpaces.push_back(getSpace(boardLayout, dRow, dCol));
+        } else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            currWinSpaces.clear();
+            currWinSpaces.push_back(getSpace(boardLayout, dRow, dCol));
+        }
 
-    return QVector<PlaySymbolLabel*>();
-    // TODO: what's the correct wa to do this?
-    //       is it just return winSpaces because it's cleared?
+        if (sameInARow == boardSettings.winCond) {
+            allWins.push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
+    }
+
+    currWinSpaces.clear();
+
+    // Get beginning of diagonal line (second)
+    dRow = row, dCol = col;
+    while (0 < dRow && dCol + 2 <= gridWidth) {
+        dRow--;
+        dCol++;
+    }
+
+    // Check symbols diagonally (second)
+    sameInARow = 0;
+    compareSymbol = getSymbol(boardLayout, dRow, dCol);
+    for (; dRow < gridHeight && 0 <= dCol; dRow += 2, dCol -= 2) {
+        QVariant currSymbol = getSymbol(boardLayout, dRow, dCol);
+
+        if (currSymbol != "" && compareSymbol == currSymbol) {
+            sameInARow++;
+            currWinSpaces.push_back(getSpace(boardLayout, dRow, dCol));
+        } else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            currWinSpaces.clear();
+            currWinSpaces.push_back(getSpace(boardLayout, dRow, dCol));
+        }
+
+        if (sameInARow == boardSettings.winCond) {
+            allWins.push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
+    }
+
+    return allWins;
 }
 
 bool PlayGameWindow::boardIsFull(const QGridLayout* boardLayout)
@@ -218,10 +277,7 @@ QVariant PlayGameWindow::getSymbol(const QGridLayout* boardLayout,
                                    const int& row,
                                    const int& col)
 {
-    return qobject_cast<PlaySymbolLabel*>
-            (boardLayout->itemAtPosition(row, col)->widget())
-            ->getSymbol();
-    // TODO: this or use getSpace().getSymbol()?
+    return getSpace(boardLayout, row, col)->getSymbol();
 }
 
 PlaySymbolLabel* PlayGameWindow::getSpace(const QGridLayout* boardLayout,
@@ -235,4 +291,80 @@ PlaySymbolLabel* PlayGameWindow::getSpace(const QGridLayout* boardLayout,
 int PlayGameWindow::getGridSize(const int& widthOrHeight)
 {
     return widthOrHeight * 2 - 1;
+}
+
+void PlayGameWindow::disableBoard(const QGridLayout* boardLayout)
+{
+    for (int row = 0; row < boardLayout->rowCount(); row += 2)
+        for (int col = 0; col < boardLayout->columnCount(); col += 2)
+            getSpace(boardLayout, row, col)->setEnabled(false);
+}
+
+// TODO: utils function?
+bool PlayGameWindow::vectorInVector(
+        const QVector<PlaySymbolLabel*>& vec1,
+        const QVector<QVector<PlaySymbolLabel*>>& vec2)
+{
+    for (QVector<PlaySymbolLabel*> v : vec2)
+        if (vec1 == v)
+            return true;
+
+    return false;
+}
+
+void PlayGameWindow::displayWins(
+        const QVector<QVector<PlaySymbolLabel*>>& wins)
+{
+    for (QVector<PlaySymbolLabel*> winSpaces : wins)
+        for (PlaySymbolLabel* space : winSpaces) {
+            QPalette palette = space->palette();
+            palette.setColor(QPalette::Background, QColor(144, 238, 144));
+            space->setAutoFillBackground(true);
+            space->setPalette(palette);
+        }
+
+}
+
+void PlayGameWindow::sus(
+        const int& pos,
+        bool horiORVert,
+        const int& size,
+        const QGridLayout* boardLayout,
+        QVector<QVector<PlaySymbolLabel*>>* allWins,
+        const int& winCond)
+{
+    QVector<PlaySymbolLabel*> currWinSpaces;
+
+    int sameInARow = 0;
+
+    QVariant compareSymbol;
+    horiORVert ? compareSymbol = getSymbol(boardLayout, pos, 0)
+               : compareSymbol = getSymbol(boardLayout, 0, pos);
+
+    for (int i = 0; i < size; i += 2) {
+        QVariant currSymbol = getSymbol(boardLayout, pos, i);
+
+        if (currSymbol != "" && compareSymbol == currSymbol)
+            sameInARow++;
+
+        else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            currWinSpaces.clear();
+        }
+
+//        PlaySymbolLabel* space;
+//        horiORVert ? space = getSpace(boardLayout, pos, i)
+//                   : space = getSpace(boardLayout, i, pos);
+        //currWinSpaces.push_back(space);
+
+        currWinSpaces.push_back(horiORVert ? getSpace(boardLayout, pos, i)
+                                           : getSpace(boardLayout, i, pos));
+
+        if (sameInARow == winCond) {
+            allWins->push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
+    }
 }

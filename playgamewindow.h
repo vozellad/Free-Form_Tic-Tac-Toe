@@ -44,11 +44,14 @@ private:
 
     QGridLayout* createBoard(const Board& boardSettings);
 
-    void evalBoardWin(const QGridLayout* boardLayout);
+    void boardSpaceClicked(PlaySymbolLabel* boardSpace,
+                           const QGridLayout* boardLayout,
+                           const Board& boardSettings);
 
-    QVector<PlaySymbolLabel*> getWinSpaces(PlaySymbolLabel* boardSpace,
-                                           const QGridLayout* boardLayout,
-                                           const Board& boardSettings);
+    QVector<QVector<PlaySymbolLabel*>> getWinSpaces(
+            PlaySymbolLabel* boardSpace,
+            const QGridLayout* boardLayout,
+            const Board& boardSettings);
 
     bool boardIsFull(const QGridLayout* board);
 
@@ -61,6 +64,24 @@ private:
                               const int& col);
 
     int getGridSize(const int& widthOrHeight);
+
+    void disableBoard(const QGridLayout* boardLayout);
+
+    bool vectorInVector(const QVector<PlaySymbolLabel*>& vec1,
+                        const QVector<QVector<PlaySymbolLabel*>>& vec2);
+
+    void displayWins(const QVector<QVector<PlaySymbolLabel*>>& wins);
+
+    QVector<QVector<PlaySymbolLabel*>> sus(const int& gridSize,
+                                           const QGridLayout* boardLayout);
+
+    void sus(
+            const int& pos,
+            bool horiORVert,
+            const int& size,
+            const QGridLayout* boardLayout,
+            QVector<QVector<PlaySymbolLabel*>>* allWins,
+            const int& winCond);
 };
 
 #endif // PLAYGAMEWINDOW_H
