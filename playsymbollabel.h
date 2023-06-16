@@ -7,6 +7,8 @@
 #include <QApplication>
 #include "symbollabel.h"
 
+// TODO: change to BoardSpaceLabel
+
 class PlaySymbolLabel : public SymbolLabel {
     Q_OBJECT
 

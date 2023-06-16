@@ -9,9 +9,6 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // hides element that helps center the title
-    ui->pushButton_backBalancer->setVisible(false);
-
     // make - + buttons square
     QToolButton* buttonArray[4] = {
         ui->toolButton_addPlayer,
@@ -121,7 +118,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     }
 
     // Make player lists
-    for (int i = 0; i < players->rowCount(); i++)
+    for (int i = 0; i < getPlayerAmt(); i++)
         playersList.push_back(Player{playerNames[i], playerSymbols[i]});
 
     // List of boards to pass to next window
