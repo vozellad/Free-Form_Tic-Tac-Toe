@@ -15,6 +15,24 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="1" colspan="5">
+     <widget class="QScrollArea" name="scrollArea_table">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents_table">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>649</width>
+         <height>532</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_table"/>
+      </widget>
+     </widget>
+    </item>
     <item row="3" column="0">
      <widget class="QScrollArea" name="scrollArea_players">
       <property name="sizePolicy">
@@ -37,8 +55,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>105</width>
-         <height>518</height>
+         <width>123</width>
+         <height>532</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -47,63 +65,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QGridLayout" name="gridLayout_players">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_playerName2">
-          <property name="text">
-           <string>Player 2</string>
-          </property>
-         </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_scrollAreaPlayers">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_players"/>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_playerName1">
-          <property name="text">
-           <string>Player 1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="label_player1Wins">
-          <property name="text">
-           <string>0</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_playerSymbol2">
-          <property name="text">
-           <string>O</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_playerSymbol1">
-          <property name="text">
-           <string>X</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_player2Wins">
-          <property name="text">
-           <string>0</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <spacer name="verticalSpacer">
+        <item>
+         <spacer name="verticalSpacer_playersBottom">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -119,30 +86,31 @@
       </widget>
      </widget>
     </item>
-    <item row="3" column="1" colspan="5">
-     <widget class="QScrollArea" name="scrollArea_table">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents_table">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>685</width>
-         <height>532</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_table"/>
-      </widget>
-     </widget>
-    </item>
     <item row="2" column="1" colspan="5">
      <layout class="QHBoxLayout" name="horizontalLayout_top">
+      <item>
+       <widget class="QPushButton" name="pushButton_back">
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>&lt;-</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="label_turnOf">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
@@ -159,19 +127,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_back">
-      <property name="maximumSize">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;-</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

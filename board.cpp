@@ -209,7 +209,7 @@ Board::getWinSpaces(BoardSpaceLabel* space)
             currWinSpaces.push_back(getSpace(row, c));
         }
 
-        if (sameInARow == winCondition) {
+        if (sameInARow == winCondition && currSymbol != "") {
             allWins.push_back(currWinSpaces);
             sameInARow--;
             currWinSpaces.erase(currWinSpaces.begin());
@@ -237,7 +237,7 @@ Board::getWinSpaces(BoardSpaceLabel* space)
             currWinSpaces.push_back(getSpace(r, col));
         }
 
-        if (sameInARow == winCondition) {
+        if (sameInARow == winCondition && currSymbol != "") {
             allWins.push_back(currWinSpaces);
             sameInARow--;
             currWinSpaces.erase(currWinSpaces.begin());
@@ -269,7 +269,7 @@ Board::getWinSpaces(BoardSpaceLabel* space)
             currWinSpaces.push_back(getSpace(dRow, dCol));
         }
 
-        if (sameInARow == winCondition) {
+        if (sameInARow == winCondition && currSymbol != "") {
             allWins.push_back(currWinSpaces);
             sameInARow--;
             currWinSpaces.erase(currWinSpaces.begin());
@@ -301,7 +301,7 @@ Board::getWinSpaces(BoardSpaceLabel* space)
             currWinSpaces.push_back(getSpace(dRow, dCol));
         }
 
-        if (sameInARow == winCondition) {
+        if (sameInARow == winCondition && currSymbol != "") {
             allWins.push_back(currWinSpaces);
             sameInARow--;
             currWinSpaces.erase(currWinSpaces.begin());

@@ -6,6 +6,14 @@ SymbolLabel::SymbolLabel(QWidget* parent,
 {
 }
 
+SymbolLabel::SymbolLabel(QVariant symbol,
+                         QWidget* parent,
+                         Qt::WindowFlags f)
+    : QLabel(parent)
+{
+    setSymbol(symbol);
+}
+
 SymbolLabel::~SymbolLabel() {}
 
 void SymbolLabel::mousePressEvent(QMouseEvent* event)

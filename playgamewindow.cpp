@@ -1,8 +1,6 @@
 #include "playgamewindow.h"
 #include "ui_playgamewindow.h"
 
-// TODO: board stuff might all need to be contained in a class
-
 PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
                                const QVector<Board>& boards,
                                QWidget *parent) :
@@ -13,15 +11,14 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 {
     ui->setupUi(this);
 
-    // Set name and symbol
-    ui->label_playerName1->setText(players[0].name);
-    //ui->label_symbol->setText(players[0].symbol.value<QString>());
-    //ui->label_symbol->
-
     table = ui->gridLayout_table;
     table->setSpacing(42);
 
     addBoards();  // Add boards to table
+
+    playersUI = ui->gridLayout_players;
+
+    addPlayers();
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -51,5 +48,25 @@ void PlayGameWindow::addBoards()
         // Increment position values
         col = (col + 1) % tableWidth;
         if (col == 0)  row++;
+    }
+}
+
+void PlayGameWindow::addPlayers()
+{
+    //playersUI->setRowMinimumHeight(2, 0);
+    //playersUI->setRowStretch(2, 0);
+
+    QLabel* playerName1 = new QLabel(players[0].name);
+    QPalette palette = playerName1->palette();
+    palette.setColor(QPalette::Window, Qt::red);
+    playerName1->setPalette(palette);
+    playersUI->addWidget(playerName1);
+    playersUI->addWidget(new SymbolLabel(players[0].symbol), 0, 1);
+    playersUI->addWidget(new QLabel("0"), 0, 2);
+
+    for (int i = 1; i < players.count(); i++) {
+        playersUI->addWidget(new QLabel(players[i].name));
+        playersUI->addWidget(new SymbolLabel(players[i].symbol));
+        playersUI->addWidget(new QLabel("0"));
     }
 }
