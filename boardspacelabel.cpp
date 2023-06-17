@@ -8,7 +8,7 @@ BoardSpaceLabel::BoardSpaceLabel(QWidget* parent, Qt::WindowFlags f)
 
 BoardSpaceLabel::~BoardSpaceLabel() {}
 
-void BoardSpaceLabel::setSymbol(const QVariant& symbol)
+void BoardSpaceLabel::setSymbol(const QVariant symbol)
 {
     setText(symbol.value<QString>());
     unscaledImage = QImage();

@@ -13,7 +13,7 @@ void SymbolLabel::mousePressEvent(QMouseEvent* event)
     emit clicked();
 }
 
-void SymbolLabel::setSymbol(const QVariant& symbol)
+void SymbolLabel::setSymbol(const QVariant symbol)
 {
     if (symbol.isNull())
         throw std::invalid_argument("Symbol is null.");

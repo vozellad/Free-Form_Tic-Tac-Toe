@@ -14,7 +14,7 @@ public:
                          Qt::WindowFlags f = Qt::WindowFlags());
     ~SymbolLabel();
 
-    void setSymbol(const QVariant& symbol);
+    void setSymbol(const QVariant symbol);
 
     QVariant getSymbol();
 

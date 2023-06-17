@@ -1,7 +1,7 @@
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
-PlayerSymbolDialog::PlayerSymbolDialog(const QString& name,
+PlayerSymbolDialog::PlayerSymbolDialog(const QString name,
                                        SymbolLabel* symbol,
                                        QWidget *parent) :
     QDialog(parent),
@@ -84,7 +84,7 @@ void PlayerSymbolDialog::on_lineEdit_text_textEdited()
 // Write to text of Get Image button
 // to let user know the state of retrieving image
 // No parameter resets the button text.
-void PlayerSymbolDialog::markGetImageButton(const QString& appendedText)
+void PlayerSymbolDialog::markGetImageButton(const QString appendedText)
 {
     QPushButton* b = ui->pushButton_getImage;
     const static QString bText = b->text();

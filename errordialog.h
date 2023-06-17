@@ -12,7 +12,7 @@ class ErrorDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ErrorDialog(const QString& errorMessage,
+    explicit ErrorDialog(const QString errorMessage,
                          QWidget *parent = nullptr);
     ~ErrorDialog();
 

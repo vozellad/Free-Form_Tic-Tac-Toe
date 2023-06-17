@@ -124,12 +124,12 @@ bool Board::boardIsFull() const
 
 // TODO: next 2 functions might get replaced by a utils function
 
-QVariant Board::getSymbol(const int& row, const int& col) const
+QVariant Board::getSymbol(const int row, const int col) const
 {
     return getSpace(row, col)->getSymbol();
 }
 
-BoardSpaceLabel* Board::getSpace(const int& row, const int& col) const
+BoardSpaceLabel* Board::getSpace(const int row, const int col) const
 {
     return qobject_cast<BoardSpaceLabel*>
             (layout->itemAtPosition(row, col)->widget());
