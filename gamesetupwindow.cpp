@@ -9,9 +9,6 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // hides element that helps center the title
-    ui->pushButton_backBalancer->setVisible(false);
-
     // make - + buttons square
     QToolButton* buttonArray[4] = {
         ui->toolButton_addPlayer,
@@ -149,7 +146,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             return;
         }
 
-        boardsList.push_back(Board{sizeX, sizeY, winCond});
+        boardsList.push_back(Board(sizeX, sizeY, winCond));
     }
 
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);

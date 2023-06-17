@@ -49,4 +49,6 @@ add noise when symbol is inserted
 
 const & everywhere?
 
+rule of five
+
 */

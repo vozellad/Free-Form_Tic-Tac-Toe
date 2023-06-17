@@ -19,11 +19,13 @@ void SymbolLabel::setSymbol(const QVariant& symbol)
         throw std::invalid_argument("Symbol is null.");
 
     else if (symbol.canConvert<QString>()) {
+        // TODO
         setText(symbol.value<QString>());
         unscaledImage = QImage();
     }
 
     else if (symbol.canConvert<QImage>()) {
+        // TODO
         QImage image = symbol.value<QImage>();
 
         QImage scaledImage = image.scaledToHeight(

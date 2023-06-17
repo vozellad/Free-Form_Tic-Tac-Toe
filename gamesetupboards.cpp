@@ -94,6 +94,7 @@ QSpinBox* GameSetupWindow::createBoardSpinBox()
     newSpinBox->setValue(3);
     newSpinBox->setMaximumWidth(70);
     newSpinBox->setMinimum(1);
+    newSpinBox->setMaximum(20);
     newSpinBox->setAlignment(Qt::AlignRight);
     return newSpinBox;
 }

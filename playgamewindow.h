@@ -6,10 +6,8 @@
 #include <cmath>
 #include "player.h"
 #include "board.h"
-#include "imageutils.h"
-#include "playsymbollabel.h"
-
-// TODO: players on top. etc on bottom.
+#include "boardspacelabel.h"  // TODO
+#include "gamesetupwindow.h"
 
 namespace Ui {
 class PlayGameWindow;
@@ -25,6 +23,9 @@ public:
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
+private slots:
+    void on_pushButton_back_clicked();
+
 private:
     Ui::PlayGameWindow *ui;
 
@@ -36,52 +37,8 @@ private:
 
     int currPlayerIndex = 0;
 
-    void addClickedBoardSpace(PlaySymbolLabel* boardSpace,
-                              const QGridLayout* boardLayout,
-                              const Board& boardSettings);
-
     void addBoards();
 
-    QGridLayout* createBoard(const Board& boardSettings);
-
-    void boardSpaceClicked(PlaySymbolLabel* boardSpace,
-                           const QGridLayout* boardLayout,
-                           const Board& boardSettings);
-
-    QVector<QVector<PlaySymbolLabel*>> getWinSpaces(
-            PlaySymbolLabel* boardSpace,
-            const QGridLayout* boardLayout,
-            const Board& boardSettings);
-
-    bool boardIsFull(const QGridLayout* board);
-
-    QVariant getSymbol(const QGridLayout* boardLayout,
-                       const int& row,
-                       const int& col);
-
-    PlaySymbolLabel* getSpace(const QGridLayout* boardLayout,
-                              const int& row,
-                              const int& col);
-
-    int getGridSize(const int& widthOrHeight);
-
-    void disableBoard(const QGridLayout* boardLayout);
-
-    bool vectorInVector(const QVector<PlaySymbolLabel*>& vec1,
-                        const QVector<QVector<PlaySymbolLabel*>>& vec2);
-
-    void displayWins(const QVector<QVector<PlaySymbolLabel*>>& wins);
-
-    QVector<QVector<PlaySymbolLabel*>> sus(const int& gridSize,
-                                           const QGridLayout* boardLayout);
-
-    void sus(
-            const int& pos,
-            bool horiORVert,
-            const int& size,
-            const QGridLayout* boardLayout,
-            QVector<QVector<PlaySymbolLabel*>>* allWins,
-            const int& winCond);
 };
 
 #endif // PLAYGAMEWINDOW_H
