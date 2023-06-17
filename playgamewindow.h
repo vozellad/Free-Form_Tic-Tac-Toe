@@ -6,7 +6,7 @@
 #include <cmath>
 #include "player.h"
 #include "board.h"
-#include "playsymbollabel.h"  // TODO
+#include "boardspacelabel.h"  // TODO
 #include "gamesetupwindow.h"
 
 namespace Ui {

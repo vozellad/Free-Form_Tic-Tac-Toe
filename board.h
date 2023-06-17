@@ -2,14 +2,15 @@
 #define BOARD_H
 
 #include <QGridLayout>
-#include "playsymbollabel.h"
+#include "boardspacelabel.h"
 
 class Board
 {
+
 public:
     Board(const int& width, const int& height, const int& winCondition);
 
-    QGridLayout* getLayout();
+    QGridLayout* getLayout() const;
 
 private:
     const int boardWidth;
@@ -32,25 +33,25 @@ private:
 
     QFrame* getLine(QFrame::Shape lineType);
 
-    void addClickedSpace(PlaySymbolLabel* space);
+    void addClickedSpace(BoardSpaceLabel* space);
 
-    void spaceClicked(PlaySymbolLabel* space);
+    void spaceClicked(BoardSpaceLabel* space);
 
-    bool boardIsFull();
+    bool boardIsFull() const;
 
-    QVariant getSymbol(const int& row, const int& col);
+    QVariant getSymbol(const int& row, const int& col) const;
 
-    PlaySymbolLabel* getSpace(const int& row, const int& col);
+    BoardSpaceLabel* getSpace(const int& row, const int& col) const;
 
     void disableBoard();
 
-    void displayWins(const QVector<QVector<PlaySymbolLabel*>>& wins);
+    void displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins);
 
-    int getSpaceRow(PlaySymbolLabel* space);
+    int getSpaceRow(BoardSpaceLabel* space);
 
-    int getSpaceCol(PlaySymbolLabel* space);
+    int getSpaceCol(BoardSpaceLabel* space);
 
-    QVector<QVector<PlaySymbolLabel*>> getWinSpaces(PlaySymbolLabel* space);
+    QVector<QVector<BoardSpaceLabel*>> getWinSpaces(BoardSpaceLabel* space);
 
 };
 

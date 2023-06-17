@@ -10,7 +10,7 @@ Board::Board(const int& width, const int& height, const int& winCondition) :
     createBoard();
 }
 
-QGridLayout* Board::getLayout() { return layout; }
+QGridLayout* Board::getLayout() const { return layout; }
 
 //get via index
 
@@ -36,7 +36,7 @@ void Board::addSpaces()
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2) {
-            PlaySymbolLabel* space = new PlaySymbolLabel();
+            BoardSpaceLabel* space = new BoardSpaceLabel();
             space->setAlignment(Qt::AlignCenter);
             addClickedSpace(space);
             layout->addWidget(space, row, col);
@@ -64,14 +64,14 @@ QFrame* Board::getLine(QFrame::Shape lineType)
     return line;
 }
 
-void Board::addClickedSpace(PlaySymbolLabel* space)
+void Board::addClickedSpace(BoardSpaceLabel* space)
 {
-    QObject::connect(space, &PlaySymbolLabel::clicked, this,
+    QObject::connect(space, &BoardSpaceLabel::clicked, this,
         [this, space]() { spaceClicked(space); }
     );
 }
 
-void Board::spaceClicked(PlaySymbolLabel* space)
+void Board::spaceClicked(BoardSpaceLabel* space)
 {
     // if space has text or image
     if (space->getSymbol() != "")
@@ -79,7 +79,7 @@ void Board::spaceClicked(PlaySymbolLabel* space)
 
     // TODO: boardSpace->setSymbol(players[currPlayerIndex].symbol);
 
-    QVector<QVector<PlaySymbolLabel*>> wins = getWinSpaces(space);
+    QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
     displayWins(wins);
 
@@ -89,7 +89,7 @@ void Board::spaceClicked(PlaySymbolLabel* space)
     // TODO: currPlayerIndex = (currPlayerIndex + 1) % players.count();
 }
 
-bool Board::boardIsFull()
+bool Board::boardIsFull() const
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
@@ -101,14 +101,14 @@ bool Board::boardIsFull()
 
 // TODO: next 2 functions might get replaced by a utils function
 
-QVariant Board::getSymbol(const int& row, const int& col)
+QVariant Board::getSymbol(const int& row, const int& col) const
 {
     return getSpace(row, col)->getSymbol();
 }
 
-PlaySymbolLabel* Board::getSpace(const int& row, const int& col)
+BoardSpaceLabel* Board::getSpace(const int& row, const int& col) const
 {
-    return qobject_cast<PlaySymbolLabel*>
+    return qobject_cast<BoardSpaceLabel*>
             (layout->itemAtPosition(row, col)->widget());
 }
 
@@ -119,10 +119,10 @@ void Board::disableBoard()
             getSpace(row, col)->setEnabled(false);
 }
 
-void Board::displayWins(const QVector<QVector<PlaySymbolLabel*>>& wins)
+void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)
 {
-    for (QVector<PlaySymbolLabel*> winSpaces : wins)
-        for (PlaySymbolLabel* space : winSpaces) {
+    for (QVector<BoardSpaceLabel*> winSpaces : wins)
+        for (BoardSpaceLabel* space : winSpaces) {
             QPalette palette = space->palette();
             palette.setColor(QPalette::Background, QColor(144, 238, 144));
             space->setAutoFillBackground(true);
@@ -131,7 +131,7 @@ void Board::displayWins(const QVector<QVector<PlaySymbolLabel*>>& wins)
         }
 }
 
-int Board::getSpaceRow(PlaySymbolLabel* space)
+int Board::getSpaceRow(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int row, _col, _rowSpan, _colSpan;
@@ -142,7 +142,7 @@ int Board::getSpaceRow(PlaySymbolLabel* space)
     return row;
 }
 
-int Board::getSpaceCol(PlaySymbolLabel* space)
+int Board::getSpaceCol(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int _row, col, _rowSpan, _colSpan;
@@ -157,18 +157,18 @@ int Board::getSpaceCol(PlaySymbolLabel* space)
 // TODO: there's enough duplicate code to justify a creating a function for it,
 // but the code is similar enough to make it difficult.
 // I don't yet know how to do it.
-QVector<QVector<PlaySymbolLabel*>>
-Board::getWinSpaces(PlaySymbolLabel* space)
+QVector<QVector<BoardSpaceLabel*>>
+Board::getWinSpaces(BoardSpaceLabel* space)
 {
     // Get space coordinates
     const int row = getSpaceRow(space);
     const int col = getSpaceCol(space);
 
     //
-    QVector<PlaySymbolLabel*> currWinSpaces;
+    QVector<BoardSpaceLabel*> currWinSpaces;
 
     //
-    QVector<QVector<PlaySymbolLabel*>> allWins;
+    QVector<QVector<BoardSpaceLabel*>> allWins;
 
     // Check symbols horizontally
     int sameInARow = 0;

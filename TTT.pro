@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     board.cpp \
+    boardspacelabel.cpp \
     errordialog.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
@@ -17,7 +18,6 @@ SOURCES += \
     main.cpp \
     playersymboldialog.cpp \
     playgamewindow.cpp \
-    playsymbollabel.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp \
     symbollabel.cpp \
@@ -25,12 +25,12 @@ SOURCES += \
 
 HEADERS += \
     board.h \
+    boardspacelabel.h \
     errordialog.h \
     imageutils.h \
     player.h \
     playersymboldialog.h \
     playgamewindow.h \
-    playsymbollabel.h \
     startscreenwindow.h \
     gamesetupwindow.h \
     symbollabel.h \
