@@ -17,7 +17,7 @@ public:
                              Qt::WindowFlags f = Qt::WindowFlags());
     ~BoardSpaceLabel();
 
-    void setSymbol(const QVariant& symbol);
+    void setSymbol(const QVariant symbol);
 
 signals:
     void resized();

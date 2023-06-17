@@ -146,7 +146,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             return;
         }
 
-        boardsList.push_back(Board{sizeX, sizeY, winCond});
+        boardsList.push_back(Board(sizeX, sizeY, winCond));
     }
 
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);

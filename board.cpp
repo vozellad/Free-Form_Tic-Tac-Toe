@@ -10,7 +10,29 @@ Board::Board(const int& width, const int& height, const int& winCondition) :
     createBoard();
 }
 
-QGridLayout* Board::getLayout() const { return layout; }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra"
+Board::Board::Board(const Board& other) :
+    boardWidth(other.boardWidth),
+    boardHeight(other.boardHeight),
+    winCondition(other.winCondition),
+    gridWidth(other.gridWidth),
+    gridHeight(other.gridHeight)
+{
+    createBoard();
+}
+#pragma GCC diagnostic pop
+
+Board::~Board()
+{
+    // TODO: delete layout
+}
+
+QGridLayout* Board::getLayout() const
+{
+    //TODO: return if no error
+    return layout;
+}
 
 //get via index
 
@@ -78,6 +100,7 @@ void Board::spaceClicked(BoardSpaceLabel* space)
         return;
 
     // TODO: boardSpace->setSymbol(players[currPlayerIndex].symbol);
+    space->setSymbol("X");
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -101,12 +124,12 @@ bool Board::boardIsFull() const
 
 // TODO: next 2 functions might get replaced by a utils function
 
-QVariant Board::getSymbol(const int& row, const int& col) const
+QVariant Board::getSymbol(const int row, const int col) const
 {
     return getSpace(row, col)->getSymbol();
 }
 
-BoardSpaceLabel* Board::getSpace(const int& row, const int& col) const
+BoardSpaceLabel* Board::getSpace(const int row, const int col) const
 {
     return qobject_cast<BoardSpaceLabel*>
             (layout->itemAtPosition(row, col)->widget());

@@ -4,11 +4,14 @@
 #include <QGridLayout>
 #include "boardspacelabel.h"
 
-class Board
+class Board : public QObject
 {
+    Q_OBJECT
 
 public:
     Board(const int& width, const int& height, const int& winCondition);
+    Board(const Board& other);
+    ~Board();
 
     QGridLayout* getLayout() const;
 
@@ -39,9 +42,9 @@ private:
 
     bool boardIsFull() const;
 
-    QVariant getSymbol(const int& row, const int& col) const;
+    QVariant getSymbol(const int row, const int col) const;
 
-    BoardSpaceLabel* getSpace(const int& row, const int& col) const;
+    BoardSpaceLabel* getSpace(const int row, const int col) const;
 
     void disableBoard();
 

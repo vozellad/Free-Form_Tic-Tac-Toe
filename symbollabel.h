@@ -12,9 +12,12 @@ class SymbolLabel : public QLabel {
 public:
     explicit SymbolLabel(QWidget* parent = Q_NULLPTR,
                          Qt::WindowFlags f = Qt::WindowFlags());
+    explicit SymbolLabel(QVariant symbol,
+                         QWidget* parent = Q_NULLPTR,
+                         Qt::WindowFlags f = Qt::WindowFlags());
     ~SymbolLabel();
 
-    void setSymbol(const QVariant& symbol);
+    void setSymbol(const QVariant symbol);
 
     QVariant getSymbol();
 

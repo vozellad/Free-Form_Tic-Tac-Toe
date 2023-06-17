@@ -60,14 +60,14 @@ private:
     QVBoxLayout* boards;
 
     // Prompt user for new symbol to replace clicked symbol
-    void addClickedPlayerSymbol(const QString& name,
+    void addClickedPlayerSymbol(const QString name,
                                 SymbolLabel* symbol);
 
     // Get current amount of players
     int getPlayerAmt() const;
 
     // Set current amount of players
-    void setPlayerAmt(const int& newPlayerAmt);
+    void setPlayerAmt(const int newPlayerAmt);
 
     // Keep player amount within range (1-99)
     // If not in range, turn off appropriate player amount modifier button -/+
@@ -90,7 +90,7 @@ private:
     int getBoardAmt() const;
 
     // Set current amount of boards
-    void setBoardAmt(const int& newBoardAmt);
+    void setBoardAmt(const int newBoardAmt);
 
     // Keep board amount within range (1-99)
     // If not in range, turn off appropriate board amount modifier button -/+

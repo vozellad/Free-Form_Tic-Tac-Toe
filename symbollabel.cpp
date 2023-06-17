@@ -6,6 +6,14 @@ SymbolLabel::SymbolLabel(QWidget* parent,
 {
 }
 
+SymbolLabel::SymbolLabel(QVariant symbol,
+                         QWidget* parent,
+                         Qt::WindowFlags f)
+    : QLabel(parent)
+{
+    setSymbol(symbol);
+}
+
 SymbolLabel::~SymbolLabel() {}
 
 void SymbolLabel::mousePressEvent(QMouseEvent* event)
@@ -13,7 +21,7 @@ void SymbolLabel::mousePressEvent(QMouseEvent* event)
     emit clicked();
 }
 
-void SymbolLabel::setSymbol(const QVariant& symbol)
+void SymbolLabel::setSymbol(const QVariant symbol)
 {
     if (symbol.isNull())
         throw std::invalid_argument("Symbol is null.");

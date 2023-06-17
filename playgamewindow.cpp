@@ -13,15 +13,14 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 {
     ui->setupUi(this);
 
-    // Set name and symbol
-    ui->label_playerName1->setText(players[0].name);
-    //ui->label_symbol->setText(players[0].symbol.value<QString>());
-    //ui->label_symbol->
-
     table = ui->gridLayout_table;
     table->setSpacing(42);
 
     addBoards();  // Add boards to table
+
+    playersUI = ui->gridLayout_players;
+
+    addPlayers();
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -45,11 +44,26 @@ void PlayGameWindow::addBoards()
 
     const int tableWidth = ((int)sqrt(boards.count() + 1));
 
-    for (Board b : boards) {
-        table->addLayout(b.getLayout(), row, col);
+    for (int i = 0; i < boards.count(); i++) {
+        table->addLayout(boards[i].getLayout(), row, col);
 
         // Increment position values
         col = (col + 1) % tableWidth;
         if (col == 0)  row++;
+    }
+}
+
+void PlayGameWindow::addPlayers()
+{
+    //playersUI->setRowMinimumHeight(2, 0);
+    //playersUI->setRowStretch(2, 0);
+
+    playersUI->addWidget(new QLabel(players[0].name), 0, 0);
+    playersUI->addWidget(new SymbolLabel(players[0].symbol), 0, 1);
+    playersUI->addWidget(new QLabel("0"), 0, 2);
+    for (int i = 1; i < players.count(); i++) {
+        playersUI->addWidget(new QLabel(players[i].name));
+        playersUI->addWidget(new SymbolLabel(players[i].symbol));
+        playersUI->addWidget(new QLabel("0"));
     }
 }

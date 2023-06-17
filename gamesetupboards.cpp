@@ -69,7 +69,7 @@ int GameSetupWindow::getBoardAmt() const
 }
 
 // Set number representing board amount in UI
-void GameSetupWindow::setBoardAmt(const int& newBoardAmt)
+void GameSetupWindow::setBoardAmt(const int newBoardAmt)
 {
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }

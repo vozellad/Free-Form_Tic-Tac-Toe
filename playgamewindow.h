@@ -35,9 +35,13 @@ private:
 
     QGridLayout* table;
 
+    QGridLayout* playersUI;
+
     int currPlayerIndex = 0;
 
     void addBoards();
+
+    void addPlayers();
 
 };
 

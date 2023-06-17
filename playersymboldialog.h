@@ -16,7 +16,7 @@ class PlayerSymbolDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlayerSymbolDialog(const QString& name,
+    explicit PlayerSymbolDialog(const QString name,
                                 SymbolLabel* newSymbol,
                                 QWidget *parent = nullptr);
     ~PlayerSymbolDialog();
@@ -44,7 +44,7 @@ private:
     // Write to text of Get Image button
     // to let user know the state of retrieving image.
     // No parameter resets the button text.
-    void markGetImageButton(const QString& appendedText = "");
+    void markGetImageButton(const QString appendedText = "");
 };
 
 #endif // PLAYERSYMBOLDIALOG_H
