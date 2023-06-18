@@ -43,6 +43,8 @@ private:
 
     void addPlayers();
 
+    void highlightPlayer();
+
 };
 
 #endif // PLAYGAMEWINDOW_H

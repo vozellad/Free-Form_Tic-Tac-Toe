@@ -99,6 +99,6 @@ void GameSetupWindow::addInitialPlayers()
 
     // Set starting symbols
     qobject_cast<SymbolLabel*>(players->itemAt(1)->widget()) ->setSymbol("X");
-    qobject_cast<SymbolLabel*>(
-                players->itemAt(1 + width)->widget()) ->setSymbol("O");
+    qobject_cast<SymbolLabel*>
+            (players->itemAt(1 + width)->widget()) ->setSymbol("O");
 }

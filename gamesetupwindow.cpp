@@ -54,6 +54,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
     // Iterate through players
     for (int i = 0; i < players->count(); i += 2) {
+
         // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
@@ -93,6 +94,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     std::sort(symbolTest.begin(), symbolTest.end());
     // Adjacent compare
     for (int i = 0; i < symbolTest.size() - 1; i++) {
+
         // Get symbols to compare
         QVariant sym1 = symbolTest[i];
         QVariant sym2 = symbolTest[i + 1];

@@ -15,6 +15,24 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="1" colspan="5">
+     <widget class="QScrollArea" name="scrollArea_table">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents_table">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>634</width>
+         <height>532</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_table"/>
+      </widget>
+     </widget>
+    </item>
     <item row="3" column="0">
      <widget class="QScrollArea" name="scrollArea_players">
       <property name="sizePolicy">
@@ -22,6 +40,12 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>140</width>
+        <height>0</height>
+       </size>
       </property>
       <property name="maximumSize">
        <size>
@@ -37,7 +61,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>105</width>
+         <width>138</width>
          <height>532</height>
         </rect>
        </property>
@@ -68,37 +92,6 @@
       </widget>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_back">
-      <property name="maximumSize">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;-</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1" colspan="5">
-     <widget class="QScrollArea" name="scrollArea_table">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents_table">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>667</width>
-         <height>532</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_table"/>
-      </widget>
-     </widget>
-    </item>
     <item row="2" column="1" colspan="5">
      <layout class="QHBoxLayout" name="horizontalLayout_top">
       <item>
@@ -121,6 +114,19 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButton_back">
+      <property name="maximumSize">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;-</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
