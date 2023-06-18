@@ -1,6 +1,10 @@
 #include "board.h"
 
-Board::Board(const int& width, const int& height, const int& winCondition) :
+Board::Board(const int width,
+             const int height,
+             const int winCondition,
+             QWidget* parent) :
+    QGridLayout(parent),
     boardWidth(width),
     boardHeight(height),
     winCondition(winCondition),
@@ -10,9 +14,8 @@ Board::Board(const int& width, const int& height, const int& winCondition) :
     createBoard();
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra"
-Board::Board::Board(const Board& other) :
+Board::Board(const Board& other, QWidget* parent) :
+    QGridLayout(parent),
     boardWidth(other.boardWidth),
     boardHeight(other.boardHeight),
     winCondition(other.winCondition),
@@ -21,17 +24,10 @@ Board::Board::Board(const Board& other) :
 {
     createBoard();
 }
-#pragma GCC diagnostic pop
 
 Board::~Board()
 {
     // TODO: delete layout
-}
-
-QGridLayout* Board::getLayout() const
-{
-    //TODO: return if no error
-    return layout;
 }
 
 //get via index
@@ -40,14 +36,12 @@ void Board::createBoard()
 {
     // TODO: do with QPallete instead?
 
-    layout = new QGridLayout();
-
     // Connect lines
-    layout->setSpacing(0);
+    setSpacing(0);
 
     // Set grid column width
-    layout->setColumnMinimumWidth(boardWidth - 1, 0);
-    layout->setColumnStretch(boardWidth - 1, 0);
+    setColumnMinimumWidth(boardWidth - 1, 0);
+    setColumnStretch(boardWidth - 1, 0);
 
     addSpaces();
 
@@ -61,7 +55,7 @@ void Board::addSpaces()
             BoardSpaceLabel* space = new BoardSpaceLabel();
             space->setAlignment(Qt::AlignCenter);
             addClickedSpace(space);
-            layout->addWidget(space, row, col);
+            addWidget(space, row, col);
         }
 }
 
@@ -69,12 +63,12 @@ void Board::addLines()
 {
     for (int row = 0; row < gridHeight; row += 2) {
         for (int col = 1; col < gridWidth; col += 2)
-            layout->addWidget(getLine(QFrame::VLine), row, col);
+            addWidget(getLine(QFrame::VLine), row, col);
 
         // Don't add last hLine
         if (row >= gridHeight - 1)  break;
 
-        layout->addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
+        addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
     }
 }
 
@@ -131,8 +125,7 @@ QVariant Board::getSymbol(const int row, const int col) const
 
 BoardSpaceLabel* Board::getSpace(const int row, const int col) const
 {
-    return qobject_cast<BoardSpaceLabel*>
-            (layout->itemAtPosition(row, col)->widget());
+    return qobject_cast<BoardSpaceLabel*>(itemAtPosition(row, col)->widget());
 }
 
 void Board::disableBoard()
@@ -158,9 +151,9 @@ int Board::getSpaceRow(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int row, _col, _rowSpan, _colSpan;
-    layout->getItemPosition(layout->indexOf(space),
-                            &row, &_col,
-                            &_rowSpan, &_colSpan);
+    getItemPosition(indexOf(space),
+                    &row, &_col,
+                    &_rowSpan, &_colSpan);
 
     return row;
 }
@@ -169,9 +162,9 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int _row, col, _rowSpan, _colSpan;
-    layout->getItemPosition(layout->indexOf(space),
-                            &_row, &col,
-                            &_rowSpan, &_colSpan);
+    getItemPosition(indexOf(space),
+                    &_row, &col,
+                    &_rowSpan, &_colSpan);
 
     return col;
 }
@@ -180,8 +173,7 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
 // TODO: there's enough duplicate code to justify a creating a function for it,
 // but the code is similar enough to make it difficult.
 // I don't yet know how to do it.
-QVector<QVector<BoardSpaceLabel*>>
-Board::getWinSpaces(BoardSpaceLabel* space)
+QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
 {
     // Get space coordinates
     const int row = getSpaceRow(space);

@@ -25,7 +25,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>649</width>
+         <width>634</width>
          <height>532</height>
         </rect>
        </property>
@@ -41,6 +41,12 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>140</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -55,7 +61,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>123</width>
+         <width>138</width>
          <height>532</height>
         </rect>
        </property>
@@ -89,28 +95,9 @@
     <item row="2" column="1" colspan="5">
      <layout class="QHBoxLayout" name="horizontalLayout_top">
       <item>
-       <widget class="QPushButton" name="pushButton_back">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&lt;-</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="label_turnOf">
         <property name="enabled">
          <bool>true</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
@@ -127,6 +114,19 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButton_back">
+      <property name="maximumSize">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;-</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

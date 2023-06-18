@@ -4,16 +4,19 @@
 #include <QGridLayout>
 #include "boardspacelabel.h"
 
-class Board : public QObject
+// TODO: change name to BoardGrid/BoardGridLayout?
+
+class Board : public QGridLayout
 {
     Q_OBJECT
 
 public:
-    Board(const int& width, const int& height, const int& winCondition);
-    Board(const Board& other);
+    Board(const int width,
+          const int height,
+          const int winCondition,
+          QWidget* parent = Q_NULLPTR);
+    Board(const Board& other, QWidget* parent = Q_NULLPTR);
     ~Board();
-
-    QGridLayout* getLayout() const;
 
 private:
     const int boardWidth;
@@ -25,8 +28,6 @@ private:
     const int gridWidth;
 
     const int gridHeight;
-
-    QGridLayout* layout;
 
     void createBoard();
 
