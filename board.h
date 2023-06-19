@@ -3,20 +3,20 @@
 
 #include <QGridLayout>
 #include "boardspacelabel.h"
+class PlayGameWindow;
 
 class Board : public QObject
 {
     Q_OBJECT
 
 public:
-    Board(const int width,
-          const int height,
-          const int winCondition,
-          auto gameWindow);
+    Board(const int width, const int height, const int winCondition);
     Board(const Board& other);
     ~Board();
 
     QGridLayout* getLayout();
+
+    void setGameWindow(PlayGameWindow* w);
 
 private:
     // TODO: which to add getter for?
@@ -35,6 +35,8 @@ private:
 
     bool boardCreated = false;
 
+    PlayGameWindow* gameWindow;
+
     void createBoard();
 
     void addSpaces();
@@ -45,7 +47,7 @@ private:
 
     void addClickedSpace(BoardSpaceLabel* space);
 
-    void spaceClicked(BoardSpaceLabel* space, Board* b);
+    void spaceClicked(BoardSpaceLabel* space);
 
     bool boardIsFull() const;
 

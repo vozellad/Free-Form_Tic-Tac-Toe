@@ -1,3 +1,4 @@
+#include "playgamewindow.h"
 #include "board.h"
 
 Board::Board(const int width, const int height, const int winCondition) :
@@ -32,6 +33,11 @@ QGridLayout* Board::getLayout()
     }
 
     return layout;
+}
+
+void Board::setGameWindow(PlayGameWindow* w)
+{
+    gameWindow = w;
 }
 
 //get via index
@@ -89,17 +95,19 @@ QFrame* Board::getLine(QFrame::Shape lineType)
 void Board::addClickedSpace(BoardSpaceLabel* space)
 {
     QObject::connect(space, &BoardSpaceLabel::clicked, this,
-        [this, space]() { spaceClicked(space, this); }
+        [this, space]() { spaceClicked(space); }
     );
 }
 
 void Board::spaceClicked(BoardSpaceLabel* space)
 {
+    // TODO: raise custom error
+
     // if space has text or image
     if (space->getSymbol() != "")
         return;
 
-    space->setSymbol(gameWindow->players[gameWindow->currPlayerIndex].symbol);
+    space->setSymbol(gameWindow->getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -107,8 +115,11 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
-    gameWindow->currPlayerIndex = (gameWindow->currPlayerIndex + 1) % gameWindow->players.count();
-    gameWindow->highlightPlayer();
+    gameWindow->addCurrPlayerScore(wins.count());
+
+    gameWindow->iteratePlayer();
+
+    gameWindow->highlightCurrPlayer();
 }
 
 bool Board::boardIsFull() const

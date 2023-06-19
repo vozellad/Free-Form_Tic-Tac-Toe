@@ -23,6 +23,14 @@ public:
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
+    QVariant getCurrPlayerSymbol();
+
+    void addCurrPlayerScore(const int scoreAdd);
+
+    void iteratePlayer();
+
+    void highlightCurrPlayer();
+
 private slots:
     void on_pushButton_back_clicked();
 
@@ -42,8 +50,6 @@ private:
     void addBoards();
 
     void addPlayers();
-
-    void highlightPlayer();
 
 };
 
