@@ -19,7 +19,7 @@ class PlayGameWindow : public QMainWindow
 
 public:
     explicit PlayGameWindow(const QVector<Player>& players,
-                            const QVector<Board>& boards,
+                            QVector<Board>& boards,
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
@@ -29,7 +29,7 @@ private slots:
 private:
     Ui::PlayGameWindow *ui;
 
-    QVector<Player> players;
+    const QVector<Player> players;
 
     QVector<Board> boards;
 

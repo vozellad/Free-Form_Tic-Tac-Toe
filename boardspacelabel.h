@@ -7,8 +7,6 @@
 #include <QApplication>
 #include "symbollabel.h"
 
-// TODO: change to BoardSpaceLabel
-
 class BoardSpaceLabel : public SymbolLabel {
     Q_OBJECT
 
@@ -31,6 +29,8 @@ private:
     bool uiLoaded = false;
 
     void resizeSymbol();
+
+    friend void spaceClicked(BoardSpaceLabel* space);
 
 };
 

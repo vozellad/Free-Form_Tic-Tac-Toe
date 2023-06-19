@@ -2,7 +2,7 @@
 #include "ui_playgamewindow.h"
 
 PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
-                               const QVector<Board>& boards,
+                               QVector<Board>& boards,
                                QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlayGameWindow),
@@ -21,8 +21,6 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     addPlayers();
     highlightPlayer();
-
-    // TODO: // setLambdaBeforeClick  // setLambdaAfterClick
 }
 
 PlayGameWindow::~PlayGameWindow()

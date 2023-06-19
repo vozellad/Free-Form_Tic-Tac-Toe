@@ -1,26 +1,22 @@
 #include "board.h"
 
-Board::Board(const int& width, const int& height, const int& winCondition) :
+Board::Board(const int width, const int height, const int winCondition) :
     boardWidth(width),
     boardHeight(height),
     winCondition(winCondition),
     gridWidth(width * 2 - 1),
     gridHeight(height * 2 - 1)
-{
-    createBoard();
-}
+{}
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wextra"
-Board::Board::Board(const Board& other) :
+Board::Board(const Board& other) :
     boardWidth(other.boardWidth),
     boardHeight(other.boardHeight),
     winCondition(other.winCondition),
     gridWidth(other.gridWidth),
     gridHeight(other.gridHeight)
-{
-    createBoard();
-}
+{}
 #pragma GCC diagnostic pop
 
 Board::~Board()
@@ -28,9 +24,13 @@ Board::~Board()
     // TODO: delete layout
 }
 
-QGridLayout* Board::getLayout() const
+QGridLayout* Board::getLayout()
 {
-    //TODO: return if no error
+    if (!boardCreated) {
+        createBoard();
+        boardCreated = true;
+    }
+
     return layout;
 }
 
@@ -38,9 +38,9 @@ QGridLayout* Board::getLayout() const
 
 void Board::createBoard()
 {
-    // TODO: do with QPallete instead?
-
     layout = new QGridLayout();
+
+    // TODO: do with QPallete instead?
 
     // Connect lines
     layout->setSpacing(0);
@@ -89,7 +89,7 @@ QFrame* Board::getLine(QFrame::Shape lineType)
 void Board::addClickedSpace(BoardSpaceLabel* space)
 {
     QObject::connect(space, &BoardSpaceLabel::clicked, this,
-        [this, space]() { spaceClicked(space); }
+        [this, space]() { spaceClicked(space, this); }
     );
 }
 
@@ -99,8 +99,7 @@ void Board::spaceClicked(BoardSpaceLabel* space)
     if (space->getSymbol() != "")
         return;
 
-    // TODO: boardSpace->setSymbol(players[currPlayerIndex].symbol);
-    space->setSymbol("X");
+    space->setSymbol(gameWindow->players[gameWindow->currPlayerIndex].symbol);
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -108,8 +107,8 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
-    // Cyclically iterate players
-    // TODO: currPlayerIndex = (currPlayerIndex + 1) % players.count();
+    gameWindow->currPlayerIndex = (gameWindow->currPlayerIndex + 1) % gameWindow->players.count();
+    gameWindow->highlightPlayer();
 }
 
 bool Board::boardIsFull() const
@@ -180,8 +179,7 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
 // TODO: there's enough duplicate code to justify a creating a function for it,
 // but the code is similar enough to make it difficult.
 // I don't yet know how to do it.
-QVector<QVector<BoardSpaceLabel*>>
-Board::getWinSpaces(BoardSpaceLabel* space)
+QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
 {
     // Get space coordinates
     const int row = getSpaceRow(space);

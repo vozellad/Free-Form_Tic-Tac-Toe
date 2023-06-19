@@ -9,13 +9,18 @@ class Board : public QObject
     Q_OBJECT
 
 public:
-    Board(const int& width, const int& height, const int& winCondition);
+    Board(const int width,
+          const int height,
+          const int winCondition,
+          auto gameWindow);
     Board(const Board& other);
     ~Board();
 
-    QGridLayout* getLayout() const;
+    QGridLayout* getLayout();
 
 private:
+    // TODO: which to add getter for?
+
     const int boardWidth;
 
     const int boardHeight;
@@ -28,6 +33,8 @@ private:
 
     QGridLayout* layout;
 
+    bool boardCreated = false;
+
     void createBoard();
 
     void addSpaces();
@@ -38,7 +45,7 @@ private:
 
     void addClickedSpace(BoardSpaceLabel* space);
 
-    void spaceClicked(BoardSpaceLabel* space);
+    void spaceClicked(BoardSpaceLabel* space, Board* b);
 
     bool boardIsFull() const;
 
