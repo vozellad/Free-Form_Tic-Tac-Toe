@@ -1,5 +1,5 @@
-#include "playgamewindow.h"
 #include "board.h"
+#include "playgamewindow.h"
 
 Board::Board(const int width,
              const int height,
@@ -92,7 +92,7 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 {
     PlayGameWindow* w = static_cast<PlayGameWindow*>(parent());
 
-    // if space has text or image
+    // If space has text or image
     if (space->getSymbol() != "")  return;
 
     space->setSymbol(w->getCurrPlayerSymbol());
@@ -105,9 +105,24 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     w->addCurrPlayerScore(wins.count());
 
-    w->iteratePlayer();
+    if (w->allBoardsDone()) {
+        const int winnerRow = w->getWinnerRow();
+        w->clearPlayerHighlight();
 
-    w->highlightCurrPlayer();
+        // If no single highest score
+        if (winnerRow == -1)
+            w->callDraw();
+
+        else {
+            w->highlightPlayer(winnerRow);
+            w->displayWinner(winnerRow);
+        }
+
+    // Continue game
+    } else {
+        w->iteratePlayer();
+        w->highlightPlayer();
+    }
 }
 
 bool Board::boardIsFull() const
@@ -138,6 +153,8 @@ void Board::disableBoard()
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
             getSpace(row, col)->setEnabled(false);
+
+    layout->setEnabled(false);
 }
 
 void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)

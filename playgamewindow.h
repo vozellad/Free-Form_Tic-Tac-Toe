@@ -31,7 +31,19 @@ public:
 
     void iteratePlayer();
 
-    void highlightCurrPlayer();
+    void highlightPlayer();
+
+    void highlightPlayer(int playerRow);
+
+    void clearPlayerHighlight();
+
+    bool allBoardsDone() const;
+
+    int getWinnerRow();
+
+    void displayWinner(int winnerIndex);
+
+    void callDraw();
 
 private slots:
     void on_pushButton_back_clicked();
@@ -47,13 +59,11 @@ private:
 
     QGridLayout* playersUI;
 
-    int currPlayerIndex = 0;
+    int currPlayerRow = 0;
 
     void addBoards();
 
     void addPlayers();
-
-    void clearPlayerHighlight();
 
 };
 
