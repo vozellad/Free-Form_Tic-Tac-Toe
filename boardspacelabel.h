@@ -30,6 +30,8 @@ private:
 
     void resizeSymbol();
 
+    friend void spaceClicked(BoardSpaceLabel* space);
+
 };
 
 #endif // BOARDSPACELABEL_H

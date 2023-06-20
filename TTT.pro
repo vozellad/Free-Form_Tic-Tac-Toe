@@ -25,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     board.h \
+    boardsettings.h \
     boardspacelabel.h \
     errordialog.h \
     imageutils.h \

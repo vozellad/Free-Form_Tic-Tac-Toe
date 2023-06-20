@@ -15,7 +15,7 @@
 #include "symbollabel.h"
 #include "playgamewindow.h"
 #include "player.h"
-#include "board.h"
+#include "boardsettings.h"
 #include "imageutils.h"
 #include "errordialog.h"
 

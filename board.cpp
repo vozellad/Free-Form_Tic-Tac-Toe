@@ -1,47 +1,48 @@
+#include "playgamewindow.h"
 #include "board.h"
 
 Board::Board(const int width,
              const int height,
              const int winCondition,
-             QWidget* parent) :
-    QGridLayout(parent),
+             PlayGameWindow* parent) :
+    QWidget(parent),
     boardWidth(width),
     boardHeight(height),
     winCondition(winCondition),
     gridWidth(width * 2 - 1),
     gridHeight(height * 2 - 1)
-{
-    createBoard();
-}
+{ createBoard(); }
 
-Board::Board(const Board& other, QWidget* parent) :
-    QGridLayout(parent),
+Board::Board(const Board& other) :
+    QWidget(other.parentWidget()),
     boardWidth(other.boardWidth),
     boardHeight(other.boardHeight),
     winCondition(other.winCondition),
     gridWidth(other.gridWidth),
     gridHeight(other.gridHeight)
-{
-    createBoard();
-}
+{ createBoard(); }
 
 Board::~Board()
 {
     // TODO: delete layout
 }
 
+QGridLayout* Board::getLayout() const { return layout; }
+
 //get via index
 
 void Board::createBoard()
 {
+    layout = new QGridLayout();
+
     // TODO: do with QPallete instead?
 
     // Connect lines
-    setSpacing(0);
+    layout->setSpacing(0);
 
     // Set grid column width
-    setColumnMinimumWidth(boardWidth - 1, 0);
-    setColumnStretch(boardWidth - 1, 0);
+    layout->setColumnMinimumWidth(boardWidth - 1, 0);
+    layout->setColumnStretch(boardWidth - 1, 0);
 
     addSpaces();
 
@@ -55,7 +56,7 @@ void Board::addSpaces()
             BoardSpaceLabel* space = new BoardSpaceLabel();
             space->setAlignment(Qt::AlignCenter);
             addClickedSpace(space);
-            addWidget(space, row, col);
+            layout->addWidget(space, row, col);
         }
 }
 
@@ -63,12 +64,12 @@ void Board::addLines()
 {
     for (int row = 0; row < gridHeight; row += 2) {
         for (int col = 1; col < gridWidth; col += 2)
-            addWidget(getLine(QFrame::VLine), row, col);
+            layout->addWidget(getLine(QFrame::VLine), row, col);
 
         // Don't add last hLine
         if (row >= gridHeight - 1)  break;
 
-        addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
+        layout->addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
     }
 }
 
@@ -89,12 +90,12 @@ void Board::addClickedSpace(BoardSpaceLabel* space)
 
 void Board::spaceClicked(BoardSpaceLabel* space)
 {
-    // if space has text or image
-    if (space->getSymbol() != "")
-        return;
+    PlayGameWindow* w = static_cast<PlayGameWindow*>(parent());
 
-    // TODO: boardSpace->setSymbol(players[currPlayerIndex].symbol);
-    space->setSymbol("X");
+    // if space has text or image
+    if (space->getSymbol() != "")  return;
+
+    space->setSymbol(w->getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -102,8 +103,11 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
-    // Cyclically iterate players
-    // TODO: currPlayerIndex = (currPlayerIndex + 1) % players.count();
+    w->addCurrPlayerScore(wins.count());
+
+    w->iteratePlayer();
+
+    w->highlightCurrPlayer();
 }
 
 bool Board::boardIsFull() const
@@ -125,7 +129,8 @@ QVariant Board::getSymbol(const int row, const int col) const
 
 BoardSpaceLabel* Board::getSpace(const int row, const int col) const
 {
-    return qobject_cast<BoardSpaceLabel*>(itemAtPosition(row, col)->widget());
+    return qobject_cast<BoardSpaceLabel*>
+            (layout->itemAtPosition(row, col)->widget());
 }
 
 void Board::disableBoard()
@@ -151,9 +156,9 @@ int Board::getSpaceRow(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int row, _col, _rowSpan, _colSpan;
-    getItemPosition(indexOf(space),
-                    &row, &_col,
-                    &_rowSpan, &_colSpan);
+    layout->getItemPosition(layout->indexOf(space),
+                            &row, &_col,
+                            &_rowSpan, &_colSpan);
 
     return row;
 }
@@ -162,9 +167,9 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int _row, col, _rowSpan, _colSpan;
-    getItemPosition(indexOf(space),
-                    &_row, &col,
-                    &_rowSpan, &_colSpan);
+    layout->getItemPosition(layout->indexOf(space),
+                            &_row, &col,
+                            &_rowSpan, &_colSpan);
 
     return col;
 }

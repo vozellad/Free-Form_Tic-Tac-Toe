@@ -6,8 +6,10 @@
 #include <cmath>
 #include "player.h"
 #include "board.h"
-#include "boardspacelabel.h"  // TODO
+#include "boardsettings.h"
 #include "gamesetupwindow.h"
+
+class Board;
 
 namespace Ui {
 class PlayGameWindow;
@@ -19,9 +21,17 @@ class PlayGameWindow : public QMainWindow
 
 public:
     explicit PlayGameWindow(const QVector<Player>& players,
-                            const QVector<Board>& boards,
+                            QVector<BoardSettings>& boardsSettings,
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
+
+    QVariant getCurrPlayerSymbol();
+
+    void addCurrPlayerScore(const int scoreAdd);
+
+    void iteratePlayer();
+
+    void highlightCurrPlayer();
 
 private slots:
     void on_pushButton_back_clicked();
@@ -29,7 +39,7 @@ private slots:
 private:
     Ui::PlayGameWindow *ui;
 
-    QVector<Player> players;
+    const QVector<Player> players;
 
     QVector<Board> boards;
 
@@ -43,7 +53,7 @@ private:
 
     void addPlayers();
 
-    void highlightPlayer();
+    void clearPlayerHighlight();
 
 };
 

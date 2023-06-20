@@ -2,17 +2,19 @@
 #include "ui_playgamewindow.h"
 
 PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
-                               const QVector<Board>& boards,
+                               QVector<BoardSettings>& boardsSettings,
                                QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlayGameWindow),
-    players(players),
-    boards(boards)
+    players(players)
 {
     ui->setupUi(this);
 
     table = ui->gridLayout_table;
     table->setSpacing(42);
+
+    for (BoardSettings b : boardsSettings)
+        boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
 
     addBoards();  // Add boards to table
 
@@ -20,14 +22,56 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     playersUI->setSpacing(0);
 
     addPlayers();
-    highlightPlayer();
-
-    // TODO: // beforeClick  // afterClick
+    highlightCurrPlayer();
 }
 
 PlayGameWindow::~PlayGameWindow()
 {
     delete ui;
+}
+
+QVariant PlayGameWindow::getCurrPlayerSymbol()
+{
+    return players[currPlayerIndex].symbol;
+}
+
+void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)
+{
+    // Get player's score label grid position
+    int i = currPlayerIndex * 3 + 2;
+
+    QLabel* score = qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
+
+    score->setText(QString::number(score->text().toInt() + scoreAdd));
+}
+
+void PlayGameWindow::iteratePlayer()
+{
+    currPlayerIndex = (currPlayerIndex + 1) % players.count();
+}
+
+void PlayGameWindow::highlightCurrPlayer()
+{
+    clearPlayerHighlight();
+
+    // Get player's name label grid position
+    int i = currPlayerIndex * 3;
+
+    // TODO: QStrings to reduce duplicate substrings
+
+    playersUI->itemAt(i + 0)->widget()->setStyleSheet(
+                "border-top: 1px solid red;"
+                "border-bottom: 1px solid red;"
+                "border-left: 1px solid red;");
+
+    playersUI->itemAt(i + 1)->widget()->setStyleSheet(
+                "border-top: 1px solid red;"
+                "border-bottom: 1px solid red;");
+
+    playersUI->itemAt(i + 2)->widget()->setStyleSheet(
+                "border-top: 1px solid red;"
+                "border-bottom: 1px solid red;"
+                "border-right: 1px solid red;");
 }
 
 // Go to previous window
@@ -47,7 +91,7 @@ void PlayGameWindow::addBoards()
     const int tableWidth = ((int)sqrt(boards.count() + 1));
 
     for (int i = 0; i < boards.count(); i++) {
-        table->addLayout(boards[i].layout(), row, col);
+        table->addLayout(boards[i].getLayout(), row, col);
 
         // Increment position values
         col = (col + 1) % tableWidth;
@@ -74,36 +118,15 @@ void PlayGameWindow::addPlayers()
         symbol->setMargin(margin);
         playersUI->addWidget(symbol);
 
-        QLabel* wins = new QLabel("0");
-        wins->setAlignment(Qt::AlignRight);
-        wins->setMargin(margin);
-        playersUI->addWidget(wins);
+        QLabel* score = new QLabel("0");
+        score->setAlignment(Qt::AlignRight);
+        score->setMargin(margin);
+        playersUI->addWidget(score);
     }
 }
 
-void PlayGameWindow::highlightPlayer()
+void PlayGameWindow::clearPlayerHighlight()
 {
-    // Clear highlights
     for (int i = 0; i < playersUI->count(); i++)
         playersUI->itemAt(i)->widget()->setStyleSheet("");
-
-    // Get player's name label grid position
-    int i = currPlayerIndex * 3;
-
-
-    // Highlight current player row
-
-    playersUI->itemAt(i + 0)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-left: 1px solid red;");
-
-    playersUI->itemAt(i + 1)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;");
-
-    playersUI->itemAt(i + 2)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-right: 1px solid red;");
 }
