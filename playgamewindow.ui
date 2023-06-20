@@ -95,7 +95,7 @@
     <item row="2" column="1" colspan="5">
      <layout class="QHBoxLayout" name="horizontalLayout_top">
       <item>
-       <widget class="QLabel" name="label_turnOf">
+       <widget class="QLabel" name="label_winner">
         <property name="enabled">
          <bool>true</bool>
         </property>

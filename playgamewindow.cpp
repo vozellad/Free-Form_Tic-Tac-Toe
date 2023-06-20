@@ -13,7 +13,7 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     table = ui->gridLayout_table;
     table->setSpacing(42);
 
-    for (BoardSettings b : boardsSettings)
+    for (BoardSettings& b : boardsSettings)
         boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
 
     addBoards();  // Add boards to table
@@ -22,7 +22,7 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
     playersUI->setSpacing(0);
 
     addPlayers();
-    highlightCurrPlayer();
+    highlightPlayer();
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -32,13 +32,13 @@ PlayGameWindow::~PlayGameWindow()
 
 QVariant PlayGameWindow::getCurrPlayerSymbol()
 {
-    return players[0].symbol;
+    return players[currPlayerRow].symbol;
 }
 
 void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)
 {
     // Get player's score label grid position
-    int i = currPlayerIndex * 3 + 2;
+    int i = currPlayerRow * 3 + 2;
 
     QLabel* score = qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
 
@@ -47,36 +47,82 @@ void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)
 
 void PlayGameWindow::iteratePlayer()
 {
-    currPlayerIndex = (currPlayerIndex + 1) % players.count();
+    currPlayerRow = (currPlayerRow + 1) % players.count();
 }
 
-void PlayGameWindow::highlightCurrPlayer()
+void PlayGameWindow::highlightPlayer()
 {
-    // Clear highlights
-    for (int i = 0; i < playersUI->count(); i++)
-        playersUI->itemAt(i)->widget()->setStyleSheet("");
+    highlightPlayer(currPlayerRow);
+}
 
+void PlayGameWindow::highlightPlayer(int playerRow)
+{
     // Get player's name label grid position
-    int i = currPlayerIndex * 3;
+    playerRow *= 3;
 
-
-    // Highlight current player row
+    clearPlayerHighlight();
 
     // TODO: QStrings to reduce duplicate substrings
 
-    playersUI->itemAt(i + 0)->widget()->setStyleSheet(
+    playersUI->itemAt(playerRow + 0)->widget()->setStyleSheet(
                 "border-top: 1px solid red;"
                 "border-bottom: 1px solid red;"
                 "border-left: 1px solid red;");
 
-    playersUI->itemAt(i + 1)->widget()->setStyleSheet(
+    playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(
                 "border-top: 1px solid red;"
                 "border-bottom: 1px solid red;");
 
-    playersUI->itemAt(i + 2)->widget()->setStyleSheet(
+    playersUI->itemAt(playerRow + 2)->widget()->setStyleSheet(
                 "border-top: 1px solid red;"
                 "border-bottom: 1px solid red;"
                 "border-right: 1px solid red;");
+}
+
+void PlayGameWindow::clearPlayerHighlight()
+{
+    for (int i = 0; i < playersUI->count(); i++)
+        playersUI->itemAt(i)->widget()->setStyleSheet("");
+}
+
+bool PlayGameWindow::allBoardsDone() const
+{
+    for (int i = 0; i < boards.count(); i++)
+        if (boards[i].getLayout()->isEnabled())  // TODO
+            return false;
+
+    return true;
+}
+
+int PlayGameWindow::getWinnerRow()
+{
+    int maxScore = -1, playerOfMax = -1;
+    bool draw = false;
+
+    for (int i = 2; i < playersUI->rowCount(); i += 3) {
+        const int currScore = qobject_cast<QLabel*>
+                (playersUI->itemAt(i)->widget())->text().toInt();
+
+        if (maxScore < currScore) {
+            maxScore = currScore;
+            playerOfMax = i - 2;
+            draw = false;
+        } else if (maxScore == currScore) {
+            draw = true;
+        }
+    }
+
+    return draw ? -1 : playerOfMax;
+}
+
+void PlayGameWindow::displayWinner(const int winnerIndex)
+{
+    QString name = qobject_cast<QLabel*>  // TODO: reduce duplicate code with function
+            (playersUI->itemAt(winnerIndex)->widget())->text();
+    QString score = qobject_cast<QLabel*>
+            (playersUI->itemAt(winnerIndex + 2)->widget())->text();
+    QString s = "Winner is " + name + " with " + score + " wins"; // TODO: tr().arg
+    ui->label_winner->setText(s);
 }
 
 // Go to previous window

@@ -9,6 +9,8 @@
 #include "boardsettings.h"
 #include "gamesetupwindow.h"
 
+class Board;
+
 namespace Ui {
 class PlayGameWindow;
 }
@@ -28,8 +30,18 @@ public:
     void addCurrPlayerScore(const int scoreAdd);
 
     void iteratePlayer();
-private:  // TODO
-    void highlightCurrPlayer();
+
+    void highlightPlayer();
+
+    void highlightPlayer(int playerRow);
+
+    void clearPlayerHighlight();
+
+    bool allBoardsDone() const;
+
+    int getWinnerRow();
+
+    void displayWinner(const int winnerIndex);
 
 private slots:
     void on_pushButton_back_clicked();
@@ -45,7 +57,7 @@ private:
 
     QGridLayout* playersUI;
 
-    int currPlayerIndex = 0;
+    int currPlayerRow = 0;
 
     void addBoards();
 

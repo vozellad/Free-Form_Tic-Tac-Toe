@@ -90,10 +90,12 @@ void Board::addClickedSpace(BoardSpaceLabel* space)
 
 void Board::spaceClicked(BoardSpaceLabel* space)
 {
+    PlayGameWindow* w = static_cast<PlayGameWindow*>(parent());
+
     // if space has text or image
     if (space->getSymbol() != "")  return;
 
-    space->setSymbol(getCurrPlayerSymbol());
+    space->setSymbol(w->getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -101,11 +103,24 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
-    addCurrPlayerScore(wins.count());
+    w->addCurrPlayerScore(wins.count());
 
-    iteratePlayer();
 
-    highlightCurrPlayer();
+    // TODO: order is a mess
+    const int winnerRow = w->getWinnerRow();
+
+    if (winnerRow = -1) {
+        w->callDraw();
+    }
+
+    if (w->allBoardsDone()) {
+        w->clearPlayerHighlight();
+        w->highlightPlayer(winnerRow);
+        w->displayWinner(winnerRow);
+    } else {
+        w->iteratePlayer();
+        w->highlightPlayer();
+    }
 }
 
 bool Board::boardIsFull() const

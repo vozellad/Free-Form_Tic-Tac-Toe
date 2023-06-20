@@ -3,6 +3,7 @@
 
 #include <QGridLayout>
 #include "boardspacelabel.h"
+
 class PlayGameWindow;
 
 class Board : public QWidget
@@ -13,7 +14,7 @@ public:
     explicit Board(const int width,
                    const int height,
                    const int winCondition,
-                   PlayGameWindow* parent = nullptr);
+                   PlayGameWindow* parent);
     explicit Board(const Board& other);
     ~Board();
 
