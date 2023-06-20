@@ -124,7 +124,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         playersList.push_back(Player{playerNames[i], playerSymbols[i]});
 
     // List of boards to pass to next window
-    QVector<Board> boardsList;
+    QVector<BoardSettings> boardsList;
 
     // Iterate through boards
     for (int i = 0; i < boards->count(); i+=2) {  // +2 to skip hLines
@@ -148,7 +148,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             return;
         }
 
-        boardsList.push_back(Board(sizeX, sizeY, winCond));
+        boardsList.push_back(BoardSettings{sizeX, sizeY, winCond});
     }
 
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);

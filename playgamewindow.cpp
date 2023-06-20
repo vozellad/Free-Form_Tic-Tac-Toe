@@ -2,17 +2,19 @@
 #include "ui_playgamewindow.h"
 
 PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
-                               QVector<Board>& boards,
+                               QVector<BoardSettings>& boardsSettings,
                                QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlayGameWindow),
-    players(players),
-    boards(boards)
+    players(players)
 {
     ui->setupUi(this);
 
     table = ui->gridLayout_table;
     table->setSpacing(42);
+
+    for (BoardSettings b : boardsSettings)
+        boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
 
     addBoards();  // Add boards to table
 
@@ -21,9 +23,6 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     addPlayers();
     highlightCurrPlayer();
-
-    for (int i = 0; i < boards.count(); i++)
-        boards[i].setGameWindow(this);
 }
 
 PlayGameWindow::~PlayGameWindow()
@@ -33,7 +32,7 @@ PlayGameWindow::~PlayGameWindow()
 
 QVariant PlayGameWindow::getCurrPlayerSymbol()
 {
-    return players[currPlayerIndex].symbol;
+    return players[0].symbol;
 }
 
 void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)

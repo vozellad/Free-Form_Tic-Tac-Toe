@@ -5,18 +5,19 @@
 #include "boardspacelabel.h"
 class PlayGameWindow;
 
-class Board : public QObject
+class Board : public QWidget
 {
     Q_OBJECT
 
 public:
-    Board(const int width, const int height, const int winCondition);
-    Board(const Board& other);
+    explicit Board(const int width,
+                   const int height,
+                   const int winCondition,
+                   PlayGameWindow* parent = nullptr);
+    explicit Board(const Board& other);
     ~Board();
 
-    QGridLayout* getLayout();
-
-    void setGameWindow(PlayGameWindow* w);
+    QGridLayout* getLayout() const;
 
 private:
     // TODO: which to add getter for?
@@ -32,10 +33,6 @@ private:
     const int gridHeight;
 
     QGridLayout* layout;
-
-    bool boardCreated = false;
-
-    PlayGameWindow* gameWindow;
 
     void createBoard();
 

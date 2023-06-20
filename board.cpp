@@ -1,44 +1,33 @@
-#include "playgamewindow.h"
 #include "board.h"
+#include "playgamewindow.h"
 
-Board::Board(const int width, const int height, const int winCondition) :
+Board::Board(const int width,
+             const int height,
+             const int winCondition,
+             PlayGameWindow* parent) :
+    QWidget(parent),
     boardWidth(width),
     boardHeight(height),
     winCondition(winCondition),
     gridWidth(width * 2 - 1),
     gridHeight(height * 2 - 1)
-{}
+{ createBoard(); }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra"
 Board::Board(const Board& other) :
+    QWidget(other.parentWidget()),
     boardWidth(other.boardWidth),
     boardHeight(other.boardHeight),
     winCondition(other.winCondition),
     gridWidth(other.gridWidth),
     gridHeight(other.gridHeight)
-{}
-#pragma GCC diagnostic pop
+{ createBoard(); }
 
 Board::~Board()
 {
     // TODO: delete layout
 }
 
-QGridLayout* Board::getLayout()
-{
-    if (!boardCreated) {
-        createBoard();
-        boardCreated = true;
-    }
-
-    return layout;
-}
-
-void Board::setGameWindow(PlayGameWindow* w)
-{
-    gameWindow = w;
-}
+QGridLayout* Board::getLayout() const { return layout; }
 
 //get via index
 
@@ -101,13 +90,10 @@ void Board::addClickedSpace(BoardSpaceLabel* space)
 
 void Board::spaceClicked(BoardSpaceLabel* space)
 {
-    // TODO: raise custom error
-
     // if space has text or image
-    if (space->getSymbol() != "")
-        return;
+    if (space->getSymbol() != "")  return;
 
-    space->setSymbol(gameWindow->getCurrPlayerSymbol());
+    space->setSymbol(getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
 
@@ -115,11 +101,11 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
-    gameWindow->addCurrPlayerScore(wins.count());
+    addCurrPlayerScore(wins.count());
 
-    gameWindow->iteratePlayer();
+    iteratePlayer();
 
-    gameWindow->highlightCurrPlayer();
+    highlightCurrPlayer();
 }
 
 bool Board::boardIsFull() const

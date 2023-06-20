@@ -6,7 +6,7 @@
 #include <cmath>
 #include "player.h"
 #include "board.h"
-#include "boardspacelabel.h"  // TODO
+#include "boardsettings.h"
 #include "gamesetupwindow.h"
 
 namespace Ui {
@@ -19,7 +19,7 @@ class PlayGameWindow : public QMainWindow
 
 public:
     explicit PlayGameWindow(const QVector<Player>& players,
-                            QVector<Board>& boards,
+                            QVector<BoardSettings>& boardsSettings,
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
 
@@ -28,7 +28,7 @@ public:
     void addCurrPlayerScore(const int scoreAdd);
 
     void iteratePlayer();
-
+private:  // TODO
     void highlightCurrPlayer();
 
 private slots:
