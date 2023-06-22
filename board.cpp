@@ -24,7 +24,15 @@ Board::Board(const Board& other) :
 
 QGridLayout* Board::getLayout() const { return layout; }
 
-//get via index
+int Board::getBoardWidth() const { return boardWidth; }
+
+int Board::getBoardHeight() const { return boardHeight; }
+
+int Board::getWinCondition() const { return winCondition; }
+
+int Board::getGridWidth() const { return gridWidth; }
+
+int Board::getGridHeight() const { return gridHeight; }
 
 void Board::createBoard()
 {

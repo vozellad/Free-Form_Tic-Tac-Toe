@@ -20,6 +20,16 @@ public:
 
     QGridLayout* getLayout() const;
 
+    int getBoardWidth() const;
+
+    int getBoardHeight() const;
+
+    int getWinCondition() const;
+
+    int getGridWidth() const;
+
+    int getGridHeight() const;
+
 private:
     // TODO: which to add getter for?
 
