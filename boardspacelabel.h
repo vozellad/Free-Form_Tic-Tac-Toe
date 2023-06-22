@@ -11,11 +11,8 @@ class BoardSpaceLabel : public SymbolLabel {
     Q_OBJECT
 
 public:
-    explicit BoardSpaceLabel(QWidget* parent = Q_NULLPTR,
-                             Qt::WindowFlags f = Qt::WindowFlags());
+    explicit BoardSpaceLabel(QWidget* parent = Q_NULLPTR);
     ~BoardSpaceLabel();
-
-    void setSymbol(const QVariant symbol);
 
 signals:
     void resized();
@@ -30,7 +27,9 @@ private:
 
     void resizeSymbol();
 
-    friend void spaceClicked(BoardSpaceLabel* space);
+    void setTextSym(QString text) override;
+
+    void setImageSym(QImage image) override;
 
 };
 

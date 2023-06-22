@@ -22,14 +22,17 @@ Board::Board(const Board& other) :
     gridHeight(other.gridHeight)
 { createBoard(); }
 
-Board::~Board()
-{
-    // TODO: delete layout
-}
-
 QGridLayout* Board::getLayout() const { return layout; }
 
-//get via index
+int Board::getBoardWidth() const { return boardWidth; }
+
+int Board::getBoardHeight() const { return boardHeight; }
+
+int Board::getWinCondition() const { return winCondition; }
+
+int Board::getGridWidth() const { return gridWidth; }
+
+int Board::getGridHeight() const { return gridHeight; }
 
 void Board::createBoard()
 {
@@ -92,7 +95,7 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 {
     PlayGameWindow* w = static_cast<PlayGameWindow*>(parent());
 
-    // if space has text or image
+    // If space has text or image
     if (space->getSymbol() != "")  return;
 
     space->setSymbol(w->getCurrPlayerSymbol());
@@ -105,18 +108,20 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     w->addCurrPlayerScore(wins.count());
 
-
-    // TODO: order is a mess
-    const int winnerRow = w->getWinnerRow();
-
-    if (winnerRow = -1) {
-        w->callDraw();
-    }
-
     if (w->allBoardsDone()) {
+        const int winnerRow = w->getWinnerRow();
         w->clearPlayerHighlight();
-        w->highlightPlayer(winnerRow);
-        w->displayWinner(winnerRow);
+
+        // If no single highest score
+        if (winnerRow == -1)
+            w->callDraw();
+
+        else {
+            w->highlightPlayer(winnerRow);
+            w->displayWinner(winnerRow);
+        }
+
+    // Continue game
     } else {
         w->iteratePlayer();
         w->highlightPlayer();
@@ -151,6 +156,8 @@ void Board::disableBoard()
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
             getSpace(row, col)->setEnabled(false);
+
+    layout->setEnabled(false);
 }
 
 void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)
@@ -187,10 +194,6 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
     return col;
 }
 
-
-// TODO: there's enough duplicate code to justify a creating a function for it,
-// but the code is similar enough to make it difficult.
-// I don't yet know how to do it.
 QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
 {
     // Get space coordinates
@@ -209,7 +212,14 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     for (int c = 0; c < gridWidth; c += 2) {
         QVariant currSymbol = getSymbol(row, c);
 
-        if (currSymbol != "" && compareSymbol == currSymbol) {
+        bool sameSymbol =
+                (compareSymbol.value<QString>() ==
+                 currSymbol.value<QString>() &&
+                 currSymbol.canConvert<QString>()) ||
+                (compareImages(compareSymbol.value<QImage>(),
+                               currSymbol.value<QImage>()));
+
+        if (currSymbol != "" && sameSymbol) {
             sameInARow++;
             currWinSpaces.push_back(getSpace(row, c));
         } else {
@@ -237,7 +247,14 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     for (int r = 0; r < gridHeight; r += 2) {
         QVariant currSymbol = getSymbol(r, col);
 
-        if (currSymbol != "" && compareSymbol == currSymbol) {
+        bool sameSymbol =
+                (compareSymbol.value<QString>() ==
+                 currSymbol.value<QString>() &&
+                 currSymbol.canConvert<QString>()) ||
+                (compareImages(compareSymbol.value<QImage>(),
+                               currSymbol.value<QImage>()));
+
+        if (currSymbol != "" && sameSymbol) {
             sameInARow++;
             currWinSpaces.push_back(getSpace(r, col));
         } else {
@@ -269,7 +286,14 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     for (; dRow < gridHeight && dCol < gridWidth; dRow += 2, dCol += 2) {
         QVariant currSymbol = getSymbol(dRow, dCol);
 
-        if (currSymbol != "" && compareSymbol == currSymbol) {
+        bool sameSymbol =
+                (compareSymbol.value<QString>() ==
+                 currSymbol.value<QString>() &&
+                 currSymbol.canConvert<QString>()) ||
+                (compareImages(compareSymbol.value<QImage>(),
+                               currSymbol.value<QImage>()));
+
+        if (currSymbol != "" && sameSymbol) {
             sameInARow++;
             currWinSpaces.push_back(getSpace(dRow, dCol));
         } else {
@@ -301,7 +325,14 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     for (; dRow < gridHeight && 0 <= dCol; dRow += 2, dCol -= 2) {
         QVariant currSymbol = getSymbol(dRow, dCol);
 
-        if (currSymbol != "" && compareSymbol == currSymbol) {
+        bool sameSymbol =
+                (compareSymbol.value<QString>() ==
+                 currSymbol.value<QString>() &&
+                 currSymbol.canConvert<QString>()) ||
+                (compareImages(compareSymbol.value<QImage>(),
+                               currSymbol.value<QImage>()));
+
+        if (currSymbol != "" && sameSymbol) {
             sameInARow++;
             currWinSpaces.push_back(getSpace(dRow, dCol));
         } else {
@@ -319,5 +350,40 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     }
 
     return allWins;
+}
+
+void Board::sus(const int row,
+                const int col,
+                QVector<QVector<BoardSpaceLabel*>>& allWins)
+{
+    QVariant currSymbol = getSymbol(row, c);
+
+    if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
+        sameInARow++;
+        //currWinSpaces.push_back(getSpace(row, c));
+    } else {
+        sameInARow = 1;
+        compareSymbol = currSymbol;
+        currWinSpaces.clear();
+        //currWinSpaces.push_back(getSpace(row, c));
+    }
+
+    if (currSymbol != "" && sameInARow == winCondition) {
+        allWins.push_back(currWinSpaces);
+        sameInARow--;
+        currWinSpaces.erase(currWinSpaces.begin());
+    }
+}
+
+bool Board::compareSymbols(QVariant sym1, QVariant sym2)
+{
+    return  // Compare text
+            (compareSymbol.value<QString>() ==
+            currSymbol.value<QString>() &&
+            currSymbol.canConvert<QString>()) ||
+
+            // Compare images
+            (compareImages(compareSymbol.value<QImage>(),
+                          currSymbol.value<QImage>()));
 }
 

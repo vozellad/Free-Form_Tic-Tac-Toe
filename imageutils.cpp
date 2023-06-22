@@ -23,6 +23,8 @@ QImage getImageFromLabel(const QLabel* label)
     if (label->pixmap()->isNull())
         throw ImageNotFoundException();
 
+    // IDE warning tells me to use other overload function
+    // while docs tell me to use this overload function
     return label->pixmap()->toImage();
 }
 

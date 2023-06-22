@@ -41,7 +41,9 @@ public:
 
     int getWinnerRow();
 
-    void displayWinner(const int winnerIndex);
+    void displayWinner(int winnerIndex);
+
+    void callDraw();
 
 private slots:
     void on_pushButton_back_clicked();

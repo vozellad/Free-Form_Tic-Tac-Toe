@@ -3,6 +3,7 @@
 
 #include <QGridLayout>
 #include "boardspacelabel.h"
+#include "imageutils.h"
 
 class PlayGameWindow;
 
@@ -16,9 +17,18 @@ public:
                    const int winCondition,
                    PlayGameWindow* parent);
     explicit Board(const Board& other);
-    ~Board();
 
     QGridLayout* getLayout() const;
+
+    int getBoardWidth() const;
+
+    int getBoardHeight() const;
+
+    int getWinCondition() const;
+
+    int getGridWidth() const;
+
+    int getGridHeight() const;
 
 private:
     // TODO: which to add getter for?
@@ -62,6 +72,12 @@ private:
     int getSpaceCol(BoardSpaceLabel* space);
 
     QVector<QVector<BoardSpaceLabel*>> getWinSpaces(BoardSpaceLabel* space);
+
+    void sus(const int row,
+             const int col,
+             QVector<QVector<BoardSpaceLabel*>>& allWins);
+
+    bool compareSymbols(QVariant sym1, QVariant sym2);
 
 };
 

@@ -88,7 +88,7 @@ void PlayGameWindow::clearPlayerHighlight()
 bool PlayGameWindow::allBoardsDone() const
 {
     for (int i = 0; i < boards.count(); i++)
-        if (boards[i].getLayout()->isEnabled())  // TODO
+        if (boards[i].getLayout()->isEnabled())
             return false;
 
     return true;
@@ -99,7 +99,7 @@ int PlayGameWindow::getWinnerRow()
     int maxScore = -1, playerOfMax = -1;
     bool draw = false;
 
-    for (int i = 2; i < playersUI->rowCount(); i += 3) {
+    for (int i = 2; i < playersUI->count(); i += 3) {
         const int currScore = qobject_cast<QLabel*>
                 (playersUI->itemAt(i)->widget())->text().toInt();
 
@@ -112,17 +112,25 @@ int PlayGameWindow::getWinnerRow()
         }
     }
 
-    return draw ? -1 : playerOfMax;
+    return draw ? -1 : playerOfMax / 3;
 }
 
-void PlayGameWindow::displayWinner(const int winnerIndex)
+void PlayGameWindow::displayWinner(int winnerIndex)
 {
+    winnerIndex *= 3;  // TODO: maybe change it to index for real instead of row
+
     QString name = qobject_cast<QLabel*>  // TODO: reduce duplicate code with function
             (playersUI->itemAt(winnerIndex)->widget())->text();
     QString score = qobject_cast<QLabel*>
             (playersUI->itemAt(winnerIndex + 2)->widget())->text();
-    QString s = "Winner is " + name + " with " + score + " wins"; // TODO: tr().arg
+    QString s = "Winner is " + name + " with " + score + " win"; // TODO: tr().arg
+    if (1 < score)  s += "s";
     ui->label_winner->setText(s);
+}
+
+void PlayGameWindow::callDraw()
+{
+    ui->label_winner->setText("It's a draw");
 }
 
 // Go to previous window
