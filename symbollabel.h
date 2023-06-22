@@ -29,6 +29,10 @@ protected:
 
     void mousePressEvent(QMouseEvent* event);
 
+    virtual void setTextSym(QString s);
+
+    virtual void setImageSym(QImage image);
+
 };
 
 #endif // SYMBOLLABEL_H

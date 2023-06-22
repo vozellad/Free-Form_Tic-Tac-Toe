@@ -8,71 +8,49 @@ BoardSpaceLabel::BoardSpaceLabel(QWidget* parent, Qt::WindowFlags f)
 
 BoardSpaceLabel::~BoardSpaceLabel() {}
 
-void BoardSpaceLabel::setSymbol(const QVariant symbol)
+void BoardSpaceLabel::setTextSym(QString s)
 {
-    setText(symbol.value<QString>());
-    unscaledImage = QImage();
-    return;
-    //SymbolLabel::setSymbol(symbol);
+    setText(s);
 
-    if (symbol.isNull())
-        throw std::invalid_argument("Symbol is null.");
+    QFont defaultFont = QApplication::font();
+    QString fontFamily = defaultFont.family();
 
-    else if (symbol.canConvert<QString>()) {
-        QString txt = symbol.value<QString>();
-        setText(txt);
+    int fontSize = 200;
 
-        QFont defaultFont = QApplication::font();
-        QString fontFamily = defaultFont.family();
+    QFont font(fontFamily);
+    font.setPointSize(fontSize);
+    setFont(font);
 
-        int fontSize = 200;
+    QFontMetrics metrics(font);
 
-        QFont font(fontFamily);
+    // Decrease the font size until the text fits within the label
+    //auto hi1 = metrics.width(txt);
+    //auto hi2 = width();
+    while (metrics.width(text()) > width() || metrics.height() > height()) {
+        fontSize--;
         font.setPointSize(fontSize);
-        setFont(font);
-
-        QFontMetrics metrics(font);
-
-        // Decrease the font size until the text fits within the label
-        //auto hi1 = metrics.width(txt);
-        //auto hi2 = width();
-        while (metrics.width(text()) > width() || metrics.height() > height()) {
-            fontSize--;
-            font.setPointSize(fontSize);
-            metrics = QFontMetrics(font);
-        }
-
-        setText(txt);
-
-        font.setPointSize(fontSize);
-        setFont(font);
-
-        unscaledImage = QImage();
+        metrics = QFontMetrics(font);
     }
 
-    else if (symbol.canConvert<QImage>()) {
-        // TODO: base class splits this function so that this scope of code can be isolated to inheret
+    setText(s);
 
-        QImage image = symbol.value<QImage>();
-        QImage scaledImage = QImage();
-        //scaledImage = image.scaledToHeight(
-        //            height(), Qt::SmoothTransformation);
-        const double reduceForSpacing = 0.9;
+    font.setPointSize(fontSize);
+    setFont(font);
+}
 
-        if (height() < width())
-            scaledImage = image.scaledToHeight(
-                        height() * reduceForSpacing, Qt::SmoothTransformation);
-        else
-            scaledImage = image.scaledToWidth(
-                        width() * reduceForSpacing, Qt::SmoothTransformation);
+void BoardSpaceLabel::setImageSym(QImage image)
+{
+    QImage scaledImage = QImage();
+    const double reduceForSpacing = 0.9;
 
-        setPixmap(QPixmap::fromImage(scaledImage));
-
-        unscaledImage = image;
-    }
-
+    if (height() < width())
+        scaledImage = image.scaledToHeight(
+                    height() * reduceForSpacing, Qt::SmoothTransformation);
     else
-        throw std::invalid_argument("Symbol must be QString or QImage.");
+        scaledImage = image.scaledToWidth(
+                    width() * reduceForSpacing, Qt::SmoothTransformation);
+
+    setPixmap(QPixmap::fromImage(scaledImage));
 }
 
 void BoardSpaceLabel::resizeEvent(QResizeEvent *event)

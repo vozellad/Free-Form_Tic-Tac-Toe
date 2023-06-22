@@ -15,8 +15,6 @@ public:
                              Qt::WindowFlags f = Qt::WindowFlags());
     ~BoardSpaceLabel();
 
-    void setSymbol(const QVariant symbol);
-
 signals:
     void resized();
 
@@ -30,7 +28,9 @@ private:
 
     void resizeSymbol();
 
-    friend void spaceClicked(BoardSpaceLabel* space);
+    void setTextSym(QString text) override;
+
+    void setImageSym(QImage image) override;
 
 };
 

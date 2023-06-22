@@ -3,6 +3,7 @@
 
 #include <QGridLayout>
 #include "boardspacelabel.h"
+#include "imageutils.h"
 
 class PlayGameWindow;
 
@@ -16,7 +17,6 @@ public:
                    const int winCondition,
                    PlayGameWindow* parent);
     explicit Board(const Board& other);
-    ~Board();
 
     QGridLayout* getLayout() const;
 
