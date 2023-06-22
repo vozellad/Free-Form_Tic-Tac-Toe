@@ -43,7 +43,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
 
 // Connect symbol label to a click listener that brings up symbol prompt window.
 // Function is a lambda function to pass variables.
-void GameSetupWindow::addClickedPlayerSymbol(const QString& name,
+void GameSetupWindow::addClickedPlayerSymbol(const QString name,
                                              SymbolLabel* symbol)
 {
     QObject::connect(symbol, &SymbolLabel::clicked, this,
@@ -61,12 +61,12 @@ int GameSetupWindow::getPlayerAmt() const
 }
 
 // Set number represeting player amount in UI
-void GameSetupWindow::setPlayerAmt(const int& newPlayerAmt)
+void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
-// Keep player amount within range (1-99)
+// Keep player amount within range
 // If not in range, turn off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_players()
@@ -76,7 +76,7 @@ void GameSetupWindow::setAmtModBtnStates_players()
 
     if (getPlayerAmt() <= 1)
         ui->toolButton_removePlayer->setEnabled(false);
-    else if (99 <= getPlayerAmt())
+    else if (20 <= getPlayerAmt())
         ui->toolButton_addPlayer->setEnabled(false);
 }
 
@@ -99,6 +99,6 @@ void GameSetupWindow::addInitialPlayers()
 
     // Set starting symbols
     qobject_cast<SymbolLabel*>(players->itemAt(1)->widget()) ->setSymbol("X");
-    qobject_cast<SymbolLabel*>(
-                players->itemAt(1 + width)->widget()) ->setSymbol("O");
+    qobject_cast<SymbolLabel*>
+            (players->itemAt(1 + width)->widget()) ->setSymbol("O");
 }

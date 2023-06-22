@@ -9,9 +9,6 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // hides element that helps center the title
-    ui->pushButton_backBalancer->setVisible(false);
-
     // make - + buttons square
     QToolButton* buttonArray[4] = {
         ui->toolButton_addPlayer,
@@ -57,6 +54,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
     // Iterate through players
     for (int i = 0; i < players->count(); i += 2) {
+
         // Get name
         QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget()) ->text();
@@ -96,6 +94,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     std::sort(symbolTest.begin(), symbolTest.end());
     // Adjacent compare
     for (int i = 0; i < symbolTest.size() - 1; i++) {
+
         // Get symbols to compare
         QVariant sym1 = symbolTest[i];
         QVariant sym2 = symbolTest[i + 1];
@@ -121,11 +120,11 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     }
 
     // Make player lists
-    for (int i = 0; i < players->rowCount(); i++)
+    for (int i = 0; i < getPlayerAmt(); i++)
         playersList.push_back(Player{playerNames[i], playerSymbols[i]});
 
     // List of boards to pass to next window
-    QVector<Board> boardsList;
+    QVector<BoardSettings> boardsList;
 
     // Iterate through boards
     for (int i = 0; i < boards->count(); i+=2) {  // +2 to skip hLines
@@ -149,7 +148,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
             return;
         }
 
-        boardsList.push_back(Board{sizeX, sizeY, winCond});
+        boardsList.push_back(BoardSettings{sizeX, sizeY, winCond});
     }
 
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);

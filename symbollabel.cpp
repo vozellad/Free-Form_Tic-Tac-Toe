@@ -6,6 +6,14 @@ SymbolLabel::SymbolLabel(QWidget* parent,
 {
 }
 
+SymbolLabel::SymbolLabel(QVariant symbol,
+                         QWidget* parent,
+                         Qt::WindowFlags f)
+    : QLabel(parent)
+{
+    setSymbol(symbol);
+}
+
 SymbolLabel::~SymbolLabel() {}
 
 void SymbolLabel::mousePressEvent(QMouseEvent* event)
@@ -13,17 +21,19 @@ void SymbolLabel::mousePressEvent(QMouseEvent* event)
     emit clicked();
 }
 
-void SymbolLabel::setSymbol(const QVariant& symbol)
+void SymbolLabel::setSymbol(const QVariant symbol)
 {
     if (symbol.isNull())
         throw std::invalid_argument("Symbol is null.");
 
     else if (symbol.canConvert<QString>()) {
+        // TODO
         setText(symbol.value<QString>());
         unscaledImage = QImage();
     }
 
     else if (symbol.canConvert<QImage>()) {
+        // TODO
         QImage image = symbol.value<QImage>();
 
         QImage scaledImage = image.scaledToHeight(
@@ -46,4 +56,10 @@ QVariant SymbolLabel::getSymbol()
 
     // Return text if text or return empty string if nothing
     return text();
+}
+
+bool SymbolLabel::sameSymbols(QVariant sym1, QVariant sym2)
+{
+    return sym1.value<QString>() == sym2.value<QString>() ||
+            compareImages(sym1.value<QImage>(), sym2.value<QImage>());
 }

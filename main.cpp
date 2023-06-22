@@ -37,14 +37,13 @@ class diagram
 
 size vs count
 
-does switching windows while only hiding the old one
-mean memory will keep building if I keep switching?
-
 correct comments because code changed
 
 make comments consistently start with upper case letter
 
 highlight boardSpace user's cursor is on
 add noise when symbol is inserted
+
+rule of five
 
 */

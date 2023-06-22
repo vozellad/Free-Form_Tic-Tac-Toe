@@ -6,10 +6,10 @@
 #include <cmath>
 #include "player.h"
 #include "board.h"
-#include "imageutils.h"
-#include "playsymbollabel.h"
+#include "boardsettings.h"
+#include "gamesetupwindow.h"
 
-// TODO: players on top. etc on bottom.
+class Board;
 
 namespace Ui {
 class PlayGameWindow;
@@ -21,29 +21,49 @@ class PlayGameWindow : public QMainWindow
 
 public:
     explicit PlayGameWindow(const QVector<Player>& players,
-                            const QVector<Board>& boards,
+                            QVector<BoardSettings>& boardsSettings,
                             QWidget *parent = nullptr);
     ~PlayGameWindow();
+
+    QVariant getCurrPlayerSymbol();
+
+    void addCurrPlayerScore(const int scoreAdd);
+
+    void iteratePlayer();
+
+    void highlightPlayer();
+
+    void highlightPlayer(int playerRow);
+
+    void clearPlayerHighlight();
+
+    bool allBoardsDone() const;
+
+    int getWinnerRow();
+
+    void displayWinner(int winnerIndex);
+
+    void callDraw();
+
+private slots:
+    void on_pushButton_back_clicked();
 
 private:
     Ui::PlayGameWindow *ui;
 
-    QVector<Player> players;
+    const QVector<Player> players;
 
     QVector<Board> boards;
 
     QGridLayout* table;
 
-    int currPlayerIndex = 0;
+    QGridLayout* playersUI;
 
-    void addClickedBoardSpace(PlaySymbolLabel* boardSpace,
-                              const QGridLayout* board);
+    int currPlayerRow = 0;
 
     void addBoards();
 
-    QGridLayout* createBoard(const Board& board);
-
-    void evalBoardWin(const QGridLayout* board);
+    void addPlayers();
 
 };
 

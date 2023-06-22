@@ -75,20 +75,20 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_backBalancer">
-        <property name="enabled">
-         <bool>true</bool>
+       <spacer name="horizontalSpacer_backBalancer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="maximumSize">
+        <property name="sizeType">
+         <enum>QSizePolicy::Maximum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
           <height>20</height>
          </size>
         </property>
-        <property name="text">
-         <string>&lt;-</string>
-        </property>
-       </widget>
+       </spacer>
       </item>
      </layout>
     </item>

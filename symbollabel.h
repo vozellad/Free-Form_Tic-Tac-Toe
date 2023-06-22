@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <Qt>
 #include <QVariant>
+#include "imageutils.h"
 
 class SymbolLabel : public QLabel {
     Q_OBJECT
@@ -12,9 +13,12 @@ class SymbolLabel : public QLabel {
 public:
     explicit SymbolLabel(QWidget* parent = Q_NULLPTR,
                          Qt::WindowFlags f = Qt::WindowFlags());
+    explicit SymbolLabel(QVariant symbol,
+                         QWidget* parent = Q_NULLPTR,
+                         Qt::WindowFlags f = Qt::WindowFlags());
     ~SymbolLabel();
 
-    void setSymbol(const QVariant& symbol);
+    void setSymbol(const QVariant symbol);
 
     QVariant getSymbol();
 

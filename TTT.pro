@@ -9,6 +9,8 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    board.cpp \
+    boardspacelabel.cpp \
     errordialog.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
@@ -16,7 +18,6 @@ SOURCES += \
     main.cpp \
     playersymboldialog.cpp \
     playgamewindow.cpp \
-    playsymbollabel.cpp \
     startscreenwindow.cpp \
     gamesetupwindow.cpp \
     symbollabel.cpp \
@@ -24,12 +25,13 @@ SOURCES += \
 
 HEADERS += \
     board.h \
+    boardsettings.h \
+    boardspacelabel.h \
     errordialog.h \
     imageutils.h \
     player.h \
     playersymboldialog.h \
     playgamewindow.h \
-    playsymbollabel.h \
     startscreenwindow.h \
     gamesetupwindow.h \
     symbollabel.h \
