@@ -75,7 +75,10 @@ private:
 
     void sus(const int row,
              const int col,
-             QVector<QVector<BoardSpaceLabel*>>& allWins);
+             QVector<BoardSpaceLabel*>& currWinSpaces,
+             QVector<QVector<BoardSpaceLabel*>>& allWins,
+             int& sameInARow,
+             QVariant& compareSymbol);
 
     bool compareSymbols(QVariant sym1, QVariant sym2);
 

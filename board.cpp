@@ -209,67 +209,17 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     // Check symbols horizontally
     int sameInARow = 0;
     QVariant compareSymbol = getSymbol(row, 0);
-    for (int c = 0; c < gridWidth; c += 2) {
-        QVariant currSymbol = getSymbol(row, c);
-
-        bool sameSymbol =
-                (compareSymbol.value<QString>() ==
-                 currSymbol.value<QString>() &&
-                 currSymbol.canConvert<QString>()) ||
-                (compareImages(compareSymbol.value<QImage>(),
-                               currSymbol.value<QImage>()));
-
-        if (currSymbol != "" && sameSymbol) {
-            sameInARow++;
-            currWinSpaces.push_back(getSpace(row, c));
-        } else {
-            sameInARow = 1;
-            compareSymbol = currSymbol;
-            currWinSpaces.clear();
-            currWinSpaces.push_back(getSpace(row, c));
-        }
-
-        if (sameInARow == winCondition && currSymbol != "") {
-            allWins.push_back(currWinSpaces);
-            sameInARow--;
-            currWinSpaces.erase(currWinSpaces.begin());
-        }
-    }
+    for (int c = 0; c < gridWidth; c += 2)
+        sus(row, c, currWinSpaces, allWins, sameInARow, compareSymbol);
 
     // Reset spaces to return
     currWinSpaces.clear();
 
-    //
-
     // Check symbols vertically
     sameInARow = 0;
     compareSymbol = getSymbol(0, col);
-    for (int r = 0; r < gridHeight; r += 2) {
-        QVariant currSymbol = getSymbol(r, col);
-
-        bool sameSymbol =
-                (compareSymbol.value<QString>() ==
-                 currSymbol.value<QString>() &&
-                 currSymbol.canConvert<QString>()) ||
-                (compareImages(compareSymbol.value<QImage>(),
-                               currSymbol.value<QImage>()));
-
-        if (currSymbol != "" && sameSymbol) {
-            sameInARow++;
-            currWinSpaces.push_back(getSpace(r, col));
-        } else {
-            sameInARow = 1;
-            compareSymbol = currSymbol;
-            currWinSpaces.clear();
-            currWinSpaces.push_back(getSpace(r, col));
-        }
-
-        if (sameInARow == winCondition && currSymbol != "") {
-            allWins.push_back(currWinSpaces);
-            sameInARow--;
-            currWinSpaces.erase(currWinSpaces.begin());
-        }
-    }
+    for (int r = 0; r < gridHeight; r += 2)
+        sus(r, col, currWinSpaces, allWins, sameInARow, compareSymbol);
 
     currWinSpaces.clear();
 
@@ -283,32 +233,8 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     // check symbols diagonally (first)
     sameInARow = 0;
     compareSymbol = getSymbol(dRow, dCol);
-    for (; dRow < gridHeight && dCol < gridWidth; dRow += 2, dCol += 2) {
-        QVariant currSymbol = getSymbol(dRow, dCol);
-
-        bool sameSymbol =
-                (compareSymbol.value<QString>() ==
-                 currSymbol.value<QString>() &&
-                 currSymbol.canConvert<QString>()) ||
-                (compareImages(compareSymbol.value<QImage>(),
-                               currSymbol.value<QImage>()));
-
-        if (currSymbol != "" && sameSymbol) {
-            sameInARow++;
-            currWinSpaces.push_back(getSpace(dRow, dCol));
-        } else {
-            sameInARow = 1;
-            compareSymbol = currSymbol;
-            currWinSpaces.clear();
-            currWinSpaces.push_back(getSpace(dRow, dCol));
-        }
-
-        if (sameInARow == winCondition && currSymbol != "") {
-            allWins.push_back(currWinSpaces);
-            sameInARow--;
-            currWinSpaces.erase(currWinSpaces.begin());
-        }
-    }
+    for (; dRow < gridHeight && dCol < gridWidth; dRow += 2, dCol += 2)
+        sus(dRow, dCol, currWinSpaces, allWins, sameInARow, compareSymbol);
 
     currWinSpaces.clear();
 
@@ -322,50 +248,29 @@ QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
     // Check symbols diagonally (second)
     sameInARow = 0;
     compareSymbol = getSymbol(dRow, dCol);
-    for (; dRow < gridHeight && 0 <= dCol; dRow += 2, dCol -= 2) {
-        QVariant currSymbol = getSymbol(dRow, dCol);
-
-        bool sameSymbol =
-                (compareSymbol.value<QString>() ==
-                 currSymbol.value<QString>() &&
-                 currSymbol.canConvert<QString>()) ||
-                (compareImages(compareSymbol.value<QImage>(),
-                               currSymbol.value<QImage>()));
-
-        if (currSymbol != "" && sameSymbol) {
-            sameInARow++;
-            currWinSpaces.push_back(getSpace(dRow, dCol));
-        } else {
-            sameInARow = 1;
-            compareSymbol = currSymbol;
-            currWinSpaces.clear();
-            currWinSpaces.push_back(getSpace(dRow, dCol));
-        }
-
-        if (sameInARow == winCondition && currSymbol != "") {
-            allWins.push_back(currWinSpaces);
-            sameInARow--;
-            currWinSpaces.erase(currWinSpaces.begin());
-        }
-    }
+    for (; dRow < gridHeight && 0 <= dCol; dRow += 2, dCol -= 2)
+        sus(dRow, dCol, currWinSpaces, allWins, sameInARow, compareSymbol);
 
     return allWins;
 }
 
 void Board::sus(const int row,
                 const int col,
-                QVector<QVector<BoardSpaceLabel*>>& allWins)
+                QVector<BoardSpaceLabel*>& currWinSpaces,
+                QVector<QVector<BoardSpaceLabel*>>& allWins,
+                int& sameInARow,
+                QVariant& compareSymbol)
 {
-    QVariant currSymbol = getSymbol(row, c);
+    QVariant currSymbol = getSymbol(row, col);
 
     if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
         sameInARow++;
-        //currWinSpaces.push_back(getSpace(row, c));
+        currWinSpaces.push_back(getSpace(row, col));
     } else {
         sameInARow = 1;
         compareSymbol = currSymbol;
         currWinSpaces.clear();
-        //currWinSpaces.push_back(getSpace(row, c));
+        currWinSpaces.push_back(getSpace(row, col));
     }
 
     if (currSymbol != "" && sameInARow == winCondition) {
@@ -378,12 +283,10 @@ void Board::sus(const int row,
 bool Board::compareSymbols(QVariant sym1, QVariant sym2)
 {
     return  // Compare text
-            (compareSymbol.value<QString>() ==
-            currSymbol.value<QString>() &&
-            currSymbol.canConvert<QString>()) ||
+            (sym1.value<QString>() == sym2.value<QString>() &&
+             sym2.canConvert<QString>()) ||
 
             // Compare images
-            (compareImages(compareSymbol.value<QImage>(),
-                          currSymbol.value<QImage>()));
+            (compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
 }
 
