@@ -11,8 +11,7 @@ class BoardSpaceLabel : public SymbolLabel {
     Q_OBJECT
 
 public:
-    explicit BoardSpaceLabel(QWidget* parent = Q_NULLPTR,
-                             Qt::WindowFlags f = Qt::WindowFlags());
+    explicit BoardSpaceLabel(QWidget* parent = Q_NULLPTR);
     ~BoardSpaceLabel();
 
 signals:

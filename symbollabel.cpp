@@ -1,22 +1,17 @@
 #include "symbollabel.h"
 
-SymbolLabel::SymbolLabel(QWidget* parent,
-                         Qt::WindowFlags f)
-    : QLabel(parent)
+SymbolLabel::SymbolLabel(QWidget* parent) : QLabel(parent)
 {
 }
 
-SymbolLabel::SymbolLabel(QVariant symbol,
-                         QWidget* parent,
-                         Qt::WindowFlags f)
-    : QLabel(parent)
+SymbolLabel::SymbolLabel(QVariant symbol, QWidget* parent) : QLabel(parent)
 {
     setSymbol(symbol);
 }
 
 SymbolLabel::~SymbolLabel() {}
 
-void SymbolLabel::mousePressEvent(QMouseEvent* event)
+void SymbolLabel::mousePressEvent(QMouseEvent*)
 {
     emit clicked();
 }

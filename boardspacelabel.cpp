@@ -1,6 +1,6 @@
 #include "boardspacelabel.h"
 
-BoardSpaceLabel::BoardSpaceLabel(QWidget* parent, Qt::WindowFlags f)
+BoardSpaceLabel::BoardSpaceLabel(QWidget* parent)
     : SymbolLabel(parent)
 {
 
@@ -10,7 +10,7 @@ BoardSpaceLabel::~BoardSpaceLabel() {}
 
 void BoardSpaceLabel::setTextSym(QString s)
 {
-    setText(s);
+    setText(s);return;
 
     QFont defaultFont = QApplication::font();
     QString fontFamily = defaultFont.family();
