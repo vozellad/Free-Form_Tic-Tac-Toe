@@ -40,4 +40,6 @@ add noise when symbol is inserted
 
 rule of five
 
+pictures in game should not go grayscale when board or space disabled
+
 */
