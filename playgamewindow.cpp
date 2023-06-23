@@ -160,9 +160,7 @@ void PlayGameWindow::addBoards()
 
 void PlayGameWindow::addPlayers()
 {
-    // Set column width
-    playersUI->setColumnMinimumWidth(2, 0);
-    playersUI->setColumnStretch(2, 0);
+    setGridWidth(playersUI, 3);
 
     const int margin = 5;
 

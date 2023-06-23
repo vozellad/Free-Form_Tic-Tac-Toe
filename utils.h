@@ -2,10 +2,13 @@
 #define UTILS_H
 
 #include <QString>
-#include <errordialog.h>
-#include "utils.h"
+#include <QGridLayout>
+#include <QVariant>
+#include <QImage>
+#include "imageutils.h"
 
+void setGridWidth(QGridLayout* l, const int width);
 
-
+bool compareSymbols(QVariant sym1, QVariant sym2);
 
 #endif // UTILS_H

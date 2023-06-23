@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include "boardspacelabel.h"
 #include "imageutils.h"
+#include "utils.h"
 
 class PlayGameWindow;
 
@@ -71,7 +72,14 @@ private:
 
     int getSpaceCol(BoardSpaceLabel* space);
 
-    QVector<QVector<BoardSpaceLabel*>> getWinSpaces(BoardSpaceLabel* space);
+    QVector<QVector<BoardSpaceLabel*>> getAllWins(BoardSpaceLabel* space);
+
+    QVector<QVector<BoardSpaceLabel*>> getLineWins(const int row,
+                                                   const int col,
+                                                   const int rowStep,
+                                                   const int colStep,
+                                                   const int rowOffset,
+                                                   const int colOffset);
 
 };
 

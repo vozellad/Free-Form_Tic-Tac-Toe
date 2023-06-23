@@ -25,10 +25,6 @@ offer spanish and greek translations (tr).
 
 add docstrings at top of each file
 
-make sure correct use of
-    setColumnMinimumWidth
-    setColumnStretch
-
 make window appear in center of screen
 
 custom widget for player and boards?

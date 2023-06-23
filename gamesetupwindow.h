@@ -18,6 +18,7 @@
 #include "boardsettings.h"
 #include "imageutils.h"
 #include "errordialog.h"
+#include "utils.h"
 
 namespace Ui {
 class GameSetupWindow;

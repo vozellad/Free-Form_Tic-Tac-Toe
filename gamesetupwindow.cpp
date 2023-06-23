@@ -94,25 +94,8 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     std::sort(symbolTest.begin(), symbolTest.end());
     // Adjacent compare
     for (int i = 0; i < symbolTest.size() - 1; i++) {
-
-        // Get symbols to compare
-        QVariant sym1 = symbolTest[i];
-        QVariant sym2 = symbolTest[i + 1];
-
-        // Check if same datatype
-        if (sym1.userType() != sym2.userType())  continue;
-
-        // Get comparison condition
-        bool duplicateFound =
-                // Compare as string
-                (sym1.userType() == QMetaType::QString &&
-                sym1.value<QString>() == sym2.value<QString>()) ||
-                // Compare as image
-                (sym1.userType() == QMetaType::QImage &&
-                compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
-
         // If comparing text and both texts are the same, display error
-        if (duplicateFound) {
+        if (compareSymbols(symbolTest[i], symbolTest[i + 1])) {
             ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
             w->show();
             return;
