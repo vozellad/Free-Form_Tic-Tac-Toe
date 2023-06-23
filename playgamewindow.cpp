@@ -170,10 +170,10 @@ void PlayGameWindow::addPlayers()
         name->setMargin(margin);
         playersUI->addWidget(name);
 
-        // TODO: why size not limited
-        SymbolLabel* symbol = new SymbolLabel(players[i].symbol);
+        SymbolLabel* symbol = new SymbolLabel();
         symbol->setAlignment(Qt::AlignHCenter);
-        symbol->setMargin(margin);
+        symbol->setFixedHeight(name->sizeHint().height());
+        symbol->setSymbol(players[i].symbol);
         playersUI->addWidget(symbol);
 
         QLabel* score = new QLabel("0");
