@@ -170,6 +170,7 @@ void PlayGameWindow::addPlayers()
         name->setMargin(margin);
         playersUI->addWidget(name);
 
+        // TODO: why size not limited
         SymbolLabel* symbol = new SymbolLabel(players[i].symbol);
         symbol->setAlignment(Qt::AlignHCenter);
         symbol->setMargin(margin);

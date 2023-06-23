@@ -26,16 +26,14 @@ offer spanish and greek translations (tr).
 add docstrings at top of each file
 
 make window appear in center of screen
+(also make next window appear where old one was)
 
 custom widget for player and boards?
 
 class diagram
 
-size vs count
-
 correct comments because code changed
-
-make comments consistently start with upper case letter
+(make comments consistently start with upper case letter)
 
 highlight boardSpace user's cursor is on
 add noise when symbol is inserted
