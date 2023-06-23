@@ -41,10 +41,9 @@ void GameSetupWindow::on_pushButton_back_clicked()
 }
 
 // Go to next window
-void GameSetupWindow::on_pushButton_startGame_clicked()
+/*
+void GameSetupWindow::on_pushButton_startGame_clicked_()
 {
-    // TODO: how to or do I split this?
-
     // List of players to pass to next window
     QVector<Player> playersList;
 
@@ -62,8 +61,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
 
         // Test for empty name
         if (name.isEmpty()) {
-            ErrorDialog *w = new ErrorDialog("Names cannot be empty.", this);
-            w->show();
+            displayErrorDialog("Names cannot be empty.");
             return;
         }
 
@@ -74,9 +72,11 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         playerSymbols.push_back(symbol);
 
         // Test for empty symbol
-        if (symbol == "" || symbol == "...") {
-            ErrorDialog *w = new ErrorDialog("Symbols cannot be empty.", this);
-            w->show();
+        if (symbol == "") {
+            displayErrorDialog("Symbols cannot be empty.");
+            return;
+        } else if (symbol == "...") {
+            displayErrorDialog("Symbols cannot be ellipses.");
             return;
         }
     }
@@ -84,8 +84,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     // Test for non-unique name
     const std::set<QString> nameTest(playerNames.begin(), playerNames.end());
     if (static_cast<int>(nameTest.size()) < playerNames.size()) {
-        ErrorDialog *w = new ErrorDialog("Names must be unique.", this);
-        w->show();
+        displayErrorDialog("Names must be unique.");
         return;
     }
 
@@ -94,27 +93,9 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     std::sort(symbolTest.begin(), symbolTest.end());
     // Adjacent compare
     for (int i = 0; i < symbolTest.size() - 1; i++) {
-
-        // Get symbols to compare
-        QVariant sym1 = symbolTest[i];
-        QVariant sym2 = symbolTest[i + 1];
-
-        // Check if same datatype
-        if (sym1.userType() != sym2.userType())  continue;
-
-        // Get comparison condition
-        bool duplicateFound =
-                // Compare as string
-                (sym1.userType() == QMetaType::QString &&
-                sym1.value<QString>() == sym2.value<QString>()) ||
-                // Compare as image
-                (sym1.userType() == QMetaType::QImage &&
-                compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
-
         // If comparing text and both texts are the same, display error
-        if (duplicateFound) {
-            ErrorDialog *w = new ErrorDialog("Symbols must be unique.", this);
-            w->show();
+        if (compareSymbols(symbolTest[i], symbolTest[i + 1])) {
+            displayErrorDialog("Symbols must be unique.");
             return;
         }
     }
@@ -133,7 +114,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
                 qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
 
         // Get board spinbox numbers
-        const int sizeX = qobject_cast<QSpinBox*>
+        const int sizeX = qobject_cast<QSpinBox*>  // TODO: need a getWidget function
                 (currBoard->itemAt(3)->widget()) ->value();
         const int sizeY = qobject_cast<QSpinBox*>
                 (currBoard->itemAt(5)->widget()) ->value();
@@ -143,8 +124,7 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
         // Verify winCond is possible
         if (sizeX < winCond && sizeY < winCond) {
             QString e = "'In a row to win' number can't be more than grid size.";
-            ErrorDialog *w = new ErrorDialog(e, this);
-            w->show();
+            displayErrorDialog(e);
             return;
         }
 
@@ -154,6 +134,126 @@ void GameSetupWindow::on_pushButton_startGame_clicked()
     PlayGameWindow *w = new PlayGameWindow(playersList, boardsList, this);
     w->show();
     this->hide();
+}*/
+
+// Go to next window
+void GameSetupWindow::on_pushButton_startGame_clicked()
+{
+    // List of players to pass to next window
+    QVector<Player> playersList = getPlayers();
+
+
+    // List of boards to pass to next window
+    QVector<BoardSettings> boardsList = getBoards();
+
+    if (!validateBoards(boardsList))
+        return;
+
+    PlayGameWindow* w = new PlayGameWindow(playersList, boardsList, this);
+    w->show();
+    this->hide();
+}
+
+QVector<Player> GameSetupWindow::getPlayers()
+{
+    QVector<Player> playersList;
+
+    // Used to test for dulplicates and emptiness
+    QVector<QString> playerNames;
+    QVector<QVariant> playerSymbols;
+
+    // Iterate through players
+    for (int i = 0; i < players->count(); i += 2) {
+
+        // Get name
+        QString name = getWidget<SymbolLabel*>(players, i)->text();
+        playerNames.push_back(name);
+
+        // Test for empty name
+        if (name.isEmpty()) {
+            displayErrorDialog("Names cannot be empty.");
+            //return;
+        }
+
+        // Get symbol
+        SymbolLabel* symbolLabel = getWidget<SymbolLabel*>(players, i + 1);
+        QVariant symbol = symbolLabel->getSymbol();
+        playerSymbols.push_back(symbol);
+
+        // Test for empty symbol
+        if (symbol == "") {
+            displayErrorDialog("Symbols cannot be empty.");
+            //return;
+        } else if (symbol == "...") {
+            displayErrorDialog("Symbols cannot be ellipses.");
+            //return;
+        }
+    }
+
+    // Test for non-unique name
+    const std::set<QString> nameTest(playerNames.begin(), playerNames.end());
+    if (static_cast<int>(nameTest.size()) < playerNames.size()) {
+        displayErrorDialog("Names must be unique.");
+        //return;
+    }
+
+    // Test for non-unique symbol
+    QVector<QVariant> symbolTest(playerSymbols);
+    std::sort(symbolTest.begin(), symbolTest.end());
+    // Adjacent compare
+    for (int i = 0; i < symbolTest.size() - 1; i++) {
+        // If comparing text and both texts are the same, display error
+        if (compareSymbols(symbolTest[i], symbolTest[i + 1])) {
+            displayErrorDialog("Symbols must be unique.");
+            //return;
+        }
+    }
+
+    // Make player lists
+    for (int i = 0; i < getPlayerAmt(); i++)
+        playersList.push_back(Player{playerNames[i], playerSymbols[i]});
+
+    return playersList;
+}
+
+QVector<BoardSettings> GameSetupWindow::getBoards()
+{
+    QVector<BoardSettings> boardsList;
+
+    // Iterate through boards
+    for (int i = 0; i < boards->count(); i+=2) {  // +2 to skip hLines
+        // Get board
+        QGridLayout* currBoard =
+                qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
+
+        // Get board spinbox numbers
+        const int sizeX = getWidget<QSpinBox*>(currBoard, 3)->value();
+        const int sizeY = getWidget<QSpinBox*>(currBoard, 5)->value();
+        const int winCond = getWidget<QSpinBox*>(currBoard, 7)->value();
+
+        boardsList.push_back(BoardSettings{sizeX, sizeY, winCond});
+    }
+
+    return boardsList;
+}
+
+bool GameSetupWindow::validateBoards(QVector<BoardSettings> boardsList)
+{
+    // Verify winCond is possible
+    for (BoardSettings& b : boardsList)
+        if (b.sizeX < b.winCond && b.sizeY < b.winCond) {
+            QString e = "'In a row to win' number can't be more than grid size.";
+            displayErrorDialog(e);
+            return false;
+        }
+
+    return true;
+}
+
+void GameSetupWindow::displayErrorDialog(const QString message)
+{
+    ErrorDialog* w = new ErrorDialog(message, this);
+    w->show();
 }
 
 // Delete last item and widget within item in given layout

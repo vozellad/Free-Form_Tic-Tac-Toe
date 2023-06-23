@@ -160,9 +160,7 @@ void PlayGameWindow::addBoards()
 
 void PlayGameWindow::addPlayers()
 {
-    // Set column width
-    playersUI->setColumnMinimumWidth(2, 0);
-    playersUI->setColumnStretch(2, 0);
+    setGridWidth(playersUI, 3);
 
     const int margin = 5;
 
@@ -172,9 +170,10 @@ void PlayGameWindow::addPlayers()
         name->setMargin(margin);
         playersUI->addWidget(name);
 
-        SymbolLabel* symbol = new SymbolLabel(players[i].symbol);
+        SymbolLabel* symbol = new SymbolLabel();
         symbol->setAlignment(Qt::AlignHCenter);
-        symbol->setMargin(margin);
+        symbol->setFixedHeight(name->sizeHint().height());
+        symbol->setSymbol(players[i].symbol);
         playersUI->addWidget(symbol);
 
         QLabel* score = new QLabel("0");

@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include "boardspacelabel.h"
 #include "imageutils.h"
+#include "utils.h"
 
 class PlayGameWindow;
 
@@ -59,8 +60,6 @@ private:
 
     bool boardIsFull() const;
 
-    QVariant getSymbol(const int row, const int col) const;
-
     BoardSpaceLabel* getSpace(const int row, const int col) const;
 
     void disableBoard();
@@ -71,16 +70,14 @@ private:
 
     int getSpaceCol(BoardSpaceLabel* space);
 
-    QVector<QVector<BoardSpaceLabel*>> getWinSpaces(BoardSpaceLabel* space);
+    QVector<QVector<BoardSpaceLabel*>> getAllWins(BoardSpaceLabel* space);
 
-    void sus(const int row,
-             const int col,
-             QVector<BoardSpaceLabel*>& currWinSpaces,
-             QVector<QVector<BoardSpaceLabel*>>& allWins,
-             int& sameInARow,
-             QVariant& compareSymbol);
-
-    bool compareSymbols(QVariant sym1, QVariant sym2);
+    QVector<QVector<BoardSpaceLabel*>> getLineWins(const int row,
+                                                   const int col,
+                                                   const int rowStep,
+                                                   const int colStep,
+                                                   const int rowOffset,
+                                                   const int colOffset);
 
 };
 

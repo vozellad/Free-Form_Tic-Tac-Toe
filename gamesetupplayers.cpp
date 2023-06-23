@@ -89,9 +89,7 @@ void GameSetupWindow::addInitialPlayers()
 {
     const int width = 2;
 
-    // Set grid column width
-    players->setColumnMinimumWidth(width - 1, 0);
-    players->setColumnStretch(width - 1, 0);
+    setGridWidth(players, width);
 
     // Add the 2 initial players
     on_toolButton_addPlayer_clicked();

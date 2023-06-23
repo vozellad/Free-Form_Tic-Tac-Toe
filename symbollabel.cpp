@@ -18,8 +18,7 @@ void SymbolLabel::mousePressEvent(QMouseEvent*)
 
 void SymbolLabel::setSymbol(const QVariant symbol)
 {
-    if (symbol.isNull())
-        throw std::invalid_argument("Symbol is null.");
+    if (symbol.isNull()) throw std::invalid_argument("Symbol is null.");
 
     else if (symbol.canConvert<QString>()) {
         setTextSym(symbol.value<QString>());
@@ -32,8 +31,7 @@ void SymbolLabel::setSymbol(const QVariant symbol)
         unscaledImage = image;
     }
 
-    else
-        throw std::invalid_argument("Symbol must be QString or QImage.");
+    else throw std::invalid_argument("Symbol must be QString or QImage.");
 }
 
 QVariant SymbolLabel::getSymbol()

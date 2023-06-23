@@ -43,9 +43,7 @@ void Board::createBoard()
     // Connect lines
     layout->setSpacing(0);
 
-    // Set grid column width
-    layout->setColumnMinimumWidth(boardWidth - 1, 0);
-    layout->setColumnStretch(boardWidth - 1, 0);
+    setGridWidth(layout, boardWidth);
 
     addSpaces();
 
@@ -100,7 +98,7 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     space->setSymbol(w->getCurrPlayerSymbol());
 
-    QVector<QVector<BoardSpaceLabel*>> wins = getWinSpaces(space);
+    QVector<QVector<BoardSpaceLabel*>> wins = getAllWins(space);
 
     displayWins(wins);
 
@@ -132,30 +130,17 @@ bool Board::boardIsFull() const
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            if (getSymbol(row, col) == "")
+            if (getWidget<SymbolLabel*>(layout, row, col)->getSymbol() == "")
                 return false;
 
     return true;
-}
-
-// TODO: next 2 functions might get replaced by a utils function
-
-QVariant Board::getSymbol(const int row, const int col) const
-{
-    return getSpace(row, col)->getSymbol();
-}
-
-BoardSpaceLabel* Board::getSpace(const int row, const int col) const
-{
-    return qobject_cast<BoardSpaceLabel*>
-            (layout->itemAtPosition(row, col)->widget());
 }
 
 void Board::disableBoard()
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            getSpace(row, col)->setEnabled(false);
+            getWidget<SymbolLabel*>(layout, row, col)->setEnabled(false);
 
     layout->setEnabled(false);
 }
@@ -194,99 +179,74 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
     return col;
 }
 
-QVector<QVector<BoardSpaceLabel*>> Board::getWinSpaces(BoardSpaceLabel* space)
+QVector<QVector<BoardSpaceLabel*>> Board::getAllWins(BoardSpaceLabel* space)
 {
     // Get space coordinates
     const int row = getSpaceRow(space);
     const int col = getSpaceCol(space);
 
-    //
-    QVector<BoardSpaceLabel*> currWinSpaces;
-
-    //
+    // Collects all win lines
     QVector<QVector<BoardSpaceLabel*>> allWins;
 
     // Check symbols horizontally
-    int sameInARow = 0;
-    QVariant compareSymbol = getSymbol(row, 0);
-    for (int c = 0; c < gridWidth; c += 2)
-        sus(row, c, currWinSpaces, allWins, sameInARow, compareSymbol);
-
-    // Reset spaces to return
-    currWinSpaces.clear();
+    allWins += getLineWins(row, col, 0, 2, 0, -col);
 
     // Check symbols vertically
-    sameInARow = 0;
-    compareSymbol = getSymbol(0, col);
-    for (int r = 0; r < gridHeight; r += 2)
-        sus(r, col, currWinSpaces, allWins, sameInARow, compareSymbol);
-
-    currWinSpaces.clear();
+    allWins += getLineWins(row, col, 2, 0, -row, 0);
 
     // Get beginning of diagonal line (first)
     int dRow = row, dCol = col;
-    while (0 < dRow && 0 < dCol) {
-        dRow--;
-        dCol--;
-    }
+    for (; 0 < dRow && 0 < dCol; dRow--, dCol--);
 
     // check symbols diagonally (first)
-    sameInARow = 0;
-    compareSymbol = getSymbol(dRow, dCol);
-    for (; dRow < gridHeight && dCol < gridWidth; dRow += 2, dCol += 2)
-        sus(dRow, dCol, currWinSpaces, allWins, sameInARow, compareSymbol);
-
-    currWinSpaces.clear();
+    allWins += getLineWins(dRow, dCol, 2, 2, 0, 0);
 
     // Get beginning of diagonal line (second)
     dRow = row, dCol = col;
-    while (0 < dRow && dCol + 2 <= gridWidth) {
-        dRow--;
-        dCol++;
-    }
+    for (; 0 < dRow && dCol + 2 <= gridWidth; dRow--, dCol++);
 
     // Check symbols diagonally (second)
-    sameInARow = 0;
-    compareSymbol = getSymbol(dRow, dCol);
-    for (; dRow < gridHeight && 0 <= dCol; dRow += 2, dCol -= 2)
-        sus(dRow, dCol, currWinSpaces, allWins, sameInARow, compareSymbol);
+    allWins += getLineWins(dRow, dCol, 2, -2, 0, 0);
 
     return allWins;
 }
 
-void Board::sus(const int row,
-                const int col,
-                QVector<BoardSpaceLabel*>& currWinSpaces,
-                QVector<QVector<BoardSpaceLabel*>>& allWins,
-                int& sameInARow,
-                QVariant& compareSymbol)
+QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
+                                                      const int col,
+                                                      const int rowStep,
+                                                      const int colStep,
+                                                      const int rowOffset,
+                                                      const int colOffset)
 {
-    QVariant currSymbol = getSymbol(row, col);
+    QVector<BoardSpaceLabel*> currWinSpaces;
+    QVector<QVector<BoardSpaceLabel*>> allWins;
+    int sameInARow = 0;
+    QVariant compareSymbol = getWidget<SymbolLabel*>
+            (layout, row + rowOffset, col + colOffset)->getSymbol();
 
-    if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
-        sameInARow++;
-        currWinSpaces.push_back(getSpace(row, col));
-    } else {
-        sameInARow = 1;
-        compareSymbol = currSymbol;
-        currWinSpaces.clear();
-        currWinSpaces.push_back(getSpace(row, col));
+    for (int r = row + rowOffset, c = col + colOffset;
+         r >= 0 && c >= 0 && r < gridHeight && c < gridWidth;
+         r += rowStep, c += colStep)
+    {
+        QVariant currSymbol =
+                getWidget<SymbolLabel*>(layout, r, c)->getSymbol();
+
+        if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
+            sameInARow++;
+            currWinSpaces.push_back(getWidget<SymbolLabel*>(layout, r, c));
+        } else {
+            sameInARow = 1;
+            compareSymbol = currSymbol;
+            currWinSpaces.clear();
+            currWinSpaces.push_back(getWidget(r, c));
+        }
+
+        if (currSymbol != "" && sameInARow == winCondition) {
+            allWins.push_back(currWinSpaces);
+            sameInARow--;
+            currWinSpaces.erase(currWinSpaces.begin());
+        }
     }
 
-    if (currSymbol != "" && sameInARow == winCondition) {
-        allWins.push_back(currWinSpaces);
-        sameInARow--;
-        currWinSpaces.erase(currWinSpaces.begin());
-    }
+    return allWins;
 }
-
-bool Board::compareSymbols(QVariant sym1, QVariant sym2)
-{
-    return  // Compare text
-            (sym1.value<QString>() == sym2.value<QString>() &&
-             sym2.canConvert<QString>()) ||
-
-            // Compare images
-            (compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
-}
-
