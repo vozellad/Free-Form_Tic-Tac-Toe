@@ -27,7 +27,8 @@ QVector<QString> GameSetupWindow::getNames()
     QVector<QString> playerNames;
 
     for (int i = 0; i < players->count(); i += 2) {
-        QString name = getWidget<SymbolLabel*>(players, i)->text();
+        QString name = qobject_cast<SymbolLabel*>
+                (players->itemAt(i)->widget())->text();
         playerNames.push_back(name);
     }
 
@@ -39,7 +40,8 @@ QVector<QVariant> GameSetupWindow::getSymbols()
     QVector<QVariant> playerSymbols;
 
     for (int i = 1; i < players->count(); i += 2) {
-        QVariant symbol = getWidget<SymbolLabel*>(players, i)->getSymbol();
+        QVariant symbol = qobject_cast<SymbolLabel*>
+                (players->itemAt(i)->widget())->getSymbol();
         playerSymbols.push_back(symbol);
     }
 
@@ -105,9 +107,12 @@ QVector<BoardSettings> GameSetupWindow::getBoards()
                 qobject_cast<QGridLayout*>(boards->itemAt(i)->layout());
 
         // Get board spinbox numbers
-        const int sizeX = getWidget<QSpinBox*>(currBoard, 3)->value();
-        const int sizeY = getWidget<QSpinBox*>(currBoard, 5)->value();
-        const int winCond = getWidget<QSpinBox*>(currBoard, 7)->value();
+        const int sizeX = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(3)->widget()) ->value();
+        const int sizeY = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(5)->widget()) ->value();
+        const int winCond = qobject_cast<QSpinBox*>
+                (currBoard->itemAt(7)->widget()) ->value();
 
         boardsList.push_back(BoardSettings{sizeX, sizeY, winCond});
     }

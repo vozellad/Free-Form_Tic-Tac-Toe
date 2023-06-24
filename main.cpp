@@ -42,4 +42,6 @@ rule of five
 
 pictures in game should not go grayscale when board or space disabled
 
+what namespaces to add? Utils?
+
 */

@@ -21,17 +21,3 @@ bool compareSymbols(QVariant sym1, QVariant sym2)
             (sym1.userType() == QMetaType::QImage &&
             compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
 }
-
-// TODO: doesn't work
-
-template <typename T>
-T getWidget(QGridLayout* l, const int i)
-{
-    return qobject_cast<T>(l->itemAt(i)->widget());
-}
-
-template <typename T>
-T getWidget(QGridLayout* l, const int row, const int col)
-{
-    return qobject_cast<T>(l->itemAtPosition(row, col)->widget());
-}

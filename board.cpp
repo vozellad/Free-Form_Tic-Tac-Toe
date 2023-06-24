@@ -130,17 +130,22 @@ bool Board::boardIsFull() const
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            if (getWidget<BoardSpaceLabel*>(layout, row, col)
-                    ->getSymbol() == "")  return false;
+            if (getSpace(row, col)->getSymbol() == "")  return false;
 
     return true;
+}
+
+BoardSpaceLabel* Board::getSpace(const int row, const int col) const
+{
+    return qobject_cast<BoardSpaceLabel*>
+            (layout->itemAtPosition(row, col)->widget());
 }
 
 void Board::disableBoard()
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            getWidget<BoardSpaceLabel*>(layout, row, col)->setEnabled(false);
+            getSpace(row, col)->setEnabled(false);
 
     layout->setEnabled(false);
 }
@@ -221,24 +226,23 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
     QVector<BoardSpaceLabel*> currWinSpaces;
     QVector<QVector<BoardSpaceLabel*>> allWins;
     int sameInARow = 0;
-    QVariant compareSymbol = getWidget<BoardSpaceLabel*>
-            (layout, row + rowOffset, col + colOffset)->getSymbol();
+    QVariant compSymbol =
+            getSpace(row + rowOffset, col + colOffset)->getSymbol();
 
     for (int r = row + rowOffset, c = col + colOffset;
          r >= 0 && c >= 0 && r < gridHeight && c < gridWidth;
          r += rowStep, c += colStep)
     {
-        QVariant currSymbol =
-                getWidget<BoardSpaceLabel*>(layout, r, c)->getSymbol();
+        QVariant currSymbol = getSpace(row, col)->getSymbol();
 
-        if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
+        if (currSymbol != "" && compareSymbols(compSymbol, currSymbol)) {
             sameInARow++;
         } else {
             sameInARow = 1;
-            compareSymbol = currSymbol;
+            compSymbol = currSymbol;
             currWinSpaces.clear();
         }
-        currWinSpaces.push_back(getWidget<BoardSpaceLabel*>(layout, r, c));
+        currWinSpaces.push_back(getSpace(row, col));
 
         if (currSymbol != "" && sameInARow == winCondition) {
             allWins.push_back(currWinSpaces);
