@@ -14,6 +14,7 @@ SOURCES += \
     errordialog.cpp \
     gamesetupboards.cpp \
     gamesetupplayers.cpp \
+    gamesetupstartgame.cpp \
     imageutils.cpp \
     main.cpp \
     playersymboldialog.cpp \

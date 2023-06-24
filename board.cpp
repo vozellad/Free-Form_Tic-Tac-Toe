@@ -130,8 +130,8 @@ bool Board::boardIsFull() const
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            if (getWidget<SymbolLabel*>(layout, row, col)->getSymbol() == "")
-                return false;
+            if (getWidget<BoardSpaceLabel*>(layout, row, col)
+                    ->getSymbol() == "")  return false;
 
     return true;
 }
@@ -140,7 +140,7 @@ void Board::disableBoard()
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            getWidget<SymbolLabel*>(layout, row, col)->setEnabled(false);
+            getWidget<BoardSpaceLabel*>(layout, row, col)->setEnabled(false);
 
     layout->setEnabled(false);
 }
@@ -221,7 +221,7 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
     QVector<BoardSpaceLabel*> currWinSpaces;
     QVector<QVector<BoardSpaceLabel*>> allWins;
     int sameInARow = 0;
-    QVariant compareSymbol = getWidget<SymbolLabel*>
+    QVariant compareSymbol = getWidget<BoardSpaceLabel*>
             (layout, row + rowOffset, col + colOffset)->getSymbol();
 
     for (int r = row + rowOffset, c = col + colOffset;
@@ -229,17 +229,16 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
          r += rowStep, c += colStep)
     {
         QVariant currSymbol =
-                getWidget<SymbolLabel*>(layout, r, c)->getSymbol();
+                getWidget<BoardSpaceLabel*>(layout, r, c)->getSymbol();
 
         if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
             sameInARow++;
-            currWinSpaces.push_back(getWidget<SymbolLabel*>(layout, r, c));
         } else {
             sameInARow = 1;
             compareSymbol = currSymbol;
             currWinSpaces.clear();
-            currWinSpaces.push_back(getWidget(r, c));
         }
+        currWinSpaces.push_back(getWidget<BoardSpaceLabel*>(layout, r, c));
 
         if (currSymbol != "" && sameInARow == winCondition) {
             allWins.push_back(currWinSpaces);

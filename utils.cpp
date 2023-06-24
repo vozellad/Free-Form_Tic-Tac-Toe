@@ -20,6 +20,8 @@ bool compareSymbols(QVariant sym1, QVariant sym2)
             compareImages(sym1.value<QImage>(), sym2.value<QImage>()));
 }
 
+// TODO: doesn't work
+
 template <typename T>
 T getWidget(QLayout* l, const int i)
 {

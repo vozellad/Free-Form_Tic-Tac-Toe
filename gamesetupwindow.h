@@ -75,7 +75,13 @@ private:
     // to prevent user from going outside range
     void setAmtModBtnStates_players();
 
-    QVector<Player> getPlayers();
+    QVector<QString> getNames();
+
+    QVector<QVariant> getSymbols();
+
+    bool validateNames(QVector<QString> playerNames);
+
+    bool validateSymbols(QVector<QVariant> playerSymbols);
 
     QVector<BoardSettings> getBoards();
 
