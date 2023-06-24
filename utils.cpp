@@ -9,6 +9,8 @@ void setGridWidth(QGridLayout* l, const int width)
 
 bool compareSymbols(QVariant sym1, QVariant sym2)
 {
+    // TODO: change to be like ifs or one return?
+
     // Check if same datatype
     if (sym1.userType() != sym2.userType())  return false;
 
@@ -23,7 +25,7 @@ bool compareSymbols(QVariant sym1, QVariant sym2)
 // TODO: doesn't work
 
 template <typename T>
-T getWidget(QLayout* l, const int i)
+T getWidget(QGridLayout* l, const int i)
 {
     return qobject_cast<T>(l->itemAt(i)->widget());
 }
