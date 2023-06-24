@@ -62,21 +62,18 @@ void PlayGameWindow::highlightPlayer(int playerRow)
 
     clearPlayerHighlight();
 
-    // TODO: QStrings to reduce duplicate substrings
+    QString borderStyle = ": 1px solid red;";
 
-    playersUI->itemAt(playerRow + 0)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-left: 1px solid red;");
+    QString bottomTopBorder = "border-top" + borderStyle +
+                              "border-bottom" + borderStyle;
 
-    playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;");
+    playersUI->itemAt(playerRow)->widget()->setStyleSheet(
+                bottomTopBorder + "border-left" + borderStyle);
+
+    playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(bottomTopBorder);
 
     playersUI->itemAt(playerRow + 2)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-right: 1px solid red;");
+                bottomTopBorder + "border-right" + borderStyle);
 }
 
 void PlayGameWindow::clearPlayerHighlight()
@@ -124,7 +121,7 @@ void PlayGameWindow::displayWinner(int winnerIndex)
     QString score = qobject_cast<QLabel*>
             (playersUI->itemAt(winnerIndex + 2)->widget())->text();
     QString s = "Winner is " + name + " with " + score + " win"; // TODO: tr().arg
-    if (1 < score)  s += "s";
+    if (1 < score.toInt())  s += "s";
     ui->label_winner->setText(s);
 }
 
@@ -174,6 +171,7 @@ void PlayGameWindow::addPlayers()
         symbol->setAlignment(Qt::AlignHCenter);
         symbol->setFixedHeight(name->sizeHint().height());
         symbol->setSymbol(players[i].symbol);
+        // TODO: why is padding weird?
         playersUI->addWidget(symbol);
 
         QLabel* score = new QLabel("0");

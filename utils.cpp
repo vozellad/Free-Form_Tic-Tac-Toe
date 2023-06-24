@@ -9,6 +9,8 @@ void setGridWidth(QGridLayout* l, const int width)
 
 bool compareSymbols(QVariant sym1, QVariant sym2)
 {
+    // TODO: change to be like ifs or one return?
+
     // Check if same datatype
     if (sym1.userType() != sym2.userType())  return false;
 

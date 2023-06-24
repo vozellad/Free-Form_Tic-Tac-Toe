@@ -60,8 +60,6 @@ private:
 
     bool boardIsFull() const;
 
-    QVariant getSymbol(const int row, const int col) const;
-
     BoardSpaceLabel* getSpace(const int row, const int col) const;
 
     void disableBoard();

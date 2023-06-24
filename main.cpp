@@ -35,11 +35,13 @@ class diagram
 correct comments because code changed
 (make comments consistently start with upper case letter)
 
-highlight boardSpace user's cursor is on
+highlight boardSpace user's cursor is on.
 add noise when symbol is inserted
 
 rule of five
 
 pictures in game should not go grayscale when board or space disabled
+
+what namespaces to add? Utils?
 
 */

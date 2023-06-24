@@ -106,6 +106,9 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     w->addCurrPlayerScore(wins.count());
 
+
+    // TODO: evalTable() or just finishGame() in second indentation or neither
+
     if (w->allBoardsDone()) {
         const int winnerRow = w->getWinnerRow();
         w->clearPlayerHighlight();
@@ -130,17 +133,9 @@ bool Board::boardIsFull() const
 {
     for (int row = 0; row < gridHeight; row += 2)
         for (int col = 0; col < gridWidth; col += 2)
-            if (getSymbol(row, col) == "")
-                return false;
+            if (getSpace(row, col)->getSymbol() == "")  return false;
 
     return true;
-}
-
-// TODO: next 2 functions might get replaced by a utils function
-
-QVariant Board::getSymbol(const int row, const int col) const
-{
-    return getSpace(row, col)->getSymbol();
 }
 
 BoardSpaceLabel* Board::getSpace(const int row, const int col) const
@@ -234,23 +229,23 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
     QVector<BoardSpaceLabel*> currWinSpaces;
     QVector<QVector<BoardSpaceLabel*>> allWins;
     int sameInARow = 0;
-    QVariant compareSymbol = getSymbol(row + rowOffset, col + colOffset);
+    QVariant compSymbol =
+            getSpace(row + rowOffset, col + colOffset)->getSymbol();
 
     for (int r = row + rowOffset, c = col + colOffset;
          r >= 0 && c >= 0 && r < gridHeight && c < gridWidth;
          r += rowStep, c += colStep)
     {
-        QVariant currSymbol = getSymbol(r, c);
+        QVariant currSymbol = getSpace(r, c)->getSymbol();
 
-        if (currSymbol != "" && compareSymbols(compareSymbol, currSymbol)) {
+        if (currSymbol != "" && compareSymbols(compSymbol, currSymbol)) {
             sameInARow++;
-            currWinSpaces.push_back(getSpace(r, c));
         } else {
             sameInARow = 1;
-            compareSymbol = currSymbol;
+            compSymbol = currSymbol;
             currWinSpaces.clear();
-            currWinSpaces.push_back(getSpace(r, c));
         }
+        currWinSpaces.push_back(getSpace(r, c));
 
         if (currSymbol != "" && sameInARow == winCondition) {
             allWins.push_back(currWinSpaces);
