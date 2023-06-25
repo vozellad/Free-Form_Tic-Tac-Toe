@@ -9,6 +9,8 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // TODO: balancer label_playerSymbolPrompt
+
     // make - + buttons square
     QToolButton* buttonArray[4] = {
         ui->toolButton_addPlayer,

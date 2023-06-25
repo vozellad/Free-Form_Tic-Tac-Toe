@@ -252,16 +252,6 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_boardSetup">
-        <item row="0" column="2">
-         <widget class="QToolButton" name="toolButton_removeBoard">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>-</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="3">
          <widget class="QToolButton" name="toolButton_addBoard">
           <property name="text">
@@ -269,19 +259,42 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_boardAmtDisplay">
-          <property name="minimumSize">
+        <item row="1" column="0" colspan="4">
+         <spacer name="verticalSpacer_boardSetup">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
            <size>
-            <width>30</width>
-            <height>0</height>
+            <width>20</width>
+            <height>5</height>
            </size>
           </property>
-          <property name="text">
-           <string>0</string>
+         </spacer>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_boardAmtPrompt">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <property name="text">
+           <string>Amount of boards: </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="toolButton_removeBoard">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>-</string>
           </property>
          </widget>
         </item>
@@ -335,34 +348,21 @@
           </widget>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_boardAmtPrompt">
-          <property name="font">
-           <font>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Amount of boards: </string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="4">
-         <spacer name="verticalSpacer_boardSetup">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_boardAmtDisplay">
+          <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>5</height>
+            <width>30</width>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
