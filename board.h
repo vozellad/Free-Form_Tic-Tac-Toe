@@ -32,8 +32,6 @@ public:
     int getGridHeight() const;
 
 private:
-    // TODO: which to add getter for?
-
     const int boardWidth;
 
     const int boardHeight;

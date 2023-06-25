@@ -27,7 +27,7 @@ QVector<QString> GameSetupWindow::getNames()
     QVector<QString> playerNames;
 
     for (int i = 0; i < players->count(); i += 2) {
-        QString name = qobject_cast<SymbolLabel*>
+        QString name = qobject_cast<QLineEdit*>
                 (players->itemAt(i)->widget())->text();
         playerNames.push_back(name);
     }
@@ -82,12 +82,11 @@ bool GameSetupWindow::validateSymbols(QVector<QVariant> playerSymbols)
     }
 
     // Test for non-unique symbol
-    QVector<QVariant> symbolTest(playerSymbols);
-    std::sort(symbolTest.begin(), symbolTest.end());
+    std::sort(playerSymbols.begin(), playerSymbols.end());
     // Adjacent compare
-    for (int i = 0; i < symbolTest.size() - 1; i++) {
+    for (int i = 0; i < playerSymbols.size() - 1; i++) {
         // If comparing text and both texts are the same, display error
-        if (compareSymbols(symbolTest[i], symbolTest[i + 1])) {
+        if (compareSymbols(playerSymbols[i], playerSymbols[i + 1])) {
             displayErrorDialog("Symbols must be unique.");
             return false;
         }

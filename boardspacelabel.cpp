@@ -75,3 +75,15 @@ void BoardSpaceLabel::resizeSymbol()
     setSymbol("");
     setSymbol(symbol);
 }
+
+void BoardSpaceLabel::enterEvent(QEvent*)
+{
+    if (isEnabled())
+        setStyleSheet("QLabel { background-color : gray; }");
+}
+
+void BoardSpaceLabel::leaveEvent(QEvent*)
+{
+    if (isEnabled())
+        setStyleSheet("");
+}

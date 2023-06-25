@@ -65,6 +65,8 @@ private:
 
     void addPlayers();
 
+    QLabel* getPlayerUILabel(const int i);
+
 };
 
 #endif // PLAYGAMEWINDOW_H

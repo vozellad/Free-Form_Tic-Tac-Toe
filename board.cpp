@@ -38,8 +38,6 @@ void Board::createBoard()
 {
     layout = new QGridLayout();
 
-    // TODO: do with QPallete instead?
-
     // Connect lines
     layout->setSpacing(0);
 
@@ -105,6 +103,9 @@ void Board::spaceClicked(BoardSpaceLabel* space)
     if (0 < wins.count() || boardIsFull())  disableBoard();
 
     w->addCurrPlayerScore(wins.count());
+
+
+    // TODO: evalTable() or just finishGame() in second indentation or neither
 
     if (w->allBoardsDone()) {
         const int winnerRow = w->getWinnerRow();
@@ -233,7 +234,7 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
          r >= 0 && c >= 0 && r < gridHeight && c < gridWidth;
          r += rowStep, c += colStep)
     {
-        QVariant currSymbol = getSpace(row, col)->getSymbol();
+        QVariant currSymbol = getSpace(r, c)->getSymbol();
 
         if (currSymbol != "" && compareSymbols(compSymbol, currSymbol)) {
             sameInARow++;
@@ -242,7 +243,7 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
             compSymbol = currSymbol;
             currWinSpaces.clear();
         }
-        currWinSpaces.push_back(getSpace(row, col));
+        currWinSpaces.push_back(getSpace(r, c));
 
         if (currSymbol != "" && sameInARow == winCondition) {
             allWins.push_back(currWinSpaces);

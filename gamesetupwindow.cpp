@@ -1,13 +1,13 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-// TODO: how to name extended source files of class
-
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
 {
     ui->setupUi(this);
+
+    // TODO: balancer label_playerSymbolPrompt
 
     // make - + buttons square
     QToolButton* buttonArray[4] = {
