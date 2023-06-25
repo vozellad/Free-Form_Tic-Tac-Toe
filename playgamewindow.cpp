@@ -12,6 +12,7 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     table = ui->gridLayout_table;
     table->setSpacing(42);
+    // TODO: each board on table needs a label on top of it to show winCondition or other info when relevant (might have to do in board class)
 
     for (BoardSettings& b : boardsSettings)
         boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
@@ -40,7 +41,7 @@ void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)
     // Get player's score label grid position
     int i = currPlayerRow * 3 + 2;
 
-    QLabel* score = qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
+    QLabel* score = getPlayerUILabel(i);
 
     score->setText(QString::number(score->text().toInt() + scoreAdd));
 }
@@ -62,21 +63,21 @@ void PlayGameWindow::highlightPlayer(int playerRow)
 
     clearPlayerHighlight();
 
-    // TODO: QStrings to reduce duplicate substrings
+    QString style = ": 1px solid red;";
 
     playersUI->itemAt(playerRow + 0)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-left: 1px solid red;");
+                "border-top" + style +
+                "border-bottom" + style +
+                "border-left" + style);
 
     playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;");
+                "border-top" + style +
+                "border-bottom" + style);
 
     playersUI->itemAt(playerRow + 2)->widget()->setStyleSheet(
-                "border-top: 1px solid red;"
-                "border-bottom: 1px solid red;"
-                "border-right: 1px solid red;");
+                "border-top" + style +
+                "border-bottom" + style +
+                "border-right" + style);
 }
 
 void PlayGameWindow::clearPlayerHighlight()
@@ -100,8 +101,7 @@ int PlayGameWindow::getWinnerRow()
     bool draw = false;
 
     for (int i = 2; i < playersUI->count(); i += 3) {
-        const int currScore = qobject_cast<QLabel*>
-                (playersUI->itemAt(i)->widget())->text().toInt();
+        const int currScore = getPlayerUILabel(i)->text().toInt();
 
         if (maxScore < currScore) {
             maxScore = currScore;
@@ -117,14 +117,12 @@ int PlayGameWindow::getWinnerRow()
 
 void PlayGameWindow::displayWinner(int winnerIndex)
 {
-    winnerIndex *= 3;  // TODO: maybe change it to index for real instead of row
+    winnerIndex *= 3;
 
-    QString name = qobject_cast<QLabel*>  // TODO: reduce duplicate code with function
-            (playersUI->itemAt(winnerIndex)->widget())->text();
-    QString score = qobject_cast<QLabel*>
-            (playersUI->itemAt(winnerIndex + 2)->widget())->text();
-    QString s = "Winner is " + name + " with " + score + " win"; // TODO: tr().arg
-    if (1 < score)  s += "s";
+    QString name = getPlayerUILabel(winnerIndex)->text();
+    QString score = getPlayerUILabel(winnerIndex + 2)->text();
+    QString s = "Winner is " + name + " with " + score + " win";
+    if (1 < score.toInt())  s += "s";
     ui->label_winner->setText(s);
 }
 
@@ -160,9 +158,7 @@ void PlayGameWindow::addBoards()
 
 void PlayGameWindow::addPlayers()
 {
-    // Set column width
-    playersUI->setColumnMinimumWidth(2, 0);
-    playersUI->setColumnStretch(2, 0);
+    setGridWidth(playersUI, 3);
 
     const int margin = 5;
 
@@ -172,9 +168,11 @@ void PlayGameWindow::addPlayers()
         name->setMargin(margin);
         playersUI->addWidget(name);
 
-        SymbolLabel* symbol = new SymbolLabel(players[i].symbol);
+        SymbolLabel* symbol = new SymbolLabel(false);
         symbol->setAlignment(Qt::AlignHCenter);
-        symbol->setMargin(margin);
+        symbol->setFixedHeight(name->sizeHint().height());
+        symbol->setSymbol(players[i].symbol);
+        // TODO: why is padding weird?
         playersUI->addWidget(symbol);
 
         QLabel* score = new QLabel("0");
@@ -182,4 +180,9 @@ void PlayGameWindow::addPlayers()
         score->setMargin(margin);
         playersUI->addWidget(score);
     }
+}
+
+QLabel* PlayGameWindow::getPlayerUILabel(const int i)
+{
+    return qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
 }

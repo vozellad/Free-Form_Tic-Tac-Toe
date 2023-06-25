@@ -18,6 +18,7 @@
 #include "boardsettings.h"
 #include "imageutils.h"
 #include "errordialog.h"
+#include "utils.h"
 
 namespace Ui {
 class GameSetupWindow;
@@ -73,6 +74,20 @@ private:
     // If not in range, turn off appropriate player amount modifier button -/+
     // to prevent user from going outside range
     void setAmtModBtnStates_players();
+
+    QVector<QString> getNames();
+
+    QVector<QVariant> getSymbols();
+
+    bool validateNames(QVector<QString> playerNames);
+
+    bool validateSymbols(QVector<QVariant> playerSymbols);
+
+    QVector<BoardSettings> getBoards();
+
+    bool validateBoards(QVector<BoardSettings> boardsList);
+
+    void displayErrorDialog(const QString message);
 
     // Delete last item in given layout
     void deleteLastItem(QLayout* l);

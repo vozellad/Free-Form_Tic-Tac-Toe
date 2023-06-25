@@ -25,25 +25,19 @@ offer spanish and greek translations (tr).
 
 add docstrings at top of each file
 
-make sure correct use of
-    setColumnMinimumWidth
-    setColumnStretch
-
 make window appear in center of screen
-
-custom widget for player and boards?
+(also make next window appear where old one was)
 
 class diagram
 
-size vs count
-
 correct comments because code changed
+(make comments consistently start with upper case letter)
 
-make comments consistently start with upper case letter
-
-highlight boardSpace user's cursor is on
+highlight boardSpace user's cursor is on.
 add noise when symbol is inserted
 
 rule of five
+
+what namespaces to add? Utils?
 
 */

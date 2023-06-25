@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include "boardspacelabel.h"
 #include "imageutils.h"
+#include "utils.h"
 
 class PlayGameWindow;
 
@@ -18,11 +19,19 @@ public:
                    PlayGameWindow* parent);
     explicit Board(const Board& other);
 
-    QGridLayout* getLayout() const;
+    QVBoxLayout* getLayout() const;
+
+    int getBoardWidth() const;
+
+    int getBoardHeight() const;
+
+    int getWinCondition() const;
+
+    int getGridWidth() const;
+
+    int getGridHeight() const;
 
 private:
-    // TODO: which to add getter for?
-
     const int boardWidth;
 
     const int boardHeight;
@@ -33,7 +42,9 @@ private:
 
     const int gridHeight;
 
-    QGridLayout* layout;
+    QGridLayout* board;
+
+    QVBoxLayout* layout;
 
     void createBoard();
 
@@ -49,8 +60,6 @@ private:
 
     bool boardIsFull() const;
 
-    QVariant getSymbol(const int row, const int col) const;
-
     BoardSpaceLabel* getSpace(const int row, const int col) const;
 
     void disableBoard();
@@ -61,7 +70,14 @@ private:
 
     int getSpaceCol(BoardSpaceLabel* space);
 
-    QVector<QVector<BoardSpaceLabel*>> getWinSpaces(BoardSpaceLabel* space);
+    QVector<QVector<BoardSpaceLabel*>> getAllWins(BoardSpaceLabel* space);
+
+    QVector<QVector<BoardSpaceLabel*>> getLineWins(const int row,
+                                                   const int col,
+                                                   const int rowStep,
+                                                   const int colStep,
+                                                   const int rowOffset,
+                                                   const int colOffset);
 
 };
 
