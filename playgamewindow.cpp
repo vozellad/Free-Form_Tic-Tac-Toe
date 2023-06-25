@@ -40,7 +40,7 @@ void PlayGameWindow::addCurrPlayerScore(const int scoreAdd)
     // Get player's score label grid position
     int i = currPlayerRow * 3 + 2;
 
-    QLabel* score = qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
+    QLabel* score = getPlayerUILabel(i);
 
     score->setText(QString::number(score->text().toInt() + scoreAdd));
 }
@@ -97,8 +97,7 @@ int PlayGameWindow::getWinnerRow()
     bool draw = false;
 
     for (int i = 2; i < playersUI->count(); i += 3) {
-        const int currScore = qobject_cast<QLabel*>
-                (playersUI->itemAt(i)->widget())->text().toInt();
+        const int currScore = getPlayerUILabel(i)->text().toInt();
 
         if (maxScore < currScore) {
             maxScore = currScore;
@@ -114,13 +113,11 @@ int PlayGameWindow::getWinnerRow()
 
 void PlayGameWindow::displayWinner(int winnerIndex)
 {
-    winnerIndex *= 3;  // TODO: maybe change it to index for real instead of row
+    winnerIndex *= 3;
 
-    QString name = qobject_cast<QLabel*>  // TODO: reduce duplicate code with function
-            (playersUI->itemAt(winnerIndex)->widget())->text();
-    QString score = qobject_cast<QLabel*>
-            (playersUI->itemAt(winnerIndex + 2)->widget())->text();
-    QString s = "Winner is " + name + " with " + score + " win"; // TODO: tr().arg
+    QString name = getPlayerUILabel(winnerIndex)->text();
+    QString score = getPlayerUILabel(winnerIndex + 2)->text();
+    QString s = "Winner is " + name + " with " + score + " win";
     if (1 < score.toInt())  s += "s";
     ui->label_winner->setText(s);
 }
@@ -179,4 +176,9 @@ void PlayGameWindow::addPlayers()
         score->setMargin(margin);
         playersUI->addWidget(score);
     }
+}
+
+QLabel* PlayGameWindow::getPlayerUILabel(const int i)
+{
+    return qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
 }

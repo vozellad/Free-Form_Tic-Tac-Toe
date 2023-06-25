@@ -38,8 +38,6 @@ void Board::createBoard()
 {
     layout = new QGridLayout();
 
-    // TODO: do with QPallete instead?
-
     // Connect lines
     layout->setSpacing(0);
 

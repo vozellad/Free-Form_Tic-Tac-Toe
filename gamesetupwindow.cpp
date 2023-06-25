@@ -1,8 +1,6 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-// TODO: how to name extended source files of class
-
 GameSetupWindow::GameSetupWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameSetupWindow)
