@@ -12,6 +12,7 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     table = ui->gridLayout_table;
     table->setSpacing(42);
+    // TODO: each board on table needs a label on top of it to show winCondition or other info when relevant (might have to do in board class)
 
     for (BoardSettings& b : boardsSettings)
         boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
@@ -62,18 +63,21 @@ void PlayGameWindow::highlightPlayer(int playerRow)
 
     clearPlayerHighlight();
 
-    QString borderStyle = ": 1px solid red;";
+    QString style = ": 1px solid red;";
 
-    QString bottomTopBorder = "border-top" + borderStyle +
-                              "border-bottom" + borderStyle;
+    playersUI->itemAt(playerRow + 0)->widget()->setStyleSheet(
+                "border-top" + style +
+                "border-bottom" + style +
+                "border-left" + style);
 
-    playersUI->itemAt(playerRow)->widget()->setStyleSheet(
-                bottomTopBorder + "border-left" + borderStyle);
-
-    playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(bottomTopBorder);
+    playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(
+                "border-top" + style +
+                "border-bottom" + style);
 
     playersUI->itemAt(playerRow + 2)->widget()->setStyleSheet(
-                bottomTopBorder + "border-right" + borderStyle);
+                "border-top" + style +
+                "border-bottom" + style +
+                "border-right" + style);
 }
 
 void PlayGameWindow::clearPlayerHighlight()
@@ -164,7 +168,7 @@ void PlayGameWindow::addPlayers()
         name->setMargin(margin);
         playersUI->addWidget(name);
 
-        SymbolLabel* symbol = new SymbolLabel();
+        SymbolLabel* symbol = new SymbolLabel(false);
         symbol->setAlignment(Qt::AlignHCenter);
         symbol->setFixedHeight(name->sizeHint().height());
         symbol->setSymbol(players[i].symbol);

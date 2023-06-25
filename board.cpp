@@ -22,7 +22,7 @@ Board::Board(const Board& other) :
     gridHeight(other.gridHeight)
 { createBoard(); }
 
-QGridLayout* Board::getLayout() const { return layout; }
+QVBoxLayout* Board::getLayout() const { return layout; }
 
 int Board::getBoardWidth() const { return boardWidth; }
 
@@ -36,12 +36,18 @@ int Board::getGridHeight() const { return gridHeight; }
 
 void Board::createBoard()
 {
-    layout = new QGridLayout();
+    board = new QGridLayout();
+
+    layout = new QVBoxLayout();
+    QLabel* winCond = new QLabel("Win Condition: " + winCondition);  // TODO: text partially hidden
+    layout->addWidget(winCond, 0, Qt::AlignCenter);
+    layout->addLayout(board, 1);
+    layout->setSpacing(5);
 
     // Connect lines
-    layout->setSpacing(0);
+    board->setSpacing(0);
 
-    setGridWidth(layout, boardWidth);
+    setGridWidth(board, boardWidth);
 
     addSpaces();
 
@@ -55,7 +61,7 @@ void Board::addSpaces()
             BoardSpaceLabel* space = new BoardSpaceLabel();
             space->setAlignment(Qt::AlignCenter);
             addClickedSpace(space);
-            layout->addWidget(space, row, col);
+            board->addWidget(space, row, col);
         }
 }
 
@@ -63,12 +69,12 @@ void Board::addLines()
 {
     for (int row = 0; row < gridHeight; row += 2) {
         for (int col = 1; col < gridWidth; col += 2)
-            layout->addWidget(getLine(QFrame::VLine), row, col);
+            board->addWidget(getLine(QFrame::VLine), row, col);
 
         // Don't add last hLine
         if (row >= gridHeight - 1)  break;
 
-        layout->addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
+        board->addWidget(getLine(QFrame::HLine), row + 1, 0, 1, 0);
     }
 }
 
@@ -139,7 +145,7 @@ bool Board::boardIsFull() const
 BoardSpaceLabel* Board::getSpace(const int row, const int col) const
 {
     return qobject_cast<BoardSpaceLabel*>
-            (layout->itemAtPosition(row, col)->widget());
+            (board->itemAtPosition(row, col)->widget());
 }
 
 void Board::disableBoard()
@@ -148,14 +154,14 @@ void Board::disableBoard()
         for (int col = 0; col < gridWidth; col += 2)
             getSpace(row, col)->setEnabled(false);
 
-    layout->setEnabled(false);
+    board->setEnabled(false);
 }
 
 void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)
 {
     for (QVector<BoardSpaceLabel*> winSpaces : wins)
         for (BoardSpaceLabel* space : winSpaces) {
-            QPalette palette = space->palette();
+            QPalette palette = space->palette();  // TODO: utils
             palette.setColor(QPalette::Background, QColor(144, 238, 144));
             space->setAutoFillBackground(true);
 
@@ -167,9 +173,9 @@ int Board::getSpaceRow(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int row, _col, _rowSpan, _colSpan;
-    layout->getItemPosition(layout->indexOf(space),
-                            &row, &_col,
-                            &_rowSpan, &_colSpan);
+    board->getItemPosition(board->indexOf(space),
+                           &row, &_col,
+                           &_rowSpan, &_colSpan);
 
     return row;
 }
@@ -178,9 +184,9 @@ int Board::getSpaceCol(BoardSpaceLabel* space)
 {
     // Get boardSpace coordinates
     int _row, col, _rowSpan, _colSpan;
-    layout->getItemPosition(layout->indexOf(space),
-                            &_row, &col,
-                            &_rowSpan, &_colSpan);
+    board->getItemPosition(board->indexOf(space),
+                           &_row, &col,
+                           &_rowSpan, &_colSpan);
 
     return col;
 }

@@ -3,14 +3,14 @@
 BoardSpaceLabel::BoardSpaceLabel(QWidget* parent)
     : SymbolLabel(parent)
 {
-
+    isHover = true;
 }
 
 BoardSpaceLabel::~BoardSpaceLabel() {}
 
 void BoardSpaceLabel::setTextSym(QString s)
 {
-    setText(s);return;
+    setText(s);return;  // TODO
 
     QFont defaultFont = QApplication::font();
     QString fontFamily = defaultFont.family();
