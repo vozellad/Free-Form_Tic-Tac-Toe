@@ -12,7 +12,6 @@ PlayGameWindow::PlayGameWindow(const QVector<Player>& players,
 
     table = ui->gridLayout_table;
     table->setSpacing(42);
-    // TODO: each board on table needs a label on top of it to show winCondition or other info when relevant (might have to do in board class)
 
     for (BoardSettings& b : boardsSettings)
         boards.push_back(Board(b.sizeX, b.sizeY, b.winCond, this));
@@ -66,18 +65,18 @@ void PlayGameWindow::highlightPlayer(int playerRow)
     QString style = ": 1px solid red;";
 
     playersUI->itemAt(playerRow + 0)->widget()->setStyleSheet(
-                "border-top" + style +
+                "border-top"    + style +
                 "border-bottom" + style +
-                "border-left" + style);
+                "border-left"   + style);
 
     playersUI->itemAt(playerRow + 1)->widget()->setStyleSheet(
-                "border-top" + style +
+                "border-top"    + style +
                 "border-bottom" + style);
 
     playersUI->itemAt(playerRow + 2)->widget()->setStyleSheet(
-                "border-top" + style +
+                "border-top"    + style +
                 "border-bottom" + style +
-                "border-right" + style);
+                "border-right"  + style);
 }
 
 void PlayGameWindow::clearPlayerHighlight()
