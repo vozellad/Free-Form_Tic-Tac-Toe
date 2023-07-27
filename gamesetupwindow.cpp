@@ -24,6 +24,8 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
 
     boards = ui->verticalLayout_boards;
     on_toolButton_addBoard_clicked();  // Add initial board
+
+    // TODO: have right now not shrink (like left side)
 }
 
 GameSetupWindow::~GameSetupWindow()

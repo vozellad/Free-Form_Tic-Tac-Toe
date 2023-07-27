@@ -39,7 +39,8 @@ void Board::createBoard()
     board = new QGridLayout();
 
     layout = new QVBoxLayout();
-    QLabel* winCond = new QLabel("Win Condition: " + winCondition);  // TODO: text partially hidden
+    QString boardTitle = QString::number(winCondition) + " in a row";
+    QLabel* winCond = new QLabel(boardTitle);
     layout->addWidget(winCond, 0, Qt::AlignCenter);
     layout->addLayout(board, 1);
     layout->setSpacing(5);
@@ -204,6 +205,9 @@ QVector<QVector<BoardSpaceLabel*>> Board::getAllWins(BoardSpaceLabel* space)
 
     // Check symbols horizontally
     allWins += getLineWins(row, col, 0, 2, 0, -col);
+
+    if (winCondition == 1) return allWins;
+    // Otherwise, the rest of this function will find the same space as a win.
 
     // Check symbols vertically
     allWins += getLineWins(row, col, 2, 0, -row, 0);

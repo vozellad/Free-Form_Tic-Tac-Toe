@@ -99,7 +99,6 @@
       </property>
       <property name="font">
        <font>
-        <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
@@ -185,7 +184,7 @@
              <x>0</x>
              <y>0</y>
              <width>395</width>
-             <height>456</height>
+             <height>459</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_scrollAreaPlayerSetup">
@@ -279,7 +278,6 @@
          <widget class="QLabel" name="label_boardAmtPrompt">
           <property name="font">
            <font>
-            <weight>50</weight>
             <bold>false</bold>
            </font>
           </property>
@@ -324,7 +322,7 @@
              <x>0</x>
              <y>0</y>
              <width>395</width>
-             <height>481</height>
+             <height>483</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_scrollAreaBoardSetup">
