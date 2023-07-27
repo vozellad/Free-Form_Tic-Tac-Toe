@@ -34,6 +34,8 @@ int Board::getGridWidth() const { return gridWidth; }
 
 int Board::getGridHeight() const { return gridHeight; }
 
+bool Board::isEnabled() const { return board->isEnabled(); }
+
 void Board::createBoard()
 {
     board = new QGridLayout();

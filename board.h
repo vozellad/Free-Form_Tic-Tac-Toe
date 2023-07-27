@@ -31,6 +31,8 @@ public:
 
     int getGridHeight() const;
 
+    bool isEnabled() const;
+
 private:
     const int boardWidth;
 

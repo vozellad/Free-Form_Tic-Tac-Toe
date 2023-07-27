@@ -88,7 +88,7 @@ void PlayGameWindow::clearPlayerHighlight()
 bool PlayGameWindow::allBoardsDone() const
 {
     for (int i = 0; i < boards.count(); i++)
-        if (boards[i].getLayout()->isEnabled())
+        if (boards[i].isEnabled())
             return false;
 
     return true;
