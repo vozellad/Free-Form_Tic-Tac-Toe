@@ -21,3 +21,14 @@ bool compareSymbols(QVariant sym1, QVariant sym2)
     return sym1.userType() == QMetaType::QImage &&
             compareImages(sym1.value<QImage>(), sym2.value<QImage>());
 }
+
+void setLabelBackgroundColor(QLabel* label, QColor color)
+{
+    label->setStyleSheet("");
+
+    QPalette palette = label->palette();  // TODO: utils?
+    palette.setColor(QPalette::Background, QColor(144, 238, 144));
+    label->setAutoFillBackground(true);
+
+    label->setPalette(palette);
+}

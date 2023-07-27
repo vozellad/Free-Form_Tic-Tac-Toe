@@ -163,15 +163,8 @@ void Board::disableBoard()
 void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)
 {
     for (QVector<BoardSpaceLabel*> winSpaces : wins)
-        for (BoardSpaceLabel* space : winSpaces) {
-            space->setStyleSheet("");
-
-            QPalette palette = space->palette();  // TODO: utils?
-            palette.setColor(QPalette::Background, QColor(144, 238, 144));
-            space->setAutoFillBackground(true);
-
-            space->setPalette(palette);
-        }
+        for (BoardSpaceLabel* space : winSpaces)
+            setLabelBackgroundColor(space, QColor(144, 238, 144));
 }
 
 int Board::getSpaceRow(BoardSpaceLabel* space)
