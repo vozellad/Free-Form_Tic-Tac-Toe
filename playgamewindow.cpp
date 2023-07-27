@@ -159,24 +159,20 @@ void PlayGameWindow::addPlayers()
 {
     setGridWidth(playersUI, 3);
 
-    const int margin = 5;
-
     // Add players info
     for (int i = 0; i < players.count(); i++) {
         QLabel* name = new QLabel(players[i].name);
-        name->setMargin(margin);
+        name->setMargin(5);
         playersUI->addWidget(name);
 
         SymbolLabel* symbol = new SymbolLabel(false);
         symbol->setAlignment(Qt::AlignHCenter);
-        symbol->setFixedHeight(name->sizeHint().height());
+        symbol->setFixedHeight(name->sizeHint().height() + 2);
         symbol->setSymbol(players[i].symbol);
-        // TODO: why is padding weird?
         playersUI->addWidget(symbol);
 
         QLabel* score = new QLabel("0");
         score->setAlignment(Qt::AlignRight);
-        score->setMargin(margin);
         playersUI->addWidget(score);
     }
 }
