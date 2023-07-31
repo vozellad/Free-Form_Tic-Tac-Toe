@@ -22,12 +22,6 @@ protected:
 
     void showEvent(QShowEvent *event) override;
 
-    void enterEvent(QEvent* ev) override;
-
-    void leaveEvent(QEvent* ev) override;
-
-    // TODO: do same for gamesetupwindow? make hoversymbollabel class?
-
 private:
     bool uiLoaded = false;
 

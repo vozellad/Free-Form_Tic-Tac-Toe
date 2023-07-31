@@ -10,13 +10,19 @@ class SymbolLabel : public QLabel {
     Q_OBJECT
 
 public:
-    explicit SymbolLabel(QWidget* parent = Q_NULLPTR);
-    explicit SymbolLabel(QVariant symbol, QWidget* parent = Q_NULLPTR);
+    explicit SymbolLabel(bool isHover = true, QWidget* parent = Q_NULLPTR);
+    explicit SymbolLabel(QVariant symbol,
+                         bool isHover = true,
+                         QWidget* parent = Q_NULLPTR);
     ~SymbolLabel();
 
     void setSymbol(const QVariant symbol);
 
     QVariant getSymbol();
+
+    bool getIsHover();
+
+    void setIsHover(bool b);
 
 signals:
     void clicked();
@@ -24,11 +30,17 @@ signals:
 protected:
     QImage unscaledImage;
 
+    bool isHover = true;
+
     void mousePressEvent(QMouseEvent* event);
 
     virtual void setTextSym(QString s);
 
     virtual void setImageSym(QImage image);
+
+    void enterEvent(QEvent* ev) override;
+
+    void leaveEvent(QEvent* ev) override;
 
 };
 

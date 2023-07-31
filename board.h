@@ -19,7 +19,7 @@ public:
                    PlayGameWindow* parent);
     explicit Board(const Board& other);
 
-    QGridLayout* getLayout() const;
+    QVBoxLayout* getLayout() const;
 
     int getBoardWidth() const;
 
@@ -30,6 +30,8 @@ public:
     int getGridWidth() const;
 
     int getGridHeight() const;
+
+    bool isEnabled() const;
 
 private:
     const int boardWidth;
@@ -42,7 +44,9 @@ private:
 
     const int gridHeight;
 
-    QGridLayout* layout;
+    QGridLayout* board;
+
+    QVBoxLayout* layout;
 
     void createBoard();
 
