@@ -106,13 +106,10 @@ void Board::spaceClicked(BoardSpaceLabel* space)
     space->setSymbol(w->getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getAllWins(space);
-
     displayWins(wins);
-
-    if (0 < wins.count() || boardIsFull())  disableBoard();
-
     w->addCurrPlayerScore(wins.count());
 
+    if (0 < wins.count() || boardIsFull()) disableBoard();
 
     // TODO: evalTable() or just finishGame() in second indentation or neither
 

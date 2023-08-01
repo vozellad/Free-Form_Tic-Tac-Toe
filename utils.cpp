@@ -26,8 +26,8 @@ void setLabelBackgroundColor(QLabel* label, QColor color)
 {
     label->setStyleSheet("");
 
-    QPalette palette = label->palette();  // TODO: utils?
-    palette.setColor(QPalette::Background, QColor(144, 238, 144));
+    QPalette palette = label->palette();
+    palette.setColor(QPalette::Background, color);
     label->setAutoFillBackground(true);
 
     label->setPalette(palette);
