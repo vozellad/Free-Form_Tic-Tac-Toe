@@ -4,39 +4,10 @@ BoardSpaceLabel::BoardSpaceLabel(QWidget* parent)
     : SymbolLabel(parent)
 {
     isHover = true;
+    initSounds();
 }
 
 BoardSpaceLabel::~BoardSpaceLabel() {}
-
-void BoardSpaceLabel::setTextSym(QString s)
-{
-    setText(s);return;  // TODO
-
-    QFont defaultFont = QApplication::font();
-    QString fontFamily = defaultFont.family();
-
-    int fontSize = 200;
-
-    QFont font(fontFamily);
-    font.setPointSize(fontSize);
-    setFont(font);
-
-    QFontMetrics metrics(font);
-
-    // Decrease the font size until the text fits within the label
-    //auto hi1 = metrics.width(txt);
-    //auto hi2 = width();
-    while (metrics.width(text()) > width() || metrics.height() > height()) {
-        fontSize--;
-        font.setPointSize(fontSize);
-        metrics = QFontMetrics(font);
-    }
-
-    setText(s);
-
-    font.setPointSize(fontSize);
-    setFont(font);
-}
 
 void BoardSpaceLabel::setImageSym(QImage image)
 {
@@ -74,4 +45,22 @@ void BoardSpaceLabel::resizeSymbol()
 
     setSymbol("");
     setSymbol(symbol);
+}
+
+void BoardSpaceLabel::initSounds()
+{
+    hoverSound->setMedia(QUrl("qrc:/sounds/muted-bell.flac"));
+    clickSound->setMedia(QUrl("qrc:/sounds/error.wav"));
+}
+
+void BoardSpaceLabel::mousePressEvent(QMouseEvent* event)
+{
+    SymbolLabel::mousePressEvent(event);
+    clickSound->play();
+}
+
+void BoardSpaceLabel::enterEvent(QEvent* event)
+{
+    SymbolLabel::enterEvent(event);
+    hoverSound->play();
 }

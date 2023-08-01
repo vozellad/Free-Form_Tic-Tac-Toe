@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <QGridLayout>
+#include <QtMultimedia>
 #include "boardspacelabel.h"
 #include "imageutils.h"
 #include "utils.h"
@@ -31,6 +32,8 @@ public:
 
     int getGridHeight() const;
 
+    bool isEnabled() const;
+
 private:
     const int boardWidth;
 
@@ -45,6 +48,10 @@ private:
     QGridLayout* board;
 
     QVBoxLayout* layout;
+
+    QMediaPlayer* winSound = new QMediaPlayer();
+
+    QMediaPlayer* drawSound = new QMediaPlayer();
 
     void createBoard();
 
@@ -79,6 +86,7 @@ private:
                                                    const int rowOffset,
                                                    const int colOffset);
 
+    void initSounds();
 };
 
 #endif // BOARD_H

@@ -11,7 +11,10 @@ Board::Board(const int width,
     winCondition(winCondition),
     gridWidth(width * 2 - 1),
     gridHeight(height * 2 - 1)
-{ createBoard(); }
+{
+    createBoard();
+    initSounds();
+}
 
 Board::Board(const Board& other) :
     QWidget(other.parentWidget()),
@@ -20,7 +23,10 @@ Board::Board(const Board& other) :
     winCondition(other.winCondition),
     gridWidth(other.gridWidth),
     gridHeight(other.gridHeight)
-{ createBoard(); }
+{
+    createBoard();
+    initSounds();
+}
 
 QVBoxLayout* Board::getLayout() const { return layout; }
 
@@ -34,17 +40,18 @@ int Board::getGridWidth() const { return gridWidth; }
 
 int Board::getGridHeight() const { return gridHeight; }
 
+bool Board::isEnabled() const { return board->isEnabled(); }
+
 void Board::createBoard()
 {
     board = new QGridLayout();
 
     layout = new QVBoxLayout();
-    QLabel* winCondLabel = new QLabel("Win Condition: " + winCondition);
-    winCondLabel->setAlignment(Qt::AlignCenter);
-    winCondLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    winCondLabel->setMinimumHeight(winCondLabel->sizeHint().height());
-    layout->addWidget(winCondLabel);
-    layout->addLayout(board);
+    QString boardTitle = QString::number(winCondition) + " in a row";
+    QLabel* winCond = new QLabel(boardTitle);
+    layout->addWidget(winCond, 0, Qt::AlignCenter);
+    layout->addLayout(board, 1);
+    layout->setSpacing(5);
 
     // Connect lines
     board->setSpacing(0);
@@ -106,12 +113,15 @@ void Board::spaceClicked(BoardSpaceLabel* space)
 
     QVector<QVector<BoardSpaceLabel*>> wins = getAllWins(space);
 
-    displayWins(wins);
-
-    if (0 < wins.count() || boardIsFull())  disableBoard();
-
-    w->addCurrPlayerScore(wins.count());
-
+    if (0 < wins.count()) {
+        displayWins(wins);
+        w->addCurrPlayerScore(wins.count());
+        winSound->play();
+        disableBoard();
+    } else if (boardIsFull()) {
+        drawSound->play();
+        disableBoard();
+    }
 
     // TODO: evalTable() or just finishGame() in second indentation or neither
 
@@ -162,13 +172,8 @@ void Board::disableBoard()
 void Board::displayWins(const QVector<QVector<BoardSpaceLabel*>>& wins)
 {
     for (QVector<BoardSpaceLabel*> winSpaces : wins)
-        for (BoardSpaceLabel* space : winSpaces) {
-            QPalette palette = space->palette();
-            palette.setColor(QPalette::Background, QColor(144, 238, 144));
-            space->setAutoFillBackground(true);
-
-            space->setPalette(palette);
-        }
+        for (BoardSpaceLabel* space : winSpaces)
+            setLabelBackgroundColor(space, QColor(144, 238, 144));
 }
 
 int Board::getSpaceRow(BoardSpaceLabel* space)
@@ -204,6 +209,9 @@ QVector<QVector<BoardSpaceLabel*>> Board::getAllWins(BoardSpaceLabel* space)
 
     // Check symbols horizontally
     allWins += getLineWins(row, col, 0, 2, 0, -col);
+
+    if (winCondition == 1) return allWins;
+    // Otherwise, the rest of this function will find the same space as a win.
 
     // Check symbols vertically
     allWins += getLineWins(row, col, 2, 0, -row, 0);
@@ -261,4 +269,10 @@ QVector<QVector<BoardSpaceLabel*>> Board::getLineWins(const int row,
     }
 
     return allWins;
+}
+
+void Board::initSounds()
+{
+    winSound->setMedia(QUrl("qrc:/sounds/muted-bell.flac"));
+    drawSound->setMedia(QUrl("qrc:/sounds/error.wav"));
 }

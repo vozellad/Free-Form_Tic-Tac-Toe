@@ -40,7 +40,7 @@ protected:
 
     void enterEvent(QEvent* ev) override;
 
-    void leaveEvent(QEvent* ev) override;
+    void leaveEvent(QEvent* event) override;
 
 };
 

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>muted-bell.flac</file>
+        <file>error.wav</file>
+    </qresource>
+</RCC>

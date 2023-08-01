@@ -5,6 +5,7 @@
 #include <Qt>
 #include <QVariant>
 #include <QApplication>
+#include <QtMultimedia>
 #include "symbollabel.h"
 
 class BoardSpaceLabel : public SymbolLabel {
@@ -25,11 +26,19 @@ protected:
 private:
     bool uiLoaded = false;
 
+    QMediaPlayer* hoverSound = new QMediaPlayer();
+
+    QMediaPlayer* clickSound = new QMediaPlayer();
+
     void resizeSymbol();
 
-    void setTextSym(QString text) override;
-
     void setImageSym(QImage image) override;
+
+    void initSounds();
+
+    void mousePressEvent(QMouseEvent* event) override;
+
+    void enterEvent(QEvent* event) override;
 
 };
 

@@ -33,8 +33,7 @@ class diagram
 correct comments because code changed
 (make comments consistently start with upper case letter)
 
-highlight boardSpace user's cursor is on.
-add noise when symbol is inserted
+add noise
 
 rule of five
 
