@@ -45,6 +45,8 @@ public:
 
     void callDraw();
 
+    void finishGame();
+
 private slots:
     void on_pushButton_back_clicked();
 

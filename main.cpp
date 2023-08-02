@@ -6,12 +6,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // Set style sheet  // TODO
-    //QFile styleSheetFile("./styleSheet.qss");
-    //styleSheetFile.open(QFile::ReadOnly);
-    //QString styleSheet = QLatin1String(styleSheetFile.readAll());
-    //a.setStyleSheet(styleSheet);
-
     StartScreenWindow w;
     w.show();
 
@@ -19,9 +13,6 @@ int main(int argc, char *argv[])
 }
 
 /* TODO:
-
-offer spanish and greek translations (tr).
-    swtch from literal strings to QStrings?
 
 add docstrings at top of each file
 
@@ -33,10 +24,6 @@ class diagram
 correct comments because code changed
 (make comments consistently start with upper case letter)
 
-add noise
-
-rule of five
-
-what namespaces to add? Utils?
+change window titles
 
 */
