@@ -1,3 +1,7 @@
+/*  This window welcomes the user to the application
+ *  and waits for the user to start the application.
+ */
+
 #ifndef STARTSCREENWINDOW_H
 #define STARTSCREENWINDOW_H
 
@@ -28,7 +32,6 @@ private slots:
 
 private:
     Ui::StartScreenWindow *ui;
-    void showEvent(QShowEvent *ev) override;
 };
 
 #endif // STARTSCREENWINDOW_H

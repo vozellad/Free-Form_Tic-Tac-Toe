@@ -15,15 +15,9 @@ int main(int argc, char *argv[])
 /* TODO:
 
 add docstrings at top of each file
-
-make window appear in center of screen
-(also make next window appear where old one was)
+correct comments because code changed
+make comments consistently start with upper case letter
 
 class diagram
-
-correct comments because code changed
-(make comments consistently start with upper case letter)
-
-change window titles
 
 */

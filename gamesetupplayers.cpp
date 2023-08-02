@@ -1,3 +1,11 @@
+/*  This file contains functions relating to player settings.
+ *  The header file is gamesetupwindow.h
+ *  It's on the left side of the window.
+ *  The player names and symbols may be changed,
+ *  as well as the amount of players. The symbol can be text or an image.
+ *  The user modifies the symbol via the PlayerSymbolDialog window.
+ */
+
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
@@ -7,19 +15,21 @@
 // a click listener for a dialog window prompting the user for a new symbol.
 void GameSetupWindow::on_toolButton_addPlayer_clicked()
 {
-    // increment player amount
+    // Increment player amount
     setPlayerAmt(getPlayerAmt() + 1);
 
-    // add name
+    // Add name
     QString newNameStr = tr("Player %1").arg(getPlayerAmt());
     players->addWidget(new QLineEdit(newNameStr));
 
-    // add symbol
+    // Add symbol
     SymbolLabel* newSymbol = new SymbolLabel();
     newSymbol->setSymbol("...");
     addClickedPlayerSymbol(newNameStr, newSymbol);
     players->addWidget(newSymbol);
 
+    // - and + buttons may become disabled if the amount is at the edge of the
+    // player range
     setAmtModBtnStates_players();
 }
 
@@ -29,25 +39,26 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
 // empty space at the bottom.
 void GameSetupWindow::on_toolButton_removePlayer_clicked()
 {
-    // decrement player amount
+    // Decrement player amount
     setPlayerAmt(getPlayerAmt() - 1);
 
-    // remove player row
+    // Remove player row
     for (int i = 0; i < players->columnCount(); i++)
         deleteLastItem(players);
 
     reAdjustGridSize(players);
 
+    // - and + buttons may become disabled if the amount is at the edge of the
+    // player range
     setAmtModBtnStates_players();
 }
 
 // Connect symbol label to a click listener that brings up symbol prompt window.
-// Function is a lambda function to pass variables.
 void GameSetupWindow::addClickedPlayerSymbol(const QString name,
                                              SymbolLabel* symbol)
 {
     QObject::connect(symbol, &SymbolLabel::clicked, this,
-        [this, name, symbol]()  {
+        [this, name, symbol]()  {  // Lambda function to pass variables
             PlayerSymbolDialog *w = new PlayerSymbolDialog(name, symbol, this);
             w->show();
         }
@@ -66,7 +77,7 @@ void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
-// Keep player amount within range
+// Keep player amount within range (1-99)
 // If not in range, turn off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_players()

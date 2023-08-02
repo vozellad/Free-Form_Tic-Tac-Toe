@@ -1,3 +1,12 @@
+/*  This window allows the user to define the settings of the game.
+ *  On the left side is the settings for the players.
+ *  The player names and symbols may be changed,
+ *  as well as the amount of players. The symbol can be text or an image.
+ *  What may be changed about the boards is the amount of them,
+ *  the board's horizontal and vertical sizes, and the amount in a row to win.
+ *  Also includes dialog window to display errors to the user.
+ */
+
 #ifndef GAMESETUPWINDOW_H
 #define GAMESETUPWINDOW_H
 
@@ -61,8 +70,7 @@ private:
     QVBoxLayout* boards;
 
     // Prompt user for new symbol to replace clicked symbol
-    void addClickedPlayerSymbol(const QString name,
-                                SymbolLabel* symbol);
+    void addClickedPlayerSymbol(const QString name, SymbolLabel* symbol);
 
     // Get current amount of players
     int getPlayerAmt() const;
@@ -75,25 +83,33 @@ private:
     // to prevent user from going outside range
     void setAmtModBtnStates_players();
 
+    // Get names from player setup
     QVector<QString> getNames();
 
+    // Get symbols from player setup
     QVector<QVariant> getSymbols();
 
+    // Make sure list of names from player setup is usable
     bool validateNames(QVector<QString> playerNames);
 
+    // Make sure list of symbols from player setup is usable
     bool validateSymbols(QVector<QVariant> playerSymbols);
 
+    // Get boards from board setup
     QVector<BoardSettings> getBoards();
 
+    // Make sure list of boards is usable
     bool validateBoards(QVector<BoardSettings> boardsList);
 
+    // Dialog window to show errors to user
     void displayErrorDialog(const QString message);
 
     // Delete last item in given layout
     void deleteLastItem(QLayout* l);
 
     // Deleting from a grid doesn't reduce the grid size appropriately.
-    // This makes sure it is.
+    // This corrects the grid size.
+    // Use after reducing the size of a grid.
     void reAdjustGridSize(QGridLayout* l);
 
     // Removing players is done by removing recent elements.
@@ -112,6 +128,7 @@ private:
     // to prevent user from going outside range
     void setAmtModBtnStates_boards();
 
+    // Return a spinbox modified for board setup
     QSpinBox* createBoardSpinBox();
 };
 

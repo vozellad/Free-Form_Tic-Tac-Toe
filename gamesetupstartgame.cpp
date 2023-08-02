@@ -1,27 +1,38 @@
+/*  This file contains functions relating to transfering the settings to
+ *  PlayGameWindow when the Start Game button is pressed to go to the next
+ *  window, the window that hosts the game using the settings from this window.
+ */
+
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-// Go to next window
+// Go to next window.
+// Gather board and player settings and pass them to next window.
 void GameSetupWindow::on_pushButton_startGame_clicked()
 {
+    // Get and validate names and symbols
     QVector<QString> playerNames = getNames();
     QVector<QVariant> playerSymbols = getSymbols();
     if(!validateNames(playerNames) || !validateSymbols(playerSymbols))
         return;
 
+    // Create player list
     QVector<Player> playersList;
     for (int i = 0; i < getPlayerAmt(); i++)
         playersList.push_back(Player{playerNames[i], playerSymbols[i]});
 
+    // Get and validate boards
     QVector<BoardSettings> boardsList = getBoards();
     if (!validateBoards(boardsList))
         return;
 
+    // Pass players and boards to new window
     PlayGameWindow* w = new PlayGameWindow(playersList, boardsList, this);
     w->show();
     this->hide();
 }
 
+// Get names from player setup
 QVector<QString> GameSetupWindow::getNames()
 {
     QVector<QString> playerNames;
@@ -35,6 +46,7 @@ QVector<QString> GameSetupWindow::getNames()
     return playerNames;
 }
 
+// Get symbols from player setup
 QVector<QVariant> GameSetupWindow::getSymbols()
 {
     QVector<QVariant> playerSymbols;
@@ -48,6 +60,7 @@ QVector<QVariant> GameSetupWindow::getSymbols()
     return playerSymbols;
 }
 
+// Make sure list of names from player setup is usable
 bool GameSetupWindow::validateNames(QVector<QString> playerNames)
 {
     // Test for empty name
@@ -68,6 +81,7 @@ bool GameSetupWindow::validateNames(QVector<QString> playerNames)
     return true;
 }
 
+// Make sure list of symbols from player setup is usable
 bool GameSetupWindow::validateSymbols(QVector<QVariant> playerSymbols)
 {
     // Test for empty symbol
@@ -95,6 +109,7 @@ bool GameSetupWindow::validateSymbols(QVector<QVariant> playerSymbols)
     return true;
 }
 
+// Get boards from board setup
 QVector<BoardSettings> GameSetupWindow::getBoards()
 {
     QVector<BoardSettings> boardsList;
@@ -119,6 +134,7 @@ QVector<BoardSettings> GameSetupWindow::getBoards()
     return boardsList;
 }
 
+// Make sure list of boards is usable
 bool GameSetupWindow::validateBoards(QVector<BoardSettings> boardsList)
 {
     // Verify winCond is possible
@@ -132,6 +148,7 @@ bool GameSetupWindow::validateBoards(QVector<BoardSettings> boardsList)
     return true;
 }
 
+// Dialog window to show errors to user
 void GameSetupWindow::displayErrorDialog(const QString message)
 {
     ErrorDialog* w = new ErrorDialog(message, this);
