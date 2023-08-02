@@ -1,3 +1,5 @@
+/* Only presents the application name and a button to start the application. */
+
 #include "startscreenwindow.h"
 #include "ui_startscreenwindow.h"
 

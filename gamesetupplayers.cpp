@@ -1,3 +1,10 @@
+/*  This file contains functions relating to player settings.
+ *  The header file is gamesetupwindow.h
+ *  It's on the left side of the window.
+ *  The player names and symbols may be changed,
+ *  as well as the amount of players. The symbol can be text or an image.
+ */
+
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 

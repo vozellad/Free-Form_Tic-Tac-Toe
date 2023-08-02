@@ -1,3 +1,11 @@
+/*  This window allows the user to define the settings of the game.
+ *  On the left side is the settings for the players.
+ *  The player names and symbols may be changed,
+ *  as well as the amount of players. The symbol can be text or an image.
+ *  What may be changed about the boards is the amount of them,
+ *  the board's horizontal and vertical sizes, and the amount in a row to win.
+ */
+
 #ifndef GAMESETUPWINDOW_H
 #define GAMESETUPWINDOW_H
 
@@ -93,7 +101,8 @@ private:
     void deleteLastItem(QLayout* l);
 
     // Deleting from a grid doesn't reduce the grid size appropriately.
-    // This makes sure it is.
+    // This corrects the grid size.
+    // Use after reducing the size of a grid.
     void reAdjustGridSize(QGridLayout* l);
 
     // Removing players is done by removing recent elements.

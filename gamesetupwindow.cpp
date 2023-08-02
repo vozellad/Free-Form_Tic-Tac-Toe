@@ -1,3 +1,15 @@
+/*  This window allows the user to define the settings of the game.
+ *
+ *  The functions relating to player settings
+ *  are kept in the file gamesetupplayers.cpp
+ *
+ *  The functions relating to the board settings
+ *  are kept in the file gamesetupboards.cpp
+ *
+ *  The functions relating to transfering the settings to PlayGameWindow
+ *  are kept in the file gamesetupstartgame.cpp
+ */
+
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
@@ -23,7 +35,8 @@ GameSetupWindow::GameSetupWindow(QWidget *parent) :
     boards = ui->verticalLayout_boards;
     on_toolButton_addBoard_clicked();  // Add initial board
 
-    // have right side not shrink
+    // Keeps UI of board setup from being smaller than the UI of player setup
+    // when window is sized down
     ui->label_boardAmtDisplay->
         setMinimumWidth(ui->label_playerAmtDisplay->width());
 }
@@ -51,7 +64,7 @@ void GameSetupWindow::deleteLastItem(QLayout* l)
 }
 
 // Deleting from a grid doesn't reduce the grid size appropriately.
-// This makes sure it is.
+// This corrects the grid size.
 void GameSetupWindow::reAdjustGridSize(QGridLayout *l)
 {
     int row = l->count() / l->columnCount() - 1;
