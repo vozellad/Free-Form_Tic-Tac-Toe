@@ -27,8 +27,6 @@ private:
 
     void resizeSymbol();
 
-    void setTextSym(QString text) override;
-
     void setImageSym(QImage image) override;
 
 };

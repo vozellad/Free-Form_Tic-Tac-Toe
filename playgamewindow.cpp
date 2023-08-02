@@ -181,3 +181,19 @@ QLabel* PlayGameWindow::getPlayerUILabel(const int i)
 {
     return qobject_cast<QLabel*>(playersUI->itemAt(i)->widget());
 }
+
+void PlayGameWindow::finishGame()
+{
+    const int winnerRow = getWinnerRow();
+
+    clearPlayerHighlight();
+
+    // If no single highest score
+    if (winnerRow == -1)
+        callDraw();
+
+    else {
+        highlightPlayer(winnerRow);
+        displayWinner(winnerRow);
+    }
+}

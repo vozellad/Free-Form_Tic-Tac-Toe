@@ -85,7 +85,7 @@ QFrame* Board::getLine(QFrame::Shape lineType)
 {
     QFrame* line = new QFrame;
     line->setFrameShape(lineType);
-    line->setStyleSheet("background-color: white;");  // TODO: make it theme agnostic
+    line->setStyleSheet("background-color: white;");
     return line;
 }
 
@@ -106,31 +106,14 @@ void Board::spaceClicked(BoardSpaceLabel* space)
     space->setSymbol(w->getCurrPlayerSymbol());
 
     QVector<QVector<BoardSpaceLabel*>> wins = getAllWins(space);
-
     displayWins(wins);
-
-    if (0 < wins.count() || boardIsFull())  disableBoard();
-
     w->addCurrPlayerScore(wins.count());
 
-
-    // TODO: evalTable() or just finishGame() in second indentation or neither
+    if (0 < wins.count() || boardIsFull()) disableBoard();
 
     if (w->allBoardsDone()) {
-        const int winnerRow = w->getWinnerRow();
-        w->clearPlayerHighlight();
-
-        // If no single highest score
-        if (winnerRow == -1)
-            w->callDraw();
-
-        else {
-            w->highlightPlayer(winnerRow);
-            w->displayWinner(winnerRow);
-        }
-
-    // Continue game
-    } else {
+        w->finishGame();
+    } else {  // Continue game
         w->iteratePlayer();
         w->highlightPlayer();
     }

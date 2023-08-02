@@ -8,36 +8,6 @@ BoardSpaceLabel::BoardSpaceLabel(QWidget* parent)
 
 BoardSpaceLabel::~BoardSpaceLabel() {}
 
-void BoardSpaceLabel::setTextSym(QString s)
-{
-    setText(s);return;  // TODO
-
-    QFont defaultFont = QApplication::font();
-    QString fontFamily = defaultFont.family();
-
-    int fontSize = 200;
-
-    QFont font(fontFamily);
-    font.setPointSize(fontSize);
-    setFont(font);
-
-    QFontMetrics metrics(font);
-
-    // Decrease the font size until the text fits within the label
-    //auto hi1 = metrics.width(txt);
-    //auto hi2 = width();
-    while (metrics.width(text()) > width() || metrics.height() > height()) {
-        fontSize--;
-        font.setPointSize(fontSize);
-        metrics = QFontMetrics(font);
-    }
-
-    setText(s);
-
-    font.setPointSize(fontSize);
-    setFont(font);
-}
-
 void BoardSpaceLabel::setImageSym(QImage image)
 {
     QImage scaledImage = QImage();

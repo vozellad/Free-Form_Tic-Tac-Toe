@@ -20,12 +20,12 @@ void setImageToLabel(const QImage& image, QLabel* label)
 
 QImage getImageFromLabel(const QLabel* label)
 {
-    if (label->pixmap()->isNull())
+    const QPixmap pixmap = label->pixmap(Qt::ReturnByValue);
+
+    if (pixmap.isNull())
         throw ImageNotFoundException();
 
-    // IDE warning tells me to use other overload function
-    // while docs tell me to use this overload function
-    return label->pixmap()->toImage();
+    return pixmap.toImage();
 }
 
 bool compareImages(const QImage& image1, const QImage& image2)

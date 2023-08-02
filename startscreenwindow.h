@@ -2,6 +2,12 @@
 #define STARTSCREENWINDOW_H
 
 #include <QMainWindow>
+
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
+
 #include "gamesetupwindow.h"
 
 namespace Ui {
@@ -22,6 +28,8 @@ private slots:
 
 private:
     Ui::StartScreenWindow *ui;
+
+    void showEvent(QShowEvent *ev) override;
 };
 
 #endif // STARTSCREENWINDOW_H
