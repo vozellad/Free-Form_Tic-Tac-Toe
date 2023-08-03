@@ -1,3 +1,8 @@
+/*  Customized label to hold either text or an image.
+ *  This label has a click and a hover listener.
+ *  It holds the unscaled image for it to be retrieved in uncompressed quality.
+ */
+
 #ifndef SYMBOLLABEL_H
 #define SYMBOLLABEL_H
 
@@ -16,6 +21,7 @@ public:
                          QWidget* parent = Q_NULLPTR);
     ~SymbolLabel();
 
+    // Like setText but allows for an image
     void setSymbol(const QVariant symbol);
 
     QVariant getSymbol();
@@ -28,8 +34,11 @@ signals:
     void clicked();
 
 protected:
+    // If the symbol is an image, the original quality
+    // is held here to be retrieved later
     QImage unscaledImage;
 
+    // Whether to highlight label on hover
     bool isHover = true;
 
     void mousePressEvent(QMouseEvent* event);
@@ -38,8 +47,10 @@ protected:
 
     virtual void setImageSym(QImage image);
 
+    // Highlights on hover
     void enterEvent(QEvent* ev) override;
 
+    // Un-highlights when leaving hover
     void leaveEvent(QEvent* ev) override;
 
 };
