@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
 
 /* TODO:
 
-add docstrings at top of each file
-correct comments because code changed
-make comments consistently start with upper case letter
+comemnts
+
+change comments from get to gets
 
 class diagram
 
