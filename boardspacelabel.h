@@ -1,3 +1,8 @@
+/*  Customized label to be used as a board space in a TicTacToe board.
+ *  Inherets from SymbolLabel to properly use text or image.
+ *  Resizes image with no progressive quality degradation as window resizes.
+ */
+
 #ifndef BOARDSPACELABEL_H
 #define BOARDSPACELABEL_H
 
@@ -18,8 +23,10 @@ signals:
     void resized();
 
 protected:
+    // Resizes symbol when window resizes
     void resizeEvent(QResizeEvent *event) override;
 
+    // Waits for UI to load to allow resizing of symbol
     void showEvent(QShowEvent *event) override;
 
 private:
@@ -27,6 +34,7 @@ private:
 
     void resizeSymbol();
 
+    // Overwrites function to scale image before applying
     void setImageSym(QImage image) override;
 
 };
