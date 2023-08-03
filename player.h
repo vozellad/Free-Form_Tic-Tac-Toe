@@ -1,3 +1,5 @@
+/* Used to hold player settings in an object to be passed around easily */
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
