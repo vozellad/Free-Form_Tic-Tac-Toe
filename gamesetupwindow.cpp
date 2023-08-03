@@ -55,7 +55,7 @@ void GameSetupWindow::on_pushButton_back_clicked()
     this->hide();
 }
 
-// Delete last item and widget within item in given layout
+// Deletes last item and widget within item in given layout
 void GameSetupWindow::deleteLastItem(QLayout* l)
 {
     QLayoutItem* lastItem = l->takeAt(l->count() - 1);

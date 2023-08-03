@@ -26,8 +26,8 @@ PlayerSymbolDialog::~PlayerSymbolDialog()
     delete ui;
 }
 
-// Prompt user for image, verify it is a valid image,
-// save image for later use, and check image radio button
+// Prompts user for image, verifies it is a valid image,
+// saves image for later use, and checks image radio button
 void PlayerSymbolDialog::on_pushButton_getImage_clicked()
 {
     // Prompt user for image
@@ -85,7 +85,7 @@ void PlayerSymbolDialog::on_lineEdit_text_textEdited()
     ui->radioButton_image->setChecked(false);
 }
 
-// Write to text of Get Image button
+// Writes to text of Get Image button
 // to let user know the state of retrieving image
 // Not having a parameter resets the button text.
 void PlayerSymbolDialog::markGetImageButton(const QString appendedText)

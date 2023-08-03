@@ -8,7 +8,7 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-// Add new board to list of boards by duplicating(not copying) the initial
+// Adds new board to list of boards by duplicating(not copying) the initial
 // board in the designer view programatically. It's done manually because Qt
 // does not have any methods for cloning widgets or layouts. Also adds a line
 // to seperate it from the previous board.
@@ -52,8 +52,8 @@ void GameSetupWindow::on_toolButton_addBoard_clicked()
     setAmtModBtnStates_boards();
 }
 
-// Take last grid layout (the last board) from list of boards and delete it and
-// its contents. Also delete the line seperating it from its previous board.
+// Takes last grid layout (the last board) from list of boards and deletes it and
+// its contents. Also deletes the line seperating it from its previous board.
 void GameSetupWindow::on_toolButton_removeBoard_clicked()
 {
     // Decrement board amount
@@ -74,20 +74,20 @@ void GameSetupWindow::on_toolButton_removeBoard_clicked()
     setAmtModBtnStates_boards();
 }
 
-// Get number represeting board amount in UI
+// Gets number represeting board amount in UI
 int GameSetupWindow::getBoardAmt() const
 {
     return ui->label_boardAmtDisplay->text().toInt();
 }
 
-// Set number representing board amount in UI
+// Sets number representing board amount in UI
 void GameSetupWindow::setBoardAmt(const int newBoardAmt)
 {
     ui->label_boardAmtDisplay->setText(QString::number(newBoardAmt));
 }
 
-// Keep board amount within range.
-// If not in range, turn off appropriate board amount modifier button -/+
+// Keeps board amount within range.
+// If not in range, turns off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_boards()
 {
@@ -100,7 +100,7 @@ void GameSetupWindow::setAmtModBtnStates_boards()
         ui->toolButton_addBoard->setEnabled(false);
 }
 
-// Return a spinbox modified for board setup
+// Returns a spinbox modified for board setup
 QSpinBox* GameSetupWindow::createBoardSpinBox()
 {
     QSpinBox* newSpinBox = new QSpinBox();

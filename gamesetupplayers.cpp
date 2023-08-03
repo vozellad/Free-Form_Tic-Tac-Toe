@@ -9,7 +9,7 @@
 #include "gamesetupwindow.h"
 #include "ui_gamesetupwindow.h"
 
-// Add new player row to list of players (which is a grid) by adding name and
+// Adds new player row to list of players (which is a grid) by adding name and
 // symbol widgets to grid layout. The grid already knows the column maximum,
 // so just adding the widgets with no positional values works. Each symbol gets
 // a click listener for a dialog window prompting the user for a new symbol.
@@ -33,7 +33,7 @@ void GameSetupWindow::on_toolButton_addPlayer_clicked()
     setAmtModBtnStates_players();
 }
 
-// To remove the last player row, remove the last element a number of times
+// To remove the last player row, removes the last element a number of times
 // equal to the grid column width. The symbol and name of the last player gets
 // removed. The grid size must also be readjusted or else there will be an
 // empty space at the bottom.
@@ -53,7 +53,7 @@ void GameSetupWindow::on_toolButton_removePlayer_clicked()
     setAmtModBtnStates_players();
 }
 
-// Connect symbol label to a click listener that brings up symbol prompt window.
+// Connects symbol label to a click listener that brings up symbol prompt window.
 void GameSetupWindow::addClickedPlayerSymbol(const QString name,
                                              SymbolLabel* symbol)
 {
@@ -65,20 +65,20 @@ void GameSetupWindow::addClickedPlayerSymbol(const QString name,
     );
 }
 
-// Get number represeting player amount in UI
+// Gets number represeting player amount in UI
 int GameSetupWindow::getPlayerAmt() const
 {
     return ui->label_playerAmtDisplay->text().toInt();
 }
 
-// Set number represeting player amount in UI
+// Sets number represeting player amount in UI
 void GameSetupWindow::setPlayerAmt(const int newPlayerAmt)
 {
     ui->label_playerAmtDisplay->setText(QString::number(newPlayerAmt));
 }
 
-// Keep player amount within range (1-99)
-// If not in range, turn off appropriate board amount modifier button -/+
+// Keeps player amount within range (1-99)
+// If not in range, turns off appropriate board amount modifier button -/+
 // to prevent user from going outside range
 void GameSetupWindow::setAmtModBtnStates_players()
 {

@@ -26,25 +26,25 @@ public:
     ~PlayerSymbolDialog();
 
 private slots:
-    // Prompt user for image
+    // Prompts user for image
     void on_pushButton_getImage_clicked();
 
-    // Apply new selected symbol
+    // Applies new selected symbol
     void on_buttonBox_accepted();
 
-    // Select radio button for text if text is modified
+    // Selects radio button for text if text is modified
     void on_lineEdit_text_textEdited();
 
 private:
     Ui::PlayerSymbolDialog *ui;
 
-    // Take image then later apply it when user presses OK
+    // Takes image then later applies it when user presses OK
     QImage image;
 
-    // Write new symbol to this element
+    // Writes new symbol to this element
     SymbolLabel* symbol;
 
-    // Write to text of Get Image button
+    // Writes to text of Get Image button
     // to let user know the state of retrieving image.
     // To reset it, call with no parameter.
     void markGetImageButton(const QString appendedText = "");
