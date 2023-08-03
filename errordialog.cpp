@@ -1,3 +1,5 @@
+/* A small window that displays an error message to the user */
+
 #include "errordialog.h"
 #include "ui_errordialog.h"
 
