@@ -1,3 +1,7 @@
+/*  In this dialog window, the user can specify exactly what they want the
+ *  symbol to be. It can be text or an image that they upload.
+ */
+
 #include "playersymboldialog.h"
 #include "ui_playersymboldialog.h"
 
@@ -83,13 +87,12 @@ void PlayerSymbolDialog::on_lineEdit_text_textEdited()
 
 // Write to text of Get Image button
 // to let user know the state of retrieving image
-// No parameter resets the button text.
+// Not having a parameter resets the button text.
 void PlayerSymbolDialog::markGetImageButton(const QString appendedText)
 {
     QPushButton* b = ui->pushButton_getImage;
-    const static QString bText = b->text();
 
-    appendedText == "" ? b->setText(bText) :
-                         b->setText(bText + " (" + appendedText + ")");
+    appendedText == "" ? b->setText(b->text()) :
+                         b->setText(b->text() + " (" + appendedText + ")");
 }
 

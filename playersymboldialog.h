@@ -1,3 +1,7 @@
+/*  In this dialog window, the user can specify exactly what they want the
+ *  symbol to be. It can be text or an image that they upload.
+ */
+
 #ifndef PLAYERSYMBOLDIALOG_H
 #define PLAYERSYMBOLDIALOG_H
 
@@ -23,7 +27,6 @@ public:
 
 private slots:
     // Prompt user for image
-    // Select radio button for image if image is given
     void on_pushButton_getImage_clicked();
 
     // Apply new selected symbol
@@ -43,7 +46,7 @@ private:
 
     // Write to text of Get Image button
     // to let user know the state of retrieving image.
-    // No parameter resets the button text.
+    // To reset it, call with no parameter.
     void markGetImageButton(const QString appendedText = "");
 };
 
