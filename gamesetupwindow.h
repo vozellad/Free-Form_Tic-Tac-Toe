@@ -4,7 +4,9 @@
  *  as well as the amount of players. The symbol can be text or an image.
  *  What may be changed about the boards is the amount of them,
  *  the board's horizontal and vertical sizes, and the amount in a row to win.
- *  Also includes dialog window to display errors to the user.
+ *  Includes dialog window to display errors to the user.
+ *  Includes boardsettings.h struct to pass board settings to next window
+ *  easily.
  */
 
 #ifndef GAMESETUPWINDOW_H
