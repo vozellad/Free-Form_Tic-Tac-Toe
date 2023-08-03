@@ -1,3 +1,5 @@
+/* Utility for image handling */
+
 #include "imageutils.h"
 
 void ImageNotFoundException::raise() const { throw *this; }

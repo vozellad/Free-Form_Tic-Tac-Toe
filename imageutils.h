@@ -1,3 +1,5 @@
+/* Utility for image handling */
+
 #ifndef IMAGEUTILS_H
 #define IMAGEUTILS_H
 
@@ -5,6 +7,7 @@
 #include <QLabel>
 #include <QException>
 
+// Custom exception for when there's no image in a label
 class ImageNotFoundException : public QException
 {
 public:
