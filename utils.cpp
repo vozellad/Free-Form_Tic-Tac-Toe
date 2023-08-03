@@ -1,11 +1,16 @@
+/* Utility functions available to any file in project */
+
 #include "utils.h"
 
+// Used before inserting items in grid to not have to specify
+// positional values
 void setGridWidth(QGridLayout* l, int width)
 {
     l->setColumnMinimumWidth(width - 1, 0);
     l->setColumnStretch(width - 1, 0);
 }
 
+// Compares symbols of either text or image
 bool compareSymbols(QVariant sym1, QVariant sym2)
 {
     // Compare datatypes
