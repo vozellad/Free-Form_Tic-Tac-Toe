@@ -9,6 +9,13 @@
  *  Amount in a row needed to win (The win condition for that individual board)
  *
  *  Made in Qt Creator.
+ *
+ *  Order of windows by program runtime:
+ *  StartScreenWindow
+ *  GameSetupWindow (SymbolLabel, BoardSettings, Player)
+ *  PlayerSymbolDialog
+ *  ErrorDialog
+ *  PlayGameWindow (Board, BoardSpaceLabel)
  */
 
 #include "startscreenwindow.h"
@@ -24,11 +31,3 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
-/* TODO:
-
-class diagram
-
-unit tests
-
-*/
