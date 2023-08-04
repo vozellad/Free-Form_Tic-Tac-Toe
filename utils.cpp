@@ -32,7 +32,7 @@ void setLabelBackgroundColor(QLabel* label, QColor color)
     label->setStyleSheet("");
 
     QPalette palette = label->palette();
-    palette.setColor(QPalette::Background, color);
+    palette.setColor(QPalette::Window, color);
     label->setAutoFillBackground(true);
 
     label->setPalette(palette);
