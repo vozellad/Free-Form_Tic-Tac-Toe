@@ -9,3 +9,4 @@ A free-form variant of Tic-Tac-Toe. The user can define the following rules:<br 
 &emsp;Amount in a row needed to win (The win condition for that individual board)<br />
   
 Made in Qt Creator on Linux.
+The Qt version is 5.15.10
