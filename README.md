@@ -12,4 +12,4 @@ Made in Qt Creator on Linux<br />
 Written in Qt version is 5.15.10<br />
 Also works in version 5.15.2
 
-![Start Screen]([http://url/to/img.png](https://i.imgur.com/JzDYkLw.png)https://i.imgur.com/JzDYkLw.png)
+![Start Screen](https://i.imgur.com/JzDYkLw.png)
