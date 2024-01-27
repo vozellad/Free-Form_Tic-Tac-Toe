@@ -12,18 +12,31 @@ Made in Qt Creator on Linux<br />
 Written in Qt version is 5.15.10<br />
 Also works in version 5.15.2<br />
 <br />
-<br />Start Screen<br />
+
+# Start Screen
+
 ![Start Screen](https://i.imgur.com/JzDYkLw.png)
-<br /><br />Game Setup<br />
+
+# Game Setup
+
 ![Game Setup](https://i.imgur.com/WTviw2r.png)
-<br /><br />Player Symbol Dialog<br />
+
+# Player Symbol Dialog
+
 ![Player Symbol Dialog](https://i.imgur.com/Z68vsah.png)
-<br /><br />Game Setup Used<br />
+
+# Game Setup Used
+
 ![Game Setup](https://i.imgur.com/3mbEpIE.png)
-<br /><br />Game Board<br />
+
+# Game Board
+
 ![Play Game](https://i.imgur.com/9XlWVzN.png)
-<br /><br />Game Board Used<br />
+
+# Game Board Used
+
 ![Play Game](https://i.imgur.com/ESnlLJb.png)
-<br /><br />Game Board Used Second<br />
+
+# Game Board Used Second
+
 ![Play Game](https://i.imgur.com/IbaPjHE.png)
-<br />
