@@ -11,32 +11,30 @@ A free-form variant of Tic-Tac-Toe. The user can define the following rules:<br 
 Made in Qt Creator on Linux<br />
 Written in Qt version is 5.15.10<br />
 Also works in version 5.15.2<br />
-<br />
+<br /><br />Screeshots taken in Fedora Linux 38 with the default UI appearance.<br />
 
 # Start Screen
 
-![Start Screen](https://i.imgur.com/JzDYkLw.png)
+![Start Screen](https://i.imgur.com/gxmLu1t.png)
 
 # Game Setup
 
-![Game Setup](https://i.imgur.com/WTviw2r.png)
+![Game Setup](https://i.imgur.com/OW9C2OO.png)
 
 # Player Symbol Dialog
 
-![Player Symbol Dialog](https://i.imgur.com/Z68vsah.png)
+![Player Symbol Dialog](https://i.imgur.com/93du8FY.png)
 
 # Game Setup Used
 
-![Game Setup](https://i.imgur.com/3mbEpIE.png)
+![Game Setup](https://i.imgur.com/oiEupBW.png)
 
 # Game Board
 
-![Play Game](https://i.imgur.com/9XlWVzN.png)
+![Play Game](https://i.imgur.com/tBCmXEV.png)
 
 # Game Board Used
 
-![Play Game](https://i.imgur.com/ESnlLJb.png)
+![Play Game](https://i.imgur.com/CyteBNd.png)
 
-# Game Board Used Second
 
-![Play Game](https://i.imgur.com/IbaPjHE.png)
