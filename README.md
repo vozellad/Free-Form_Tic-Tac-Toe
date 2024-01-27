@@ -14,16 +14,16 @@ Also works in version 5.15.2<br />
 <br />
 <br />Start Screen<br />
 ![Start Screen](https://i.imgur.com/JzDYkLw.png)
-<br />Game Setup<br />
+<br /><br />Game Setup<br />
 ![Game Setup](https://i.imgur.com/WTviw2r.png)
-<br />Player Symbol Dialog<br />
+<br /><br />Player Symbol Dialog<br />
 ![Player Symbol Dialog](https://i.imgur.com/Z68vsah.png)
-<br />Game Setup Used<br />
+<br /><br />Game Setup Used<br />
 ![Game Setup](https://i.imgur.com/3mbEpIE.png)
-<br />Game Board<br />
+<br /><br />Game Board<br />
 ![Play Game](https://i.imgur.com/9XlWVzN.png)
-<br />Game Board Used<br />
+<br /><br />Game Board Used<br />
 ![Play Game](https://i.imgur.com/ESnlLJb.png)
-<br />Game Board Used Second<br />
+<br /><br />Game Board Used Second<br />
 ![Play Game](https://i.imgur.com/IbaPjHE.png)
 <br />
